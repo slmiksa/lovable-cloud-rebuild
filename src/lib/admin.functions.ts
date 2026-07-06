@@ -23,13 +23,23 @@ const ORDER: Record<AdminTable, { col: string; asc: boolean }> = {
   news: { col: "published_at", asc: false },
 };
 
+async function isAdmin(userId: string): Promise<boolean> {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const db = supabaseAdmin as any;
+  const { data, error } = await db
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", userId)
+    .eq("role", "admin")
+    .maybeSingle();
+  if (error) return false;
+  return !!data;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function assertAdmin(context: any) {
-  const { data, error } = await context.supabase.rpc("has_role", {
-    _user_id: context.userId,
-    _role: "admin",
-  });
-  if (error || !data) {
+  if (!(await isAdmin(context.userId))) {
     throw new Response("Forbidden", { status: 403 });
   }
 }
@@ -38,11 +48,8 @@ async function assertAdmin(context: any) {
 export const getAdminStatus = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const { data } = await context.supabase.rpc("has_role", {
-      _user_id: context.userId,
-      _role: "admin",
-    });
-    return { isAdmin: Boolean(data), userId: context.userId };
+    const admin = await isAdmin(context.userId);
+    return { isAdmin: admin, userId: context.userId };
   });
 
 /** Lists all rows (including inactive) of an allow-listed table. */
