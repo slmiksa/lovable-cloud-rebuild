@@ -17,7 +17,6 @@ import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { AdminLogin } from "@/components/admin/AdminLogin";
 
 export const Route = createFileRoute("/adminpanel")({
-  ssr: false,
   head: () => ({
     meta: [
       { title: "لوحة التحكم — LamhaSec" },
