@@ -114,6 +114,10 @@ export async function adminUploadImage({
     .from("media")
     .upload(path, bytes, { contentType, upsert: true });
   if (error) throw new Error(error.message);
-  const { data: pub } = supabase.storage.from("media").getPublicUrl(path);
-  return { url: pub.publicUrl };
+  // Long-lived signed URL (10 years) since the bucket is private.
+  const { data: signed, error: signErr } = await supabase.storage
+    .from("media")
+    .createSignedUrl(path, 60 * 60 * 24 * 365 * 10);
+  if (signErr || !signed) throw new Error(signErr?.message || "Failed to sign URL");
+  return { url: signed.signedUrl };
 }
