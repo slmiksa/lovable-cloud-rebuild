@@ -1,5 +1,8 @@
-import { createServerFn } from "@tanstack/react-start";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { supabase } from "@/integrations/supabase/client";
+
+/** Admin operations executed directly from the browser using the
+ *  authenticated user's JWT. Access is enforced by RLS policies that
+ *  require `public.has_role(auth.uid(),'admin')`. */
 
 export const ADMIN_TABLES = [
   "slides",
@@ -23,127 +26,94 @@ const ORDER: Record<AdminTable, { col: string; asc: boolean }> = {
   news: { col: "published_at", asc: false },
 };
 
-async function isAdmin(userId: string): Promise<boolean> {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const db = supabaseAdmin as any;
-  const { data, error } = await db
+export async function getAdminStatus(): Promise<{ isAdmin: boolean; userId: string }> {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthenticated");
+  const { data, error } = await supabase
     .from("user_roles")
     .select("role")
-    .eq("user_id", userId)
+    .eq("user_id", user.id)
     .eq("role", "admin")
     .maybeSingle();
-  if (error) return false;
-  return !!data;
+  if (error) return { isAdmin: false, userId: user.id };
+  return { isAdmin: !!data, userId: user.id };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function assertAdmin(context: any) {
-  if (!(await isAdmin(context.userId))) {
-    throw new Response("Forbidden", { status: 403 });
-  }
+function assertTable(t: string): AdminTable {
+  if (!(ADMIN_TABLES as readonly string[]).includes(t)) throw new Error("Invalid table");
+  return t as AdminTable;
 }
 
-/** Returns whether the currently signed-in user is an admin. */
-export const getAdminStatus = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const admin = await isAdmin(context.userId);
-    return { isAdmin: admin, userId: context.userId };
-  });
+export async function adminList({ data }: { data: { table: AdminTable } }) {
+  const table = assertTable(data.table);
+  const ord = ORDER[table];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: rows, error } = await (supabase as any)
+    .from(table)
+    .select("*")
+    .order(ord.col, { ascending: ord.asc, nullsFirst: false });
+  if (error) throw new Error(error.message);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (rows ?? []) as any[];
+}
 
-/** Lists all rows (including inactive) of an allow-listed table. */
-export const adminList = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((d: { table: AdminTable }) => {
-    if (!ADMIN_TABLES.includes(d.table)) throw new Error("Invalid table");
-    return d;
-  })
-  .handler(async ({ data, context }) => {
-    await assertAdmin(context);
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+export async function adminUpsert({
+  data,
+}: {
+  data: { table: AdminTable; row: Record<string, unknown> };
+}) {
+  const table = assertTable(data.table);
+  if (!data.row || typeof data.row !== "object") throw new Error("Invalid row");
+  const { id, ...fields } = data.row;
+  if (id) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const db = supabaseAdmin as any;
-    const ord = ORDER[data.table];
-    const { data: rows, error } = await db
-      .from(data.table)
-      .select("*")
-      .order(ord.col, { ascending: ord.asc, nullsFirst: false });
-    if (error) throw new Error(error.message);
-    return (rows ?? []) as any[];
-  });
-
-/** Inserts (no id) or updates (with id) a row in an allow-listed table. */
-export const adminUpsert = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((d: { table: AdminTable; row: Record<string, unknown> }) => {
-    if (!ADMIN_TABLES.includes(d.table)) throw new Error("Invalid table");
-    if (!d.row || typeof d.row !== "object") throw new Error("Invalid row");
-    return d;
-  })
-  .handler(async ({ data, context }) => {
-    await assertAdmin(context);
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const db = supabaseAdmin as any;
-    const { id, ...fields } = data.row;
-    if (id) {
-      const { data: row, error } = await db
-        .from(data.table)
-        .update(fields)
-        .eq("id", id)
-        .select()
-        .single();
-      if (error) throw new Error(error.message);
-      return row as any;
-    }
-    const { data: row, error } = await db
-      .from(data.table)
-      .insert(fields)
+    const { data: row, error } = await (supabase as any)
+      .from(table)
+      .update(fields)
+      .eq("id", id as string)
       .select()
       .single();
     if (error) throw new Error(error.message);
-    return row as any;
-  });
+    return row;
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: row, error } = await (supabase as any)
+    .from(table)
+    .insert(fields)
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return row;
+}
 
-/** Deletes a row by id from an allow-listed table. */
-export const adminDelete = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((d: { table: AdminTable; id: string }) => {
-    if (!ADMIN_TABLES.includes(d.table)) throw new Error("Invalid table");
-    if (!d.id) throw new Error("Missing id");
-    return d;
-  })
-  .handler(async ({ data, context }) => {
-    await assertAdmin(context);
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const db = supabaseAdmin as any;
-    const { error } = await db.from(data.table).delete().eq("id", data.id);
-    if (error) throw new Error(error.message);
-    return { ok: true };
-  });
+export async function adminDelete({ data }: { data: { table: AdminTable; id: string } }) {
+  const table = assertTable(data.table);
+  if (!data.id) throw new Error("Missing id");
+  const { error } = await supabase.from(table).delete().eq("id", data.id);
+  if (error) throw new Error(error.message);
+  return { ok: true };
+}
 
-/** Uploads an image (as a data URL) to the public `media` bucket and returns its URL. */
-export const adminUploadImage = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((d: { filename: string; dataUrl: string }) => {
-    if (!d?.dataUrl || !d.dataUrl.startsWith("data:")) throw new Error("Invalid file");
-    return d;
-  })
-  .handler(async ({ data, context }) => {
-    await assertAdmin(context);
-    const match = data.dataUrl.match(/^data:([^;]+);base64,(.*)$/);
-    if (!match) throw new Error("Invalid data URL");
-    const contentType = match[1];
-    const buffer = Buffer.from(match[2], "base64");
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const ext = (data.filename.split(".").pop() || "png").toLowerCase().replace(/[^a-z0-9]/g, "");
-    const path = `uploads/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-    const { error } = await supabaseAdmin.storage
-      .from("media")
-      .upload(path, buffer, { contentType, upsert: true });
-    if (error) throw new Error(error.message);
-    const { data: pub } = supabaseAdmin.storage.from("media").getPublicUrl(path);
-    return { url: pub.publicUrl };
-  });
+export async function adminUploadImage({
+  data,
+}: {
+  data: { filename: string; dataUrl: string };
+}) {
+  if (!data?.dataUrl?.startsWith("data:")) throw new Error("Invalid file");
+  const match = data.dataUrl.match(/^data:([^;]+);base64,(.*)$/);
+  if (!match) throw new Error("Invalid data URL");
+  const contentType = match[1];
+  const bin = atob(match[2]);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  const ext = (data.filename.split(".").pop() || "png").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const path = `uploads/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const { error } = await supabase.storage
+    .from("media")
+    .upload(path, bytes, { contentType, upsert: true });
+  if (error) throw new Error(error.message);
+  const { data: pub } = supabase.storage.from("media").getPublicUrl(path);
+  return { url: pub.publicUrl };
+}
