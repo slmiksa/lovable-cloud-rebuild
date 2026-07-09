@@ -94,12 +94,6 @@ const AdminpanelClientsRoute = AdminpanelClientsRouteImport.update({
   path: '/clients',
   getParentRoute: () => AdminpanelRoute,
 } as any)
-const AdminpanelOrdersRoute = AdminpanelOrdersRouteImport.update({
-  id: '/orders',
-  path: '/orders',
-  getParentRoute: () => AdminpanelRoute,
-} as any)
-
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
