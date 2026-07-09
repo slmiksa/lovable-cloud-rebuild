@@ -20,7 +20,9 @@ import {
   type PublicSlide,
   type PublicSystem,
 } from "@/lib/public.functions";
-import { ArrowLeft, Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, Check, ChevronLeft, ChevronRight, Loader2, CheckCircle2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { Dialog as SuccessDialog, DialogContent as SuccessDialogContent } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
