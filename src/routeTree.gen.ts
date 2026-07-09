@@ -23,7 +23,6 @@ import { Route as AdminpanelOrdersRouteImport } from './routes/adminpanel.orders
 import { Route as AdminpanelOffersRouteImport } from './routes/adminpanel.offers'
 import { Route as AdminpanelNewsRouteImport } from './routes/adminpanel.news'
 import { Route as AdminpanelClientsRouteImport } from './routes/adminpanel.clients'
-import { Route as AdminpanelOrdersRouteImport } from './routes/adminpanel.orders'
 
 const SystemsRoute = SystemsRouteImport.update({
   id: '/systems',
@@ -95,6 +94,12 @@ const AdminpanelClientsRoute = AdminpanelClientsRouteImport.update({
   path: '/clients',
   getParentRoute: () => AdminpanelRoute,
 } as any)
+const AdminpanelOrdersRoute = AdminpanelOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => AdminpanelRoute,
+} as any)
+
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
