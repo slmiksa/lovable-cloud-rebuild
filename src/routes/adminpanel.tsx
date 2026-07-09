@@ -11,6 +11,7 @@ import {
   Shield,
   Loader2,
   LogOut,
+  Inbox,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
