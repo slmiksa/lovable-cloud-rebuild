@@ -20,7 +20,9 @@ import {
   type PublicSlide,
   type PublicSystem,
 } from "@/lib/public.functions";
-import { ArrowLeft, Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, Check, ChevronLeft, ChevronRight, Loader2, CheckCircle2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { Dialog as SuccessDialog, DialogContent as SuccessDialogContent } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -298,20 +300,9 @@ function Index() {
         </section>
       )}
 
-      {/* Contact CTA */}
-      <section id="contact" className="bg-gradient-to-l from-[var(--purple)] to-[var(--purple-dark)] py-16 text-white" dir="rtl">
-        <div className="mx-auto grid max-w-[1400px] items-center gap-6 px-5 md:grid-cols-[1fr_auto] md:px-10">
-          <div>
-            <h3 className="text-2xl font-black md:text-4xl">جاهزون لحماية مؤسستك؟</h3>
-            <p className="mt-3 text-white/85 md:text-lg">
-              تواصل مع فريق LamhaSec للحصول على تقييم مجاني لوضعك الأمني والتقني الحالي.
-            </p>
-          </div>
-          <a href="mailto:info@lamhasec.com" className="justify-self-start rounded-md bg-gradient-to-b from-[var(--brand)] to-[var(--brand-dark)] px-10 py-4 text-lg font-extrabold text-white shadow-[0_10px_24px_-8px_color-mix(in_oklab,var(--brand)_45%,transparent)] transition hover:brightness-110 md:justify-self-end">
-            تواصل معنا الآن
-          </a>
-        </div>
-      </section>
+      {/* Contact Form */}
+      <ContactSection />
+
 
       <SiteFooter />
 
@@ -441,5 +432,199 @@ function ClientsCarousel({ clients }: { clients: PublicClient[] }) {
         ))}
       </div>
     </div>
+  );
+}
+
+function ContactSection() {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<{ requestNo: number } | null>(null);
+
+  const maxMsg = 700;
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    const trimmedName = name.trim();
+    const digits = phone.replace(/\D/g, "");
+    const trimmedEmail = email.trim();
+    const trimmedMsg = message.trim();
+    if (trimmedName.length < 2) return setError("الرجاء إدخال الاسم الكامل");
+    if (digits.length < 9) return setError("الرجاء إدخال رقم جوال صحيح");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) return setError("البريد الإلكتروني غير صحيح");
+    if (trimmedMsg.length < 1) return setError("الرجاء كتابة الموضوع");
+    if (trimmedMsg.length > maxMsg) return setError(`الموضوع يجب ألا يتجاوز ${maxMsg} حرف`);
+
+    const fullPhone = digits.startsWith("966") ? `+${digits}` : `+966${digits.replace(/^0+/, "")}`;
+
+    setSubmitting(true);
+    const { data, error: dbError } = await supabase
+      .from("contact_requests")
+      .insert({
+        full_name: trimmedName,
+        phone: fullPhone,
+        email: trimmedEmail,
+        message: trimmedMsg,
+      })
+      .select("request_no")
+      .single();
+    setSubmitting(false);
+
+    if (dbError) {
+      setError("تعذّر إرسال الطلب، حاول لاحقاً");
+      return;
+    }
+    setSuccess({ requestNo: (data as { request_no: number }).request_no });
+    setName("");
+    setPhone("");
+    setEmail("");
+    setMessage("");
+  };
+
+  return (
+    <section
+      id="contact"
+      dir="rtl"
+      className="relative overflow-hidden bg-gradient-to-l from-[var(--purple)] to-[var(--purple-dark)] py-20 text-white"
+    >
+      <div className="pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 20% 20%, white 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+      <div className="relative mx-auto max-w-[1100px] px-5 md:px-10">
+        <div className="grid gap-10 md:grid-cols-2 md:items-center">
+          <div>
+            <span className="inline-block rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold text-white/90 backdrop-blur">
+              تواصل معنا
+            </span>
+            <h3 className="mt-4 text-3xl font-black leading-tight md:text-5xl">تواصل معنا الآن</h3>
+            <p className="mt-4 text-white/85 md:text-lg">
+              اترك بياناتك وسيقوم فريق LamhaSec بالتواصل معك في أقرب وقت لمناقشة احتياجاتك الأمنية والتقنية.
+            </p>
+          </div>
+
+          <form
+            onSubmit={onSubmit}
+            className="rounded-3xl border border-white/15 bg-white/10 p-6 shadow-2xl backdrop-blur-xl md:p-8"
+          >
+            <div className="space-y-4">
+              <div>
+                <label className="mb-1.5 block text-sm font-bold text-white/90">الاسم الكامل *</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  maxLength={120}
+                  required
+                  className="w-full rounded-lg border border-white/20 bg-white/95 px-4 py-3 text-[var(--ink)] outline-none transition placeholder:text-slate-400 focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/40"
+                  placeholder="الاسم الكامل"
+                />
+              </div>
+
+              <div>
+                <label className="mb-1.5 block text-sm font-bold text-white/90">رقم الجوال *</label>
+                <div className="flex overflow-hidden rounded-lg border border-white/20 bg-white/95 focus-within:border-[var(--brand)] focus-within:ring-2 focus-within:ring-[var(--brand)]/40">
+                  <span className="flex items-center gap-2 border-e border-slate-200 bg-slate-50 px-3 text-sm font-bold text-slate-700" dir="ltr">
+                    <span className="text-lg">🇸🇦</span>
+                    +966
+                  </span>
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value.replace(/[^\d]/g, ""))}
+                    required
+                    dir="ltr"
+                    inputMode="numeric"
+                    className="w-full bg-transparent px-4 py-3 text-[var(--ink)] outline-none placeholder:text-slate-400"
+                    placeholder="5XXXXXXXX"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="mb-1.5 block text-sm font-bold text-white/90">البريد الإلكتروني *</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  maxLength={200}
+                  required
+                  dir="ltr"
+                  className="w-full rounded-lg border border-white/20 bg-white/95 px-4 py-3 text-[var(--ink)] outline-none transition placeholder:text-slate-400 focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/40"
+                  placeholder="example@domain.com"
+                />
+              </div>
+
+              <div>
+                <label className="mb-1.5 flex items-center justify-between text-sm font-bold text-white/90">
+                  <span>الموضوع *</span>
+                  <span className="text-xs font-normal text-white/70">{message.length}/{maxMsg}</span>
+                </label>
+                <textarea
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value.slice(0, maxMsg))}
+                  rows={5}
+                  required
+                  maxLength={maxMsg}
+                  className="w-full resize-none rounded-lg border border-white/20 bg-white/95 px-4 py-3 text-[var(--ink)] outline-none transition placeholder:text-slate-400 focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/40"
+                  placeholder="اكتب موضوع طلبك هنا..."
+                />
+              </div>
+
+              {error && (
+                <div className="rounded-lg border border-red-300/40 bg-red-500/20 px-4 py-2.5 text-sm font-bold text-white">
+                  {error}
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={submitting}
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-b from-[var(--brand)] to-[var(--brand-dark)] px-6 py-3.5 text-base font-extrabold text-white shadow-[0_10px_24px_-8px_color-mix(in_oklab,var(--brand)_60%,transparent)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                {submitting ? (
+                  <>
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    جاري الإرسال...
+                  </>
+                ) : (
+                  "إرسال"
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <SuccessDialog open={!!success} onOpenChange={(o) => !o && setSuccess(null)}>
+        <SuccessDialogContent
+          className="max-w-md border border-[var(--line)] bg-white p-0 text-[var(--ink)] sm:rounded-3xl"
+          dir="rtl"
+        >
+          <div className="p-8 text-center">
+            <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
+              <CheckCircle2 className="h-12 w-12 text-green-600" strokeWidth={2.5} />
+            </div>
+            <h4 className="text-2xl font-black text-[var(--purple)]">تم استلام طلبك بنجاح</h4>
+            <p className="mt-3 text-[var(--ink-soft)]">
+              سوف يتم التواصل معكم قريباً من قِبَل فريق LamhaSec.
+            </p>
+            <div className="mt-6 rounded-xl bg-slate-50 px-5 py-4">
+              <div className="text-xs font-bold text-slate-500">رقم الطلب</div>
+              <div className="mt-1 font-mono text-2xl font-black text-[var(--brand)]" dir="ltr">
+                #{success?.requestNo}
+              </div>
+            </div>
+            <button
+              onClick={() => setSuccess(null)}
+              className="mt-6 w-full rounded-lg bg-[var(--purple)] px-6 py-3 font-bold text-white transition hover:brightness-110"
+            >
+              إغلاق
+            </button>
+          </div>
+        </SuccessDialogContent>
+      </SuccessDialog>
+    </section>
   );
 }

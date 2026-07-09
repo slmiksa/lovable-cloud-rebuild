@@ -19,6 +19,7 @@ import { Route as AdminpanelSystemsRouteImport } from './routes/adminpanel.syste
 import { Route as AdminpanelSocialRouteImport } from './routes/adminpanel.social'
 import { Route as AdminpanelSlidesRouteImport } from './routes/adminpanel.slides'
 import { Route as AdminpanelServicesRouteImport } from './routes/adminpanel.services'
+import { Route as AdminpanelOrdersRouteImport } from './routes/adminpanel.orders'
 import { Route as AdminpanelOffersRouteImport } from './routes/adminpanel.offers'
 import { Route as AdminpanelNewsRouteImport } from './routes/adminpanel.news'
 import { Route as AdminpanelClientsRouteImport } from './routes/adminpanel.clients'
@@ -73,6 +74,11 @@ const AdminpanelServicesRoute = AdminpanelServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => AdminpanelRoute,
 } as any)
+const AdminpanelOrdersRoute = AdminpanelOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => AdminpanelRoute,
+} as any)
 const AdminpanelOffersRoute = AdminpanelOffersRouteImport.update({
   id: '/offers',
   path: '/offers',
@@ -97,6 +103,7 @@ export interface FileRoutesByFullPath {
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/news': typeof AdminpanelNewsRoute
   '/adminpanel/offers': typeof AdminpanelOffersRoute
+  '/adminpanel/orders': typeof AdminpanelOrdersRoute
   '/adminpanel/services': typeof AdminpanelServicesRoute
   '/adminpanel/slides': typeof AdminpanelSlidesRoute
   '/adminpanel/social': typeof AdminpanelSocialRoute
@@ -111,6 +118,7 @@ export interface FileRoutesByTo {
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/news': typeof AdminpanelNewsRoute
   '/adminpanel/offers': typeof AdminpanelOffersRoute
+  '/adminpanel/orders': typeof AdminpanelOrdersRoute
   '/adminpanel/services': typeof AdminpanelServicesRoute
   '/adminpanel/slides': typeof AdminpanelSlidesRoute
   '/adminpanel/social': typeof AdminpanelSocialRoute
@@ -127,6 +135,7 @@ export interface FileRoutesById {
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/news': typeof AdminpanelNewsRoute
   '/adminpanel/offers': typeof AdminpanelOffersRoute
+  '/adminpanel/orders': typeof AdminpanelOrdersRoute
   '/adminpanel/services': typeof AdminpanelServicesRoute
   '/adminpanel/slides': typeof AdminpanelSlidesRoute
   '/adminpanel/social': typeof AdminpanelSocialRoute
@@ -144,6 +153,7 @@ export interface FileRouteTypes {
     | '/adminpanel/clients'
     | '/adminpanel/news'
     | '/adminpanel/offers'
+    | '/adminpanel/orders'
     | '/adminpanel/services'
     | '/adminpanel/slides'
     | '/adminpanel/social'
@@ -158,6 +168,7 @@ export interface FileRouteTypes {
     | '/adminpanel/clients'
     | '/adminpanel/news'
     | '/adminpanel/offers'
+    | '/adminpanel/orders'
     | '/adminpanel/services'
     | '/adminpanel/slides'
     | '/adminpanel/social'
@@ -173,6 +184,7 @@ export interface FileRouteTypes {
     | '/adminpanel/clients'
     | '/adminpanel/news'
     | '/adminpanel/offers'
+    | '/adminpanel/orders'
     | '/adminpanel/services'
     | '/adminpanel/slides'
     | '/adminpanel/social'
@@ -261,6 +273,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminpanelServicesRouteImport
       parentRoute: typeof AdminpanelRoute
     }
+    '/adminpanel/orders': {
+      id: '/adminpanel/orders'
+      path: '/orders'
+      fullPath: '/adminpanel/orders'
+      preLoaderRoute: typeof AdminpanelOrdersRouteImport
+      parentRoute: typeof AdminpanelRoute
+    }
     '/adminpanel/offers': {
       id: '/adminpanel/offers'
       path: '/offers'
@@ -289,6 +308,7 @@ interface AdminpanelRouteChildren {
   AdminpanelClientsRoute: typeof AdminpanelClientsRoute
   AdminpanelNewsRoute: typeof AdminpanelNewsRoute
   AdminpanelOffersRoute: typeof AdminpanelOffersRoute
+  AdminpanelOrdersRoute: typeof AdminpanelOrdersRoute
   AdminpanelServicesRoute: typeof AdminpanelServicesRoute
   AdminpanelSlidesRoute: typeof AdminpanelSlidesRoute
   AdminpanelSocialRoute: typeof AdminpanelSocialRoute
@@ -300,6 +320,7 @@ const AdminpanelRouteChildren: AdminpanelRouteChildren = {
   AdminpanelClientsRoute: AdminpanelClientsRoute,
   AdminpanelNewsRoute: AdminpanelNewsRoute,
   AdminpanelOffersRoute: AdminpanelOffersRoute,
+  AdminpanelOrdersRoute: AdminpanelOrdersRoute,
   AdminpanelServicesRoute: AdminpanelServicesRoute,
   AdminpanelSlidesRoute: AdminpanelSlidesRoute,
   AdminpanelSocialRoute: AdminpanelSocialRoute,

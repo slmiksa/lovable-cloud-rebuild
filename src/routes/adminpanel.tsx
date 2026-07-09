@@ -11,6 +11,7 @@ import {
   Shield,
   Loader2,
   LogOut,
+  Inbox,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -29,6 +30,7 @@ export const Route = createFileRoute("/adminpanel")({
 
 const navItems = [
   { to: "/adminpanel", label: "الرئيسية", icon: LayoutDashboard, exact: true },
+  { to: "/adminpanel/orders", label: "الطلبات", icon: Inbox, exact: false },
   { to: "/adminpanel/slides", label: "السلايدات", icon: Images, exact: false },
   { to: "/adminpanel/services", label: "خدماتنا", icon: Sparkles, exact: false },
   { to: "/adminpanel/offers", label: "أحدث العروض", icon: Tag, exact: false },

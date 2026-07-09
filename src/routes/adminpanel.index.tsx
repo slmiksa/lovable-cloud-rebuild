@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Images, Sparkles, Tag, AppWindow, Users, Newspaper, Share2 } from "lucide-react";
+import { Images, Sparkles, Tag, AppWindow, Users, Newspaper, Share2, Inbox } from "lucide-react";
 import { AdminSection } from "@/components/admin/AdminSection";
 import { adminList, type AdminTable } from "@/lib/admin.functions";
 
@@ -16,6 +16,7 @@ const cards: {
   color: string;
   unit: string;
 }[] = [
+  { to: "/adminpanel/orders", table: "contact_requests", label: "الطلبات", icon: Inbox, color: "bg-orange-500/10 text-orange-600", unit: "طلب" },
   { to: "/adminpanel/slides", table: "slides", label: "السلايدات", icon: Images, color: "bg-blue-500/10 text-blue-600", unit: "سلايد" },
   { to: "/adminpanel/services", table: "services", label: "خدماتنا", icon: Sparkles, color: "bg-emerald-500/10 text-emerald-600", unit: "خدمة" },
   { to: "/adminpanel/offers", table: "offers", label: "أحدث العروض", icon: Tag, color: "bg-amber-500/10 text-amber-600", unit: "عرض" },
