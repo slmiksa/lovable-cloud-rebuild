@@ -300,20 +300,9 @@ function Index() {
         </section>
       )}
 
-      {/* Contact CTA */}
-      <section id="contact" className="bg-gradient-to-l from-[var(--purple)] to-[var(--purple-dark)] py-16 text-white" dir="rtl">
-        <div className="mx-auto grid max-w-[1400px] items-center gap-6 px-5 md:grid-cols-[1fr_auto] md:px-10">
-          <div>
-            <h3 className="text-2xl font-black md:text-4xl">جاهزون لحماية مؤسستك؟</h3>
-            <p className="mt-3 text-white/85 md:text-lg">
-              تواصل مع فريق LamhaSec للحصول على تقييم مجاني لوضعك الأمني والتقني الحالي.
-            </p>
-          </div>
-          <a href="mailto:info@lamhasec.com" className="justify-self-start rounded-md bg-gradient-to-b from-[var(--brand)] to-[var(--brand-dark)] px-10 py-4 text-lg font-extrabold text-white shadow-[0_10px_24px_-8px_color-mix(in_oklab,var(--brand)_45%,transparent)] transition hover:brightness-110 md:justify-self-end">
-            تواصل معنا الآن
-          </a>
-        </div>
-      </section>
+      {/* Contact Form */}
+      <ContactSection />
+
 
       <SiteFooter />
 
