@@ -47,6 +47,45 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_requests: {
+        Row: {
+          admin_note: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          message: string
+          phone: string
+          request_no: number
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          admin_note?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          message: string
+          phone: string
+          request_no?: number
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          admin_note?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          message?: string
+          phone?: string
+          request_no?: number
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       news: {
         Row: {
           content: string | null
