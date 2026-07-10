@@ -24,7 +24,6 @@ import { Route as AdminpanelOffersRouteImport } from './routes/adminpanel.offers
 import { Route as AdminpanelNewsRouteImport } from './routes/adminpanel.news'
 import { Route as AdminpanelClientsRouteImport } from './routes/adminpanel.clients'
 import { Route as AdminpanelBrandingRouteImport } from './routes/adminpanel.branding'
-import { Route as AdminpanelBrandingRouteImport } from './routes/adminpanel.branding'
 
 const SystemsRoute = SystemsRouteImport.update({
   id: '/systems',
@@ -101,18 +100,12 @@ const AdminpanelBrandingRoute = AdminpanelBrandingRouteImport.update({
   path: '/branding',
   getParentRoute: () => AdminpanelRoute,
 } as any)
-const AdminpanelBrandingRoute = AdminpanelBrandingRouteImport.update({
-  id: '/branding',
-  path: '/branding',
-  getParentRoute: () => AdminpanelRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/adminpanel': typeof AdminpanelRouteWithChildren
   '/clients': typeof ClientsRoute
   '/systems': typeof SystemsRoute
-  '/adminpanel/branding': typeof AdminpanelBrandingRoute
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/news': typeof AdminpanelNewsRoute
@@ -148,7 +141,6 @@ export interface FileRoutesById {
   '/clients': typeof ClientsRoute
   '/systems': typeof SystemsRoute
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
-  '/adminpanel/branding': typeof AdminpanelBrandingRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/news': typeof AdminpanelNewsRoute
   '/adminpanel/offers': typeof AdminpanelOffersRoute
@@ -168,8 +160,6 @@ export interface FileRouteTypes {
     | '/clients'
     | '/systems'
     | '/adminpanel/branding'
-    | '/adminpanel/branding'
-    | '/adminpanel/branding'
     | '/adminpanel/clients'
     | '/adminpanel/news'
     | '/adminpanel/offers'
@@ -185,7 +175,6 @@ export interface FileRouteTypes {
     | '/'
     | '/clients'
     | '/systems'
-    | '/adminpanel/branding'
     | '/adminpanel/branding'
     | '/adminpanel/clients'
     | '/adminpanel/news'
@@ -322,13 +311,6 @@ declare module '@tanstack/react-router' {
       path: '/clients'
       fullPath: '/adminpanel/clients'
       preLoaderRoute: typeof AdminpanelClientsRouteImport
-      parentRoute: typeof AdminpanelRoute
-    }
-    '/adminpanel/branding': {
-      id: '/adminpanel/branding'
-      path: '/branding'
-      fullPath: '/adminpanel/branding'
-      preLoaderRoute: typeof AdminpanelBrandingRouteImport
       parentRoute: typeof AdminpanelRoute
     }
     '/adminpanel/branding': {
