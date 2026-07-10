@@ -115,13 +115,13 @@ function Index() {
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <a
                   href={slide?.cta_url || "#contact"}
-                  className="rounded-md bg-gradient-to-b from-[var(--brand)] to-[var(--brand-dark)] px-9 py-3.5 text-base font-extrabold text-white shadow-[0_10px_24px_-8px_color-mix(in_oklab,var(--brand)_45%,transparent)] transition hover:brightness-110"
+                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-gradient-to-b from-[var(--brand)] to-[var(--brand-dark)] px-5 py-3 text-sm font-extrabold text-white shadow-[0_10px_24px_-8px_color-mix(in_oklab,var(--brand)_45%,transparent)] transition hover:brightness-110 sm:px-9 sm:py-3.5 sm:text-base"
                 >
                   {slide?.cta_label || "اكتشف حلول LamhaSec"}
                 </a>
                 <a
                   href="#services"
-                  className="rounded-md border-2 border-white/80 px-9 py-3 text-base font-extrabold text-white transition hover:bg-white hover:text-[var(--purple)]"
+                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md border-2 border-white/80 px-5 py-2.5 text-sm font-extrabold text-white transition hover:bg-white hover:text-[var(--purple)] sm:px-9 sm:py-3 sm:text-base"
                 >
                   تعرّف على خدماتنا
                 </a>
