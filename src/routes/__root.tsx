@@ -67,6 +67,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useEffect(() => {
+    void import("@/hooks/useSiteSettings").then((m) => m.refreshSiteSettings());
+  }, []);
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
