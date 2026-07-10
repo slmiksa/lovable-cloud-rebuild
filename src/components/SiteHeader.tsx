@@ -95,7 +95,7 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
             </button>
             <a
               href="/#contact"
-              className="rounded-md bg-gradient-to-b from-[var(--brand)] to-[var(--brand-dark)] px-6 py-2.5 text-sm font-extrabold text-white shadow-[0_8px_18px_-8px_color-mix(in_oklab,var(--brand)_40%,transparent)] transition hover:brightness-110"
+              className="whitespace-nowrap rounded-md bg-gradient-to-b from-[var(--brand)] to-[var(--brand-dark)] px-4 py-2 text-xs font-extrabold text-white shadow-[0_8px_18px_-8px_color-mix(in_oklab,var(--brand)_40%,transparent)] transition hover:brightness-110 sm:px-6 sm:py-2.5 sm:text-sm"
             >
               ابدأ الآن
             </a>
