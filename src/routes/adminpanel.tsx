@@ -12,6 +12,7 @@ import {
   Loader2,
   LogOut,
   Inbox,
+  Palette,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -38,6 +39,7 @@ const navItems = [
   { to: "/adminpanel/clients", label: "عملاؤنا", icon: Users, exact: false },
   { to: "/adminpanel/news", label: "الأخبار (مدونة)", icon: Newspaper, exact: false },
   { to: "/adminpanel/social", label: "وسائل التواصل", icon: Share2, exact: false },
+  { to: "/adminpanel/branding", label: "الهوية البصرية", icon: Palette, exact: false },
 ] as const;
 
 function AdminGate() {
