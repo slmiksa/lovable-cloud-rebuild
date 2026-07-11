@@ -6,8 +6,8 @@ import { getPublicClients, type PublicClient } from "@/lib/public.functions";
 export const Route = createFileRoute("/clients")({
   head: () => ({
     meta: [
-      { title: "عملاؤنا — LamhaSec" },
-      { name: "description", content: "قائمة شركاء وعملاء LamhaSec في الأمن السيبراني والحلول التقنية." },
+      { title: "عملاؤنا — Lamha Secure" },
+      { name: "description", content: "قائمة شركاء وعملاء Lamha Secure في الأمن السيبراني والحلول التقنية." },
     ],
   }),
   loader: () => getPublicClients(),

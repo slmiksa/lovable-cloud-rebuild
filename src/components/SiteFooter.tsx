@@ -42,7 +42,7 @@ export function SiteFooter() {
               </div>
             )}
             <div className="leading-tight">
-              <div className="text-base font-extrabold tracking-wider">LamhaSec</div>
+              <div className="text-base font-extrabold tracking-wider">Lamha Secure</div>
               <div className="text-[10px] tracking-[0.12em] text-white/70">لمحة الآمنة للحلول التقنية</div>
             </div>
           </div>
@@ -112,7 +112,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-[1400px] flex-col items-center justify-between gap-2 px-5 py-5 text-xs text-white/60 md:flex-row md:px-10">
-          <div>© {new Date().getFullYear()} LamhaSec for Technical Solutions. جميع الحقوق محفوظة.</div>
+          <div>© {new Date().getFullYear()} Lamha Secure for Technical Solutions. جميع الحقوق محفوظة.</div>
           <div>لمحة الآمنة للحلول التقنية</div>
         </div>
       </div>
