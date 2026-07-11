@@ -15,6 +15,7 @@ import { useSiteSettings } from "@/hooks/useSiteSettings";
 
 export function SiteHeader({ active }: { active?: "home" | "services" | "systems" | "clients" | "contact" }) {
   const [open, setOpen] = useState(false);
+  const { logo_url } = useSiteSettings();
   const navItems: { id: NonNullable<typeof active>; label: string; href: string; to?: undefined }[] | { id: NonNullable<typeof active>; label: string; to: string; href?: undefined }[] = [
     { id: "home", label: "الرئيسية", to: "/" },
     { id: "services", label: "خدماتنا", href: "/#services" },
