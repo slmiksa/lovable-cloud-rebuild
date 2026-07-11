@@ -9,16 +9,16 @@ import { SiteFooter } from "@/components/SiteFooter";
 export const Route = createFileRoute("/systems")({
   head: () => ({
     meta: [
-      { title: "تطبيقاتنا وأنظمتنا — LamhaSec" },
+      { title: "تطبيقاتنا وأنظمتنا — Lamha Secure" },
       {
         name: "description",
         content:
-          "استعرض جميع منصات وأنظمة LamhaSec للأمن السيبراني والحلول التقنية: مراقبة، تشفير، جدار حماية، حماية سحابية، وأكثر.",
+          "استعرض جميع منصات وأنظمة Lamha Secure للأمن السيبراني والحلول التقنية: مراقبة، تشفير، جدار حماية، حماية سحابية، وأكثر.",
       },
-      { property: "og:title", content: "تطبيقاتنا وأنظمتنا — LamhaSec" },
+      { property: "og:title", content: "تطبيقاتنا وأنظمتنا — Lamha Secure" },
       {
         property: "og:description",
-        content: "جميع منصات وأنظمة LamhaSec في مكان واحد.",
+        content: "جميع منصات وأنظمة Lamha Secure في مكان واحد.",
       },
     ],
   }),

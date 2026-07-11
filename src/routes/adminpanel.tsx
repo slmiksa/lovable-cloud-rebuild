@@ -21,7 +21,7 @@ import { AdminLogin } from "@/components/admin/AdminLogin";
 export const Route = createFileRoute("/adminpanel")({
   head: () => ({
     meta: [
-      { title: "لوحة التحكم — LamhaSec" },
+      { title: "لوحة التحكم — Lamha Secure" },
       { name: "description", content: "لوحة تحكم لإدارة محتوى موقع لمحة سيك." },
       { name: "robots", content: "noindex, nofollow" },
     ],
@@ -76,7 +76,7 @@ function AdminLayout() {
             </div>
             <div>
               <div className="text-sm font-bold text-foreground">لوحة التحكم</div>
-              <div className="text-xs text-muted-foreground">LamhaSec Admin</div>
+              <div className="text-xs text-muted-foreground">Lamha Secure Admin</div>
             </div>
           </div>
           <nav className="flex-1 space-y-1 p-3">
