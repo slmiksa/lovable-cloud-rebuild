@@ -17,6 +17,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { AdminLogin } from "@/components/admin/AdminLogin";
+import { Admin2FA } from "@/components/admin/Admin2FA";
 
 export const Route = createFileRoute("/adminpanel")({
   head: () => ({
