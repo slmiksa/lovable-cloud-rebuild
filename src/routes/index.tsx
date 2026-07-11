@@ -27,9 +27,9 @@ import { Dialog as SuccessDialog, DialogContent as SuccessDialogContent } from "
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "LamhaSec for Technical Solutions — لمحة الآمنة للحلول التقنية" },
+      { title: "Lamha Secure for Technical Solutions — لمحة الآمنة للحلول التقنية" },
       { name: "description", content: "لمحة الآمنة للحلول التقنية: خدمات سيبرانية متكاملة وحلول تقنية وبرمجية واستشارات لحماية أعمالك وتسريع نموّها الرقمي." },
-      { property: "og:title", content: "LamhaSec for Technical Solutions — لمحة الآمنة للحلول التقنية" },
+      { property: "og:title", content: "Lamha Secure for Technical Solutions — لمحة الآمنة للحلول التقنية" },
       { property: "og:description", content: "خدمات سيبرانية، حلول تقنية وبرمجية، واستشارات." },
     ],
   }),
@@ -107,7 +107,7 @@ function Index() {
 
           <div className="relative mx-auto flex h-full max-w-[1400px] items-center px-5 md:px-10">
             <div className="max-w-2xl">
-              <div className="text-sm font-bold tracking-widest text-white/80">أهلاً بك في LamhaSec — لمحة الآمنة للحلول التقنية</div>
+              <div className="text-sm font-bold tracking-widest text-white/80">أهلاً بك في Lamha Secure — لمحة الآمنة للحلول التقنية</div>
               <h1 className="mt-4 whitespace-pre-line text-4xl font-black leading-[1.12] tracking-tight md:text-6xl lg:text-[68px]">
                 {slide?.title}
               </h1>
@@ -117,7 +117,7 @@ function Index() {
                   href={slide?.cta_url || "#contact"}
                   className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-gradient-to-b from-[var(--brand)] to-[var(--brand-dark)] px-5 py-3 text-sm font-extrabold text-white shadow-[0_10px_24px_-8px_color-mix(in_oklab,var(--brand)_45%,transparent)] transition hover:brightness-110 sm:px-9 sm:py-3.5 sm:text-base"
                 >
-                  {slide?.cta_label || "اكتشف حلول LamhaSec"}
+                  {slide?.cta_label || "اكتشف حلول Lamha Secure"}
                 </a>
                 <a
                   href="#services"
@@ -240,7 +240,7 @@ function Index() {
             <div className="mb-8 text-center">
               <div className="inline-flex items-center gap-2 text-sm font-bold text-[var(--brand)]">
                 <span className="h-2 w-2 rounded-full bg-[var(--brand)]" />
-                عملاء LamhaSec
+                عملاء Lamha Secure
               </div>
               <h3 className="mt-2 text-2xl font-black text-[var(--purple)] md:text-3xl">يثقون بنا</h3>
             </div>
@@ -261,7 +261,7 @@ function Index() {
       {news.length > 0 && (
         <section className="mx-auto max-w-[1400px] px-5 pb-20 md:px-10" dir="rtl">
           <div className="mb-8 text-center">
-            <h3 className="text-2xl font-black text-[var(--purple)] md:text-3xl">أهم أخبار LamhaSec</h3>
+            <h3 className="text-2xl font-black text-[var(--purple)] md:text-3xl">أهم أخبار Lamha Secure</h3>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {news.slice(0, 3).map((n: PublicNews) => (
@@ -498,7 +498,7 @@ function ContactSection() {
             </span>
             <h3 className="mt-4 text-3xl font-black leading-tight md:text-5xl">تواصل معنا الآن</h3>
             <p className="mt-4 text-white/85 md:text-lg">
-              اترك بياناتك وسيقوم فريق LamhaSec بالتواصل معك في أقرب وقت لمناقشة احتياجاتك الأمنية والتقنية.
+              اترك بياناتك وسيقوم فريق Lamha Secure بالتواصل معك في أقرب وقت لمناقشة احتياجاتك الأمنية والتقنية.
             </p>
           </div>
 
@@ -606,7 +606,7 @@ function ContactSection() {
             </div>
             <h4 className="text-2xl font-black text-[var(--purple)]">تم استلام طلبك بنجاح</h4>
             <p className="mt-3 text-[var(--ink-soft)]">
-              سوف يتم التواصل معكم قريباً من قِبَل فريق LamhaSec.
+              سوف يتم التواصل معكم قريباً من قِبَل فريق Lamha Secure.
             </p>
             <button
               onClick={() => setSuccess(null)}
