@@ -100,12 +100,13 @@ function Index() {
 
           <div className="relative mx-auto flex h-full max-w-[1400px] items-center px-5 md:px-10">
             <div className="max-w-2xl">
-              <div className="text-sm font-bold tracking-widest text-white/80">أهلاً بك في Lamha Secure — لمحة الآمنة للحلول التقنية</div>
-              <h1 className="mt-4 whitespace-pre-line text-4xl font-black leading-[1.12] tracking-tight md:text-6xl lg:text-[68px]">
-                {slide?.title}
-              </h1>
-              <p className="mt-6 max-w-xl text-base leading-loose text-white/85 md:text-lg">{slide?.subtitle}</p>
-              <div className="mt-8 flex flex-wrap items-center gap-3">
+              <div className="rounded-2xl bg-gradient-to-br from-[var(--purple)] to-[var(--purple-dark)] p-5 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.5)] md:p-7">
+                <h1 className="whitespace-pre-line text-3xl font-black leading-[1.12] tracking-tight text-white md:text-5xl lg:text-[58px]">
+                  {slide?.title}
+                </h1>
+                <p className="mt-4 max-w-xl text-base leading-loose text-white/90 md:text-lg">{slide?.subtitle}</p>
+              </div>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
                 <a
                   href={slide?.cta_url || "#contact"}
                   className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-gradient-to-b from-[var(--brand)] to-[var(--brand-dark)] px-5 py-3 text-sm font-extrabold text-white shadow-[0_10px_24px_-8px_color-mix(in_oklab,var(--brand)_45%,transparent)] transition hover:brightness-110 sm:px-9 sm:py-3.5 sm:text-base"
@@ -114,7 +115,7 @@ function Index() {
                 </a>
                 <a
                   href="#services"
-                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md border-2 border-white/80 px-5 py-2.5 text-sm font-extrabold text-white transition hover:bg-white hover:text-[var(--purple)] sm:px-9 sm:py-3 sm:text-base"
+                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-[var(--purple)] px-5 py-2.5 text-sm font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(0,0,0,0.3)] transition hover:bg-[var(--purple-light)] sm:px-9 sm:py-3 sm:text-base"
                 >
                   تعرّف على خدماتنا
                 </a>
