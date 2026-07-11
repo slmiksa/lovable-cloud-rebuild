@@ -22,6 +22,7 @@ import {
 } from "@/lib/public.functions";
 import { ArrowLeft, Check, ChevronLeft, ChevronRight, Loader2, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { FunctionsHttpError } from "@supabase/supabase-js";
 import { Dialog as SuccessDialog, DialogContent as SuccessDialogContent } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/")({
@@ -476,18 +477,22 @@ function ContactSection() {
       return;
     }
 
-    // Fire-and-forget email dispatch.
-    supabase.functions
-      .invoke("send-contact-emails", {
-        body: {
-          requestNo,
-          fullName: trimmedName,
-          phone: fullPhone,
-          email: trimmedEmail,
-          message: trimmedMsg,
-        },
-      })
-      .catch((err) => console.error("send-contact-emails failed", err));
+    const { data: emailResult, error: emailError } = await supabase.functions.invoke("send-contact-emails", {
+      body: {
+        requestNo,
+        fullName: trimmedName,
+        phone: fullPhone,
+        email: trimmedEmail,
+        message: trimmedMsg,
+      },
+    });
+
+    if (emailError || emailResult?.ok === false) {
+      const details = emailError instanceof FunctionsHttpError
+        ? await emailError.context.text()
+        : emailError?.message ?? JSON.stringify(emailResult);
+      console.error("send-contact-emails failed", details);
+    }
 
     setSubmitting(false);
     setSuccess({ requestNo: Number(requestNo) });

@@ -110,7 +110,11 @@ async function sendEmail(payload: {
     console.error("Resend error", res.status, text);
     throw new Error(`Resend ${res.status}: ${text}`);
   }
-  return text;
+  try {
+    return JSON.parse(text);
+  } catch {
+    return { raw: text };
+  }
 }
 
 Deno.serve(async (req) => {
@@ -138,10 +142,12 @@ Deno.serve(async (req) => {
 
     const errors = results.filter((r) => r.status === "rejected")
       .map((r) => (r as PromiseRejectedResult).reason?.message ?? "unknown");
+    const sent = results.filter((r) => r.status === "fulfilled")
+      .map((r) => (r as PromiseFulfilledResult<unknown>).value);
 
     return new Response(
-      JSON.stringify({ ok: errors.length === 0, errors }),
-      { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      JSON.stringify({ ok: errors.length === 0, sent, errors }),
+      { status: errors.length ? 502 : 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   } catch (e) {
     console.error(e);
