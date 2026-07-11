@@ -62,40 +62,40 @@ function shell(title: string, bodyHtml: string) {
 
 function clientTemplate(p: Payload) {
   const body = `
-    <h2 style="margin:0 0 12px;color:${BRAND};font-size:20px;">مرحباً ${esc(p.fullName)} 👋</h2>
-    <p style="margin:0 0 12px;">شكراً لتواصلك مع <b>Lamha Secure for Technical Solutions</b>. تم استلام طلبك بنجاح وسيقوم فريقنا بالتواصل معك في أقرب وقت.</p>
-    <div style="background:#f4f9fb;border:1px solid #dbe9ee;border-radius:12px;padding:16px;margin:16px 0;">
-      <div style="font-size:13px;color:#5a7079;margin-bottom:6px;">رقم الطلب</div>
-      <div style="font-size:22px;font-weight:800;color:${BRAND};direction:ltr;text-align:right;">#${p.requestNo}</div>
+    <h2 style="margin:0 0 12px;color:${BRAND_DARK};font-size:20px;">مرحباً ${esc(p.fullName)} 👋</h2>
+    <p style="margin:0 0 12px;color:${INK};">شكراً لتواصلك مع <b>Lamha Secure for Technical Solutions</b>. تم استلام طلبك بنجاح وسيقوم فريقنا بالتواصل معك في أقرب وقت.</p>
+    <div style="background:${BRAND_SOFT};border:1px solid ${BRAND_BORDER};border-radius:12px;padding:16px;margin:16px 0;">
+      <div style="font-size:13px;color:${INK_SOFT};margin-bottom:6px;">رقم الطلب</div>
+      <div style="font-size:24px;font-weight:800;color:${BRAND};direction:ltr;text-align:right;">#${p.requestNo}</div>
     </div>
     <h3 style="margin:20px 0 8px;font-size:15px;color:${BRAND_DARK};">تفاصيل طلبك</h3>
     <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;font-size:14px;">
-      <tr><td style="padding:8px 0;color:#5a7079;width:120px;">الاسم:</td><td style="padding:8px 0;">${esc(p.fullName)}</td></tr>
-      <tr><td style="padding:8px 0;color:#5a7079;">الجوال:</td><td style="padding:8px 0;" dir="ltr">${esc(p.phone)}</td></tr>
-      <tr><td style="padding:8px 0;color:#5a7079;">البريد:</td><td style="padding:8px 0;" dir="ltr">${esc(p.email)}</td></tr>
-      <tr><td style="padding:8px 0;color:#5a7079;vertical-align:top;">الموضوع:</td><td style="padding:8px 0;">${esc(p.message)}</td></tr>
+      <tr><td style="padding:8px 0;color:${INK_SOFT};width:120px;">الاسم:</td><td style="padding:8px 0;">${esc(p.fullName)}</td></tr>
+      <tr><td style="padding:8px 0;color:${INK_SOFT};">الجوال:</td><td style="padding:8px 0;" dir="ltr">${esc(p.phone)}</td></tr>
+      <tr><td style="padding:8px 0;color:${INK_SOFT};">البريد:</td><td style="padding:8px 0;" dir="ltr">${esc(p.email)}</td></tr>
+      <tr><td style="padding:8px 0;color:${INK_SOFT};vertical-align:top;">الموضوع:</td><td style="padding:8px 0;">${esc(p.message)}</td></tr>
     </table>
-    <p style="margin:20px 0 0;color:#5a7079;font-size:13px;">إن لم تكن أنت من قام بإرسال هذا الطلب، يمكنك تجاهل هذه الرسالة.</p>
+    <p style="margin:20px 0 0;color:${INK_SOFT};font-size:13px;">إن لم تكن أنت من قام بإرسال هذا الطلب، يمكنك تجاهل هذه الرسالة.</p>
   `;
   return shell("تم استلام طلبك", body);
 }
 
 function adminTemplate(p: Payload) {
   const body = `
-    <div style="background:${BRAND};color:#fff;display:inline-block;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;margin-bottom:12px;">طلب جديد</div>
+    <div style="background:${BRAND};color:${BRAND_DARK};display:inline-block;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:12px;">طلب جديد</div>
     <h2 style="margin:0 0 8px;color:${BRAND_DARK};font-size:20px;">طلب تواصل جديد وارد</h2>
-    <div style="background:#f4f9fb;border:1px solid #dbe9ee;border-radius:12px;padding:16px;margin:16px 0;">
-      <div style="font-size:13px;color:#5a7079;margin-bottom:6px;">رقم الطلب</div>
-      <div style="font-size:22px;font-weight:800;color:${BRAND};direction:ltr;text-align:right;">#${p.requestNo}</div>
+    <div style="background:${BRAND_SOFT};border:1px solid ${BRAND_BORDER};border-radius:12px;padding:16px;margin:16px 0;">
+      <div style="font-size:13px;color:${INK_SOFT};margin-bottom:6px;">رقم الطلب</div>
+      <div style="font-size:24px;font-weight:800;color:${BRAND};direction:ltr;text-align:right;">#${p.requestNo}</div>
     </div>
     <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;font-size:14px;">
-      <tr><td style="padding:8px 0;color:#5a7079;width:120px;">الاسم:</td><td style="padding:8px 0;font-weight:600;">${esc(p.fullName)}</td></tr>
-      <tr><td style="padding:8px 0;color:#5a7079;">الجوال:</td><td style="padding:8px 0;" dir="ltr"><a href="tel:${esc(p.phone)}" style="color:${BRAND};text-decoration:none;">${esc(p.phone)}</a></td></tr>
-      <tr><td style="padding:8px 0;color:#5a7079;">البريد:</td><td style="padding:8px 0;" dir="ltr"><a href="mailto:${esc(p.email)}" style="color:${BRAND};text-decoration:none;">${esc(p.email)}</a></td></tr>
+      <tr><td style="padding:8px 0;color:${INK_SOFT};width:120px;">الاسم:</td><td style="padding:8px 0;font-weight:600;">${esc(p.fullName)}</td></tr>
+      <tr><td style="padding:8px 0;color:${INK_SOFT};">الجوال:</td><td style="padding:8px 0;" dir="ltr"><a href="tel:${esc(p.phone)}" style="color:${BRAND};text-decoration:none;font-weight:600;">${esc(p.phone)}</a></td></tr>
+      <tr><td style="padding:8px 0;color:${INK_SOFT};">البريد:</td><td style="padding:8px 0;" dir="ltr"><a href="mailto:${esc(p.email)}" style="color:${BRAND};text-decoration:none;font-weight:600;">${esc(p.email)}</a></td></tr>
     </table>
     <h3 style="margin:20px 0 8px;font-size:15px;color:${BRAND_DARK};">الموضوع</h3>
-    <div style="background:#fafbfc;border-right:4px solid ${BRAND};padding:12px 16px;border-radius:8px;white-space:pre-wrap;">${esc(p.message)}</div>
-    <p style="margin:24px 0 0;color:#5a7079;font-size:12px;">هذه الرسالة تم إرسالها تلقائياً من نموذج التواصل على موقع Lamha Secure.</p>
+    <div style="background:#f7fbfb;border-right:4px solid ${BRAND};padding:12px 16px;border-radius:8px;white-space:pre-wrap;color:${INK};">${esc(p.message)}</div>
+    <p style="margin:24px 0 0;color:${INK_SOFT};font-size:12px;">هذه الرسالة تم إرسالها تلقائياً من نموذج التواصل على موقع Lamha Secure.</p>
   `;
   return shell(`طلب جديد #${p.requestNo}`, body);
 }
