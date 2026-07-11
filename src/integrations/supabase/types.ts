@@ -365,6 +365,15 @@ export type Database = {
         }
         Returns: boolean
       }
+      submit_contact_request: {
+        Args: {
+          p_email: string
+          p_full_name: string
+          p_message: string
+          p_phone: string
+        }
+        Returns: number
+      }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
