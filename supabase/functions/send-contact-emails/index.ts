@@ -103,7 +103,7 @@ function adminTemplate(p: Payload) {
 }
 
 async function sendEmail(payload: {
-  to: string[]; subject: string; html: string;
+  to: string[]; subject: string; html: string; bcc?: string[];
 }) {
   const key = Deno.env.get("RESEND_API_KEY");
   if (!key) throw new Error("RESEND_API_KEY missing");
