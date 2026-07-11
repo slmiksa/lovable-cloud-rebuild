@@ -140,13 +140,9 @@ Deno.serve(async (req) => {
     const results = await Promise.allSettled([
       sendEmail({
         to: [p.email],
+        bcc: ADMIN_EMAILS,
         subject: `تم استلام طلبك #${p.requestNo} — Lamha Secure`,
         html: clientTemplate(p),
-      }),
-      sendEmail({
-        to: ADMIN_EMAILS,
-        subject: `طلب جديد #${p.requestNo} من ${p.fullName}`,
-        html: adminTemplate(p),
       }),
     ]);
 
