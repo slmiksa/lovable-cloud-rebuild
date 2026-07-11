@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Twitter, Youtube, type LucideIcon } from "lucide-react";
 import { LogoMark } from "./LogoMark";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { getPublicSocialLinks, type PublicSocialLink } from "@/lib/public.functions";
 
 const SOCIAL_ICONS: Record<string, LucideIcon> = {
@@ -14,6 +15,7 @@ const SOCIAL_ICONS: Record<string, LucideIcon> = {
 
 export function SiteFooter() {
   const [social, setSocial] = useState<PublicSocialLink[]>([]);
+  const { logo_url } = useSiteSettings();
 
   useEffect(() => {
     let alive = true;
@@ -32,9 +34,13 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-[1400px] gap-10 px-5 py-14 md:grid-cols-4 md:px-10">
         <div>
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand)] to-[var(--brand-dark)]">
-              <LogoMark className="h-7 w-7 text-white" />
-            </div>
+            {logo_url ? (
+              <LogoMark className="h-14 w-14 md:h-16 md:w-16" />
+            ) : (
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand)] to-[var(--brand-dark)]">
+                <LogoMark className="h-7 w-7 text-white" />
+              </div>
+            )}
             <div className="leading-tight">
               <div className="text-base font-extrabold tracking-wider">LamhaSec</div>
               <div className="text-[10px] tracking-[0.12em] text-white/70">لمحة الآمنة للحلول التقنية</div>
