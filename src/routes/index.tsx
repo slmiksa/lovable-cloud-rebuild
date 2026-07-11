@@ -462,23 +462,21 @@ function ContactSection() {
     const fullPhone = digits.startsWith("966") ? `+${digits}` : `+966${digits.replace(/^0+/, "")}`;
 
     setSubmitting(true);
-    const { data, error: dbError } = await supabase
+    const { error: dbError } = await supabase
       .from("contact_requests")
       .insert({
         full_name: trimmedName,
         phone: fullPhone,
         email: trimmedEmail,
         message: trimmedMsg,
-      })
-      .select("request_no")
-      .single();
+      });
     setSubmitting(false);
 
     if (dbError) {
       setError("تعذّر إرسال الطلب، حاول لاحقاً");
       return;
     }
-    setSuccess({ requestNo: (data as { request_no: number }).request_no });
+    setSuccess({ requestNo: 0 });
     setName("");
     setPhone("");
     setEmail("");
