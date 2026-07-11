@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { LogoMark } from "./LogoMark";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 
 export function SiteHeader({ active }: { active?: "home" | "services" | "systems" | "clients" | "contact" }) {
   const [open, setOpen] = useState(false);
