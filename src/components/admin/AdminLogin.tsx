@@ -37,7 +37,7 @@ export function AdminLogin({ forbidden }: { forbidden?: boolean }) {
           <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-xl bg-primary text-primary-foreground">
             <Shield className="h-7 w-7" />
           </div>
-          <h1 className="text-xl font-bold text-foreground">لوحة تحكم لمحة سيك</h1>
+          <h1 className="text-xl font-bold text-foreground">لوحة تحكم لمحة الآمنة</h1>
           <p className="mt-1 text-sm text-muted-foreground">سجّل الدخول للوصول إلى لوحة التحكم</p>
         </div>
 
