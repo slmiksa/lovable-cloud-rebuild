@@ -608,12 +608,6 @@ function ContactSection() {
             <p className="mt-3 text-[var(--ink-soft)]">
               سوف يتم التواصل معكم قريباً من قِبَل فريق LamhaSec.
             </p>
-            <div className="mt-6 rounded-xl bg-slate-50 px-5 py-4">
-              <div className="text-xs font-bold text-slate-500">رقم الطلب</div>
-              <div className="mt-1 font-mono text-2xl font-black text-[var(--brand)]" dir="ltr">
-                #{success?.requestNo}
-              </div>
-            </div>
             <button
               onClick={() => setSuccess(null)}
               className="mt-6 w-full rounded-lg bg-[var(--purple)] px-6 py-3 font-bold text-white transition hover:brightness-110"
