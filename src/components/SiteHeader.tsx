@@ -69,8 +69,11 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
               </div>
             )}
             <div className="min-w-0 leading-tight">
-              <div className="truncate text-base font-extrabold tracking-wider text-[var(--purple)] md:text-lg">Lamha Secure</div>
-              <div className="truncate text-[10px] tracking-[0.12em] text-[var(--ink-soft)]">لمحة الآمنة للحلول التقنية</div>
+              <div className="text-[10px] font-extrabold leading-tight tracking-wider text-[var(--purple)] sm:text-xs md:text-sm">
+                <span className="block">Lamha Secure</span>
+                <span className="block">for Technical Solutions</span>
+              </div>
+              <div className="truncate text-[9px] tracking-[0.12em] text-[var(--ink-soft)] sm:text-[10px]">لمحة الآمنة للحلول التقنية</div>
             </div>
           </Link>
 
