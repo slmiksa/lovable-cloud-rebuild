@@ -138,12 +138,19 @@ Deno.serve(async (req) => {
     }
 
     const results = await Promise.allSettled([
+      // 1) Email to the client (confirmation)
       sendEmail({
         to: [p.email],
-        bcc: ADMIN_EMAILS,
-        reply_to: p.email,
+        reply_to: "support@lamhasec.com",
         subject: `تم استلام طلبك #${p.requestNo} — Lamha Secure`,
         html: clientTemplate(p),
+      }),
+      // 2) Separate email to admins (new-request notification)
+      sendEmail({
+        to: ADMIN_EMAILS,
+        reply_to: p.email,
+        subject: `طلب جديد #${p.requestNo} — يرجى المتابعة من لوحة التحكم`,
+        html: adminTemplate(p),
       }),
     ]);
 
