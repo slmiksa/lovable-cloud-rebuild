@@ -130,7 +130,7 @@ export default function WhatsAppWidget() {
             <X className="h-6 w-6 text-[var(--brand)] md:h-7 md:w-7" />
           ) : (
             <>
-              <LogoMark className="h-10 w-10 object-contain md:h-11 md:w-11" />
+              <LogoMark className="h-12 w-12 object-contain md:h-14 md:w-14" />
               <MessageCircle className="absolute -bottom-1.5 -left-1.5 h-4 w-4 rounded-full bg-[var(--brand)] text-white p-0.5" />
             </>
           )}
