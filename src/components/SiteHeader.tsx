@@ -61,9 +61,13 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
       <div className="border-b border-[var(--line)] bg-white">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-5 py-3 md:px-10 md:py-4">
           <Link to="/" className="flex min-w-0 items-center gap-3">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand)] to-[var(--brand-dark)] shadow-[0_8px_18px_-8px_color-mix(in_oklab,var(--brand)_35%,transparent)]">
-              <LogoMark className="h-7 w-7 text-white" />
-            </div>
+            {logo_url ? (
+              <LogoMark className="h-14 w-14 shrink-0 md:h-16 md:w-16" />
+            ) : (
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand)] to-[var(--brand-dark)] shadow-[0_8px_18px_-8px_color-mix(in_oklab,var(--brand)_35%,transparent)]">
+                <LogoMark className="h-7 w-7 text-white" />
+              </div>
+            )}
             <div className="min-w-0 leading-tight">
               <div className="truncate text-base font-extrabold tracking-wider text-[var(--purple)] md:text-lg">LamhaSec</div>
               <div className="truncate text-[10px] tracking-[0.12em] text-[var(--ink-soft)]">لمحة الآمنة للحلول التقنية</div>
