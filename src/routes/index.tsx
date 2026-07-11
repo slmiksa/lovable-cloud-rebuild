@@ -95,13 +95,6 @@ function Index() {
               {s.image_url && (
                 <img src={s.image_url} alt="" className="absolute inset-0 h-full w-full object-cover" />
               )}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(265deg, rgba(15,10,40,0.35) 0%, rgba(30,12,60,0.75) 45%, rgba(20,8,45,0.92) 100%)",
-                }}
-              />
             </div>
           ))}
 
