@@ -37,7 +37,7 @@ function codeEmail(code: string, email: string) {
       <tr><td style="padding:32px 28px;">
         <p style="margin:0 0 12px;font-size:16px;">مرحبًا،</p>
         <p style="margin:0 0 20px;font-size:15px;color:${INK_SOFT};line-height:1.8;">
-          استخدم الرمز التالي لإكمال تسجيل الدخول إلى لوحة تحكم <strong>لمحة سيك</strong>.
+          استخدم الرمز التالي لإكمال تسجيل الدخول إلى لوحة تحكم <strong>لمحة الآمنة</strong>.
           الرمز صالح لمدة <strong>10 دقائق</strong> فقط ولا يجب مشاركته مع أي شخص.
         </p>
         <div style="text-align:center;margin:28px 0;">
