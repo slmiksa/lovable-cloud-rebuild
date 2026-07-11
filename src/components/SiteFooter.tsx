@@ -34,9 +34,13 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-[1400px] gap-10 px-5 py-14 md:grid-cols-4 md:px-10">
         <div>
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand)] to-[var(--brand-dark)]">
-              <LogoMark className="h-7 w-7 text-white" />
-            </div>
+            {logo_url ? (
+              <LogoMark className="h-14 w-14 md:h-16 md:w-16" />
+            ) : (
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand)] to-[var(--brand-dark)]">
+                <LogoMark className="h-7 w-7 text-white" />
+              </div>
+            )}
             <div className="leading-tight">
               <div className="text-base font-extrabold tracking-wider">LamhaSec</div>
               <div className="text-[10px] tracking-[0.12em] text-white/70">لمحة الآمنة للحلول التقنية</div>
