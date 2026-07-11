@@ -24,7 +24,6 @@ const BRAND_SOFT = "#E6F7F7";   // ice teal
 const BRAND_BORDER = "#BEE6E7";
 const INK = "#0F1F22";
 const INK_SOFT = "#4a6166";
-const LOGO_URL = "https://nwiftvgwcsqgwmsfmlgs.supabase.co/storage/v1/object/sign/media/uploads/1783762460814-n47t99iz0w.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV82ZGVhZjI0NS1kNzNjLTQwZDctYWQ5Zi04OTRjMWQyYjNkZTkiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJtZWRpYS91cGxvYWRzLzE3ODM3NjI0NjA4MTQtbjQ3dDk5aXowdy5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgzNzYyNDYyLCJleHAiOjIwOTkxMjI0NjJ9.CqaCUSLyCpGRhCQymaQhdSTMkqufLBngNjayucGy_Tw";
 
 interface Payload {
   requestNo: number;
@@ -44,10 +43,7 @@ function shell(title: string, bodyHtml: string) {
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f2f6f7;padding:24px 12px;">
     <tr><td align="center">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(15,31,34,.08);border:1px solid ${BRAND_BORDER};">
-        <tr><td style="background:linear-gradient(135deg,${BRAND_DARK} 0%, #14343a 55%, ${BRAND} 100%);padding:28px 24px;text-align:center;color:#ffffff;">
-          <table role="presentation" cellpadding="0" cellspacing="0" align="center" style="margin:0 auto 14px;"><tr><td style="background:#ffffff;border-radius:20px;padding:14px;box-shadow:0 6px 20px rgba(0,0,0,.18);">
-            <img src="${LOGO_URL}" alt="Lamha Secure" width="96" height="96" style="display:block;background:#ffffff;border-radius:12px;"/>
-          </td></tr></table>
+        <tr><td style="background:linear-gradient(135deg,${BRAND_DARK} 0%, #14343a 55%, ${BRAND} 100%);padding:30px 24px;text-align:center;color:#ffffff;">
           <div style="font-size:22px;font-weight:800;letter-spacing:.5px;">Lamha Secure</div>
           <div style="font-size:12px;opacity:.85;margin-top:4px;">for Technical Solutions · لمحة الآمنة للحلول التقنية</div>
         </td></tr>
@@ -103,7 +99,7 @@ function adminTemplate(p: Payload) {
 }
 
 async function sendEmail(payload: {
-  to: string[]; subject: string; html: string; bcc?: string[];
+  to: string[]; subject: string; html: string; bcc?: string[]; reply_to?: string;
 }) {
   const key = Deno.env.get("RESEND_API_KEY");
   if (!key) throw new Error("RESEND_API_KEY missing");
@@ -141,6 +137,7 @@ Deno.serve(async (req) => {
       sendEmail({
         to: [p.email],
         bcc: ADMIN_EMAILS,
+        reply_to: p.email,
         subject: `تم استلام طلبك #${p.requestNo} — Lamha Secure`,
         html: clientTemplate(p),
       }),
