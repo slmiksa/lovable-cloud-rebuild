@@ -95,7 +95,7 @@ function adminTemplate(p: Payload) {
     <h3 style="margin:20px 0 8px;font-size:15px;color:${BRAND_DARK};">الموضوع</h3>
     <div style="background:#f7fbfb;border-right:4px solid ${BRAND};padding:12px 16px;border-radius:8px;white-space:pre-wrap;color:${INK};">${esc(p.message)}</div>
     <div style="text-align:center;margin:24px 0 4px;">
-      <a href="https://lamhasec.com/admin" style="display:inline-block;background:${BRAND};color:#ffffff;text-decoration:none;font-weight:700;padding:12px 22px;border-radius:10px;font-size:14px;">فتح لوحة تحكم الأدمن</a>
+      <a href="https://lamhasec.com/adminpanel" style="display:inline-block;background:${BRAND};color:#ffffff;text-decoration:none;font-weight:700;padding:12px 22px;border-radius:10px;font-size:14px;">فتح لوحة تحكم الأدمن</a>
     </div>
     <p style="margin:16px 0 0;color:${INK_SOFT};font-size:12px;text-align:center;">هذه الرسالة تم إرسالها تلقائياً من نموذج التواصل على موقع Lamha Secure.</p>
   `;
