@@ -44,7 +44,7 @@ const navItems = [
 ] as const;
 
 function AdminGate() {
-  const { status } = useAdminAuth();
+  const { status, recheck } = useAdminAuth();
 
   if (status === "loading") {
     return (
@@ -56,6 +56,7 @@ function AdminGate() {
 
   if (status === "unauth") return <AdminLogin />;
   if (status === "forbidden") return <AdminLogin forbidden />;
+  if (status === "needs_2fa") return <Admin2FA onVerified={recheck} />;
 
   return <AdminLayout />;
 }
