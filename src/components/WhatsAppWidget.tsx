@@ -125,7 +125,7 @@ export default function WhatsAppWidget() {
         <span className="pointer-events-none absolute -inset-1 animate-pulse rounded-full bg-[var(--brand)]/20 blur-md" />
 
         {/* Icon: logo inside circle */}
-        <span className="relative grid h-full w-full place-items-center overflow-hidden rounded-full bg-white p-2">
+        <span className="relative grid h-full w-full place-items-center overflow-hidden rounded-full bg-white p-1">
           {open ? (
             <X className="h-6 w-6 text-[var(--brand)] md:h-7 md:w-7" />
           ) : (
