@@ -125,12 +125,12 @@ export default function WhatsAppWidget() {
         <span className="pointer-events-none absolute -inset-1 animate-pulse rounded-full bg-[var(--brand)]/20 blur-md" />
 
         {/* Icon: shield with chat dot */}
-        <span className="relative">
+        <span className="relative grid h-full w-full place-items-center rounded-full bg-white p-2">
           {open ? (
             <X className="h-6 w-6 text-[var(--brand)] md:h-7 md:w-7" />
           ) : (
             <>
-              <LogoMark className="h-8 w-8 md:h-9 md:w-9" />
+              <LogoMark className="h-full w-full object-contain" />
               <MessageCircle className="absolute -bottom-1.5 -left-1.5 h-4 w-4 rounded-full bg-[var(--brand)] text-white p-0.5" />
             </>
           )}
