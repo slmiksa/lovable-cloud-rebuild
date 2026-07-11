@@ -45,7 +45,9 @@ function shell(title: string, bodyHtml: string) {
     <tr><td align="center">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(15,31,34,.08);border:1px solid ${BRAND_BORDER};">
         <tr><td style="background:linear-gradient(135deg,${BRAND_DARK} 0%, #14343a 55%, ${BRAND} 100%);padding:28px 24px;text-align:center;color:#ffffff;">
-          <img src="${LOGO_URL}" alt="Lamha Secure" width="88" height="88" style="display:block;margin:0 auto 10px;border-radius:14px;background:#ffffff;padding:8px;"/>
+          <table role="presentation" cellpadding="0" cellspacing="0" align="center" style="margin:0 auto 14px;"><tr><td style="background:#ffffff;border-radius:20px;padding:14px;box-shadow:0 6px 20px rgba(0,0,0,.18);">
+            <img src="${LOGO_URL}" alt="Lamha Secure" width="96" height="96" style="display:block;background:#ffffff;border-radius:12px;"/>
+          </td></tr></table>
           <div style="font-size:22px;font-weight:800;letter-spacing:.5px;">Lamha Secure</div>
           <div style="font-size:12px;opacity:.85;margin-top:4px;">for Technical Solutions · لمحة الآمنة للحلول التقنية</div>
         </td></tr>
@@ -101,7 +103,7 @@ function adminTemplate(p: Payload) {
 }
 
 async function sendEmail(payload: {
-  to: string[]; subject: string; html: string;
+  to: string[]; subject: string; html: string; bcc?: string[];
 }) {
   const key = Deno.env.get("RESEND_API_KEY");
   if (!key) throw new Error("RESEND_API_KEY missing");
@@ -138,13 +140,9 @@ Deno.serve(async (req) => {
     const results = await Promise.allSettled([
       sendEmail({
         to: [p.email],
+        bcc: ADMIN_EMAILS,
         subject: `تم استلام طلبك #${p.requestNo} — Lamha Secure`,
         html: clientTemplate(p),
-      }),
-      sendEmail({
-        to: ADMIN_EMAILS,
-        subject: `طلب جديد #${p.requestNo} من ${p.fullName}`,
-        html: adminTemplate(p),
       }),
     ]);
 
