@@ -462,28 +462,25 @@ function ContactSection() {
     const fullPhone = digits.startsWith("966") ? `+${digits}` : `+966${digits.replace(/^0+/, "")}`;
 
     setSubmitting(true);
-    const { data: inserted, error: dbError } = await supabase
-      .from("contact_requests")
-      .insert({
-        full_name: trimmedName,
-        phone: fullPhone,
-        email: trimmedEmail,
-        message: trimmedMsg,
-      })
-      .select("request_no")
-      .single();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: requestNo, error: dbError } = await (supabase as any).rpc("submit_contact_request", {
+      p_full_name: trimmedName,
+      p_phone: fullPhone,
+      p_email: trimmedEmail,
+      p_message: trimmedMsg,
+    });
 
-    if (dbError || !inserted) {
+    if (dbError || !requestNo) {
       setSubmitting(false);
       setError("تعذّر إرسال الطلب، حاول لاحقاً");
       return;
     }
 
-    // Fire-and-forget email dispatch (do not block success UX on email delivery).
+    // Fire-and-forget email dispatch.
     supabase.functions
       .invoke("send-contact-emails", {
         body: {
-          requestNo: inserted.request_no,
+          requestNo,
           fullName: trimmedName,
           phone: fullPhone,
           email: trimmedEmail,
