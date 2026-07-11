@@ -2,3 +2,9 @@ project_id = "nwiftvgwcsqgwmsfmlgs"
 
 [functions.send-contact-emails]
 verify_jwt = false
+
+[functions.admin-2fa-send]
+verify_jwt = true
+
+[functions.admin-2fa-verify]
+verify_jwt = true

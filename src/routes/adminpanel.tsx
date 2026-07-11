@@ -17,6 +17,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { AdminLogin } from "@/components/admin/AdminLogin";
+import { Admin2FA } from "@/components/admin/Admin2FA";
 
 export const Route = createFileRoute("/adminpanel")({
   head: () => ({
@@ -43,7 +44,7 @@ const navItems = [
 ] as const;
 
 function AdminGate() {
-  const { status } = useAdminAuth();
+  const { status, recheck } = useAdminAuth();
 
   if (status === "loading") {
     return (
@@ -55,6 +56,7 @@ function AdminGate() {
 
   if (status === "unauth") return <AdminLogin />;
   if (status === "forbidden") return <AdminLogin forbidden />;
+  if (status === "needs_2fa") return <Admin2FA onVerified={recheck} />;
 
   return <AdminLayout />;
 }
