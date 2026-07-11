@@ -490,7 +490,7 @@ function ContactSection() {
       .catch((err) => console.error("send-contact-emails failed", err));
 
     setSubmitting(false);
-    setSuccess({ requestNo: inserted.request_no });
+    setSuccess({ requestNo: Number(requestNo) });
     setName("");
     setPhone("");
     setEmail("");
