@@ -462,23 +462,21 @@ function ContactSection() {
     const fullPhone = digits.startsWith("966") ? `+${digits}` : `+966${digits.replace(/^0+/, "")}`;
 
     setSubmitting(true);
-    const { data, error: dbError } = await supabase
+    const { error: dbError } = await supabase
       .from("contact_requests")
       .insert({
         full_name: trimmedName,
         phone: fullPhone,
         email: trimmedEmail,
         message: trimmedMsg,
-      })
-      .select("request_no")
-      .single();
+      });
     setSubmitting(false);
 
     if (dbError) {
       setError("تعذّر إرسال الطلب، حاول لاحقاً");
       return;
     }
-    setSuccess({ requestNo: (data as { request_no: number }).request_no });
+    setSuccess({ requestNo: 0 });
     setName("");
     setPhone("");
     setEmail("");
@@ -610,12 +608,6 @@ function ContactSection() {
             <p className="mt-3 text-[var(--ink-soft)]">
               سوف يتم التواصل معكم قريباً من قِبَل فريق LamhaSec.
             </p>
-            <div className="mt-6 rounded-xl bg-slate-50 px-5 py-4">
-              <div className="text-xs font-bold text-slate-500">رقم الطلب</div>
-              <div className="mt-1 font-mono text-2xl font-black text-[var(--brand)]" dir="ltr">
-                #{success?.requestNo}
-              </div>
-            </div>
             <button
               onClick={() => setSuccess(null)}
               className="mt-6 w-full rounded-lg bg-[var(--purple)] px-6 py-3 font-bold text-white transition hover:brightness-110"
