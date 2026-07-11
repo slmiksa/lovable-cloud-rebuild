@@ -84,7 +84,7 @@ function Index() {
     <div className="min-h-screen font-arabic bg-white text-[var(--ink)]">
       <SiteHeader active="home" />
 
-      {/* Hero slider — full-bleed dark image with overlay */}
+      {/* Hero slider — full-bleed image, no overlay */}
       <section id="home" className="relative overflow-hidden text-white" dir="rtl">
         <div className="relative h-[560px] md:h-[640px]">
           {slides.map((s, i) => (
