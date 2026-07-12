@@ -22,6 +22,7 @@ import { Route as AdminpanelServicesRouteImport } from './routes/adminpanel.serv
 import { Route as AdminpanelOrdersRouteImport } from './routes/adminpanel.orders'
 import { Route as AdminpanelOffersRouteImport } from './routes/adminpanel.offers'
 import { Route as AdminpanelNewsRouteImport } from './routes/adminpanel.news'
+import { Route as AdminpanelContactRouteImport } from './routes/adminpanel.contact'
 import { Route as AdminpanelClientsRouteImport } from './routes/adminpanel.clients'
 import { Route as AdminpanelBrandingRouteImport } from './routes/adminpanel.branding'
 
@@ -90,6 +91,11 @@ const AdminpanelNewsRoute = AdminpanelNewsRouteImport.update({
   path: '/news',
   getParentRoute: () => AdminpanelRoute,
 } as any)
+const AdminpanelContactRoute = AdminpanelContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => AdminpanelRoute,
+} as any)
 const AdminpanelClientsRoute = AdminpanelClientsRouteImport.update({
   id: '/clients',
   path: '/clients',
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/systems': typeof SystemsRoute
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
+  '/adminpanel/contact': typeof AdminpanelContactRoute
   '/adminpanel/news': typeof AdminpanelNewsRoute
   '/adminpanel/offers': typeof AdminpanelOffersRoute
   '/adminpanel/orders': typeof AdminpanelOrdersRoute
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/systems': typeof SystemsRoute
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
+  '/adminpanel/contact': typeof AdminpanelContactRoute
   '/adminpanel/news': typeof AdminpanelNewsRoute
   '/adminpanel/offers': typeof AdminpanelOffersRoute
   '/adminpanel/orders': typeof AdminpanelOrdersRoute
@@ -142,6 +150,7 @@ export interface FileRoutesById {
   '/systems': typeof SystemsRoute
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
+  '/adminpanel/contact': typeof AdminpanelContactRoute
   '/adminpanel/news': typeof AdminpanelNewsRoute
   '/adminpanel/offers': typeof AdminpanelOffersRoute
   '/adminpanel/orders': typeof AdminpanelOrdersRoute
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/systems'
     | '/adminpanel/branding'
     | '/adminpanel/clients'
+    | '/adminpanel/contact'
     | '/adminpanel/news'
     | '/adminpanel/offers'
     | '/adminpanel/orders'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/systems'
     | '/adminpanel/branding'
     | '/adminpanel/clients'
+    | '/adminpanel/contact'
     | '/adminpanel/news'
     | '/adminpanel/offers'
     | '/adminpanel/orders'
@@ -194,6 +205,7 @@ export interface FileRouteTypes {
     | '/systems'
     | '/adminpanel/branding'
     | '/adminpanel/clients'
+    | '/adminpanel/contact'
     | '/adminpanel/news'
     | '/adminpanel/offers'
     | '/adminpanel/orders'
@@ -306,6 +318,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminpanelNewsRouteImport
       parentRoute: typeof AdminpanelRoute
     }
+    '/adminpanel/contact': {
+      id: '/adminpanel/contact'
+      path: '/contact'
+      fullPath: '/adminpanel/contact'
+      preLoaderRoute: typeof AdminpanelContactRouteImport
+      parentRoute: typeof AdminpanelRoute
+    }
     '/adminpanel/clients': {
       id: '/adminpanel/clients'
       path: '/clients'
@@ -326,6 +345,7 @@ declare module '@tanstack/react-router' {
 interface AdminpanelRouteChildren {
   AdminpanelBrandingRoute: typeof AdminpanelBrandingRoute
   AdminpanelClientsRoute: typeof AdminpanelClientsRoute
+  AdminpanelContactRoute: typeof AdminpanelContactRoute
   AdminpanelNewsRoute: typeof AdminpanelNewsRoute
   AdminpanelOffersRoute: typeof AdminpanelOffersRoute
   AdminpanelOrdersRoute: typeof AdminpanelOrdersRoute
@@ -339,6 +359,7 @@ interface AdminpanelRouteChildren {
 const AdminpanelRouteChildren: AdminpanelRouteChildren = {
   AdminpanelBrandingRoute: AdminpanelBrandingRoute,
   AdminpanelClientsRoute: AdminpanelClientsRoute,
+  AdminpanelContactRoute: AdminpanelContactRoute,
   AdminpanelNewsRoute: AdminpanelNewsRoute,
   AdminpanelOffersRoute: AdminpanelOffersRoute,
   AdminpanelOrdersRoute: AdminpanelOrdersRoute,
