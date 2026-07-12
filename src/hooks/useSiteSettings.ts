@@ -24,15 +24,26 @@ function applyFavicon(url: string | null) {
   document.head.appendChild(link);
 }
 
+const EMPTY: SiteSettings = {
+  logo_url: null,
+  favicon_url: null,
+  contact_phone: null,
+  contact_email: null,
+  contact_address: null,
+};
+
 export async function refreshSiteSettings() {
   const { data } = await supabase
     .from("site_settings")
-    .select("logo_url,favicon_url")
+    .select("logo_url,favicon_url,contact_phone,contact_email,contact_address")
     .eq("id", true)
     .maybeSingle();
   const next: SiteSettings = {
     logo_url: data?.logo_url ?? null,
     favicon_url: data?.favicon_url ?? null,
+    contact_phone: data?.contact_phone ?? null,
+    contact_email: data?.contact_email ?? null,
+    contact_address: data?.contact_address ?? null,
   };
   cache = next;
   applyFavicon(next.favicon_url);
@@ -41,7 +52,7 @@ export async function refreshSiteSettings() {
 }
 
 export function useSiteSettings() {
-  const [settings, setSettings] = useState<SiteSettings>(cache ?? { logo_url: null, favicon_url: null });
+  const [settings, setSettings] = useState<SiteSettings>(cache ?? EMPTY);
   useEffect(() => {
     listeners.add(setSettings);
     if (!cache) void refreshSiteSettings();
