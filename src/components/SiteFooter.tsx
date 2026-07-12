@@ -15,7 +15,7 @@ const SOCIAL_ICONS: Record<string, LucideIcon> = {
 
 export function SiteFooter() {
   const [social, setSocial] = useState<PublicSocialLink[]>([]);
-  const { logo_url } = useSiteSettings();
+  const { logo_url, contact_phone, contact_email, contact_address } = useSiteSettings();
 
   useEffect(() => {
     let alive = true;
