@@ -15,7 +15,7 @@ const SOCIAL_ICONS: Record<string, LucideIcon> = {
 
 export function SiteFooter() {
   const [social, setSocial] = useState<PublicSocialLink[]>([]);
-  const { logo_url } = useSiteSettings();
+  const { logo_url, contact_phone, contact_email, contact_address } = useSiteSettings();
 
   useEffect(() => {
     let alive = true;
@@ -31,7 +31,7 @@ export function SiteFooter() {
 
   return (
     <footer className="bg-[var(--purple-dark)] font-arabic text-white" dir="rtl">
-      <div className="mx-auto grid max-w-[1400px] gap-10 px-5 py-14 md:grid-cols-4 md:px-10">
+      <div className="mx-auto grid max-w-[1400px] gap-10 px-5 py-14 md:grid-cols-3 md:px-10">
         <div>
           <div className="flex items-center gap-3">
             {logo_url ? (
@@ -82,31 +82,26 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h4 className="border-b border-white/15 pb-3 text-sm font-bold text-white">خدماتنا</h4>
-          <ul className="mt-4 space-y-2.5 text-sm text-white/70">
-            <li>اختبار الاختراق</li>
-            <li>أمن الشبكات</li>
-            <li>أمن السحابة</li>
-            <li>الاستجابة للحوادث</li>
-            <li>الاستشارات التقنية</li>
-          </ul>
-        </div>
-
-        <div>
           <h4 className="border-b border-white/15 pb-3 text-sm font-bold text-white">تواصل معنا</h4>
           <ul className="mt-4 space-y-3 text-sm text-white/70">
-            <li className="flex items-center gap-2">
-              <Phone className="h-4 w-4 text-[var(--brand)]" />
-              <span dir="ltr">800 304 0304</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-[var(--brand)]" />
-              <a href="mailto:info@lamhasec.com" className="hover:text-[var(--brand)]">info@lamhasec.com</a>
-            </li>
-            <li className="flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-[var(--brand)]" />
-              <span>الرياض، المملكة العربية السعودية</span>
-            </li>
+            {contact_phone && (
+              <li className="flex items-center gap-2">
+                <Phone className="h-4 w-4 text-[var(--brand)]" />
+                <span dir="ltr">{contact_phone}</span>
+              </li>
+            )}
+            {contact_email && (
+              <li className="flex items-center gap-2">
+                <Mail className="h-4 w-4 text-[var(--brand)]" />
+                <a href={`mailto:${contact_email}`} className="hover:text-[var(--brand)]">{contact_email}</a>
+              </li>
+            )}
+            {contact_address && (
+              <li className="flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-[var(--brand)]" />
+                <span>{contact_address}</span>
+              </li>
+            )}
           </ul>
         </div>
       </div>
