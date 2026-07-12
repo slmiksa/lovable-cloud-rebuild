@@ -13,6 +13,7 @@ import {
   LogOut,
   Inbox,
   Palette,
+  Phone,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
