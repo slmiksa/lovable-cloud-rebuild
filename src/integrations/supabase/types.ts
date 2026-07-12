@@ -253,18 +253,27 @@ export type Database = {
       }
       site_settings: {
         Row: {
+          contact_address: string | null
+          contact_email: string | null
+          contact_phone: string | null
           favicon_url: string | null
           id: boolean
           logo_url: string | null
           updated_at: string
         }
         Insert: {
+          contact_address?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
           favicon_url?: string | null
           id?: boolean
           logo_url?: string | null
           updated_at?: string
         }
         Update: {
+          contact_address?: string | null
+          contact_email?: string | null
+          contact_phone?: string | null
           favicon_url?: string | null
           id?: boolean
           logo_url?: string | null
