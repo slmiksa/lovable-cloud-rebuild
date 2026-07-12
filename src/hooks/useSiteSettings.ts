@@ -4,6 +4,9 @@ import { supabase } from "@/integrations/supabase/client";
 export type SiteSettings = {
   logo_url: string | null;
   favicon_url: string | null;
+  contact_phone: string | null;
+  contact_email: string | null;
+  contact_address: string | null;
 };
 
 let cache: SiteSettings | null = null;
