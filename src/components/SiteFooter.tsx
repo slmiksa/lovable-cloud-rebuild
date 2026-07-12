@@ -31,7 +31,7 @@ export function SiteFooter() {
 
   return (
     <footer className="bg-[var(--purple-dark)] font-arabic text-white" dir="rtl">
-      <div className="mx-auto grid max-w-[1400px] gap-10 px-5 py-14 md:grid-cols-4 md:px-10">
+      <div className="mx-auto grid max-w-[1400px] gap-10 px-5 py-14 md:grid-cols-3 md:px-10">
         <div>
           <div className="flex items-center gap-3">
             {logo_url ? (
