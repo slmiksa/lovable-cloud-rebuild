@@ -42,6 +42,7 @@ const navItems = [
   { to: "/adminpanel/news", label: "الأخبار (مدونة)", icon: Newspaper, exact: false },
   { to: "/adminpanel/social", label: "وسائل التواصل", icon: Share2, exact: false },
   { to: "/adminpanel/branding", label: "الهوية البصرية", icon: Palette, exact: false },
+  { to: "/adminpanel/contact", label: "بيانات التواصل", icon: Phone, exact: false },
 ] as const;
 
 function AdminGate() {
