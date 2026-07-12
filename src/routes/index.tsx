@@ -84,7 +84,7 @@ function Index() {
     <div className="min-h-screen font-arabic bg-white text-[var(--ink)]">
       <SiteHeader active="home" />
 
-      {/* Hero slider — full-bleed image, no overlay */}
+      {/* Hero slider — full-bleed image, optional compact bottom bar */}
       <section id="home" className="relative overflow-hidden text-white" dir="rtl">
         <div className="relative h-[560px] md:h-[640px]">
           {slides.map((s, i) => (
@@ -98,30 +98,41 @@ function Index() {
             </div>
           ))}
 
-          <div className="relative mx-auto flex h-full max-w-[1400px] items-center px-5 md:px-10">
-            <div className="max-w-2xl">
-              <div className="rounded-2xl bg-gradient-to-br from-[var(--purple)] to-[var(--purple-dark)] p-5 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.5)] md:p-7">
-                <h1 className="whitespace-pre-line text-3xl font-black leading-[1.12] tracking-tight text-white md:text-5xl lg:text-[58px]">
-                  {slide?.title}
-                </h1>
-                <p className="mt-4 max-w-xl text-base leading-loose text-white/90 md:text-lg">{slide?.subtitle}</p>
-              </div>
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                <a
-                  href={slide?.cta_url || "#contact"}
-                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-gradient-to-b from-[var(--brand)] to-[var(--brand-dark)] px-5 py-3 text-sm font-extrabold text-white shadow-[0_10px_24px_-8px_color-mix(in_oklab,var(--brand)_45%,transparent)] transition hover:brightness-110 sm:px-9 sm:py-3.5 sm:text-base"
-                >
-                  {slide?.cta_label || "اكتشف حلول Lamha Secure"}
-                </a>
-                <a
-                  href="#services"
-                  className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-[var(--purple)] px-5 py-2.5 text-sm font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(0,0,0,0.3)] transition hover:bg-[var(--purple-light)] sm:px-9 sm:py-3 sm:text-base"
-                >
-                  تعرّف على خدماتنا
-                </a>
+          {/* Optional slide content — bottom bar, appears only when configured */}
+          {slide && (slide.title || slide.subtitle || slide.cta_label || slide.cta_url) && (
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent">
+              <div className="mx-auto flex max-w-[1400px] flex-col items-start gap-3 px-5 py-5 md:flex-row md:items-end md:justify-between md:px-10 md:pb-6">
+                <div className="max-w-2xl">
+                  {slide.title && (
+                    <h1 className="whitespace-pre-line text-lg font-black leading-snug text-white drop-shadow md:text-2xl">
+                      {slide.title}
+                    </h1>
+                  )}
+                  {slide.subtitle && (
+                    <p className="mt-1 text-sm leading-relaxed text-white/90 drop-shadow md:text-base">
+                      {slide.subtitle}
+                    </p>
+                  )}
+                </div>
+                {(slide.cta_label || slide.cta_url) && (
+                  <div className="flex flex-wrap items-center gap-2">
+                    <a
+                      href={slide.cta_url || "#contact"}
+                      className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-gradient-to-b from-[var(--brand)] to-[var(--brand-dark)] px-4 py-2 text-xs font-extrabold text-white shadow-[0_8px_18px_-8px_color-mix(in_oklab,var(--brand)_45%,transparent)] transition hover:brightness-110 md:px-5 md:text-sm"
+                    >
+                      {slide.cta_label || "اكتشف حلول Lamha Secure"}
+                    </a>
+                    <a
+                      href="#services"
+                      className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-white/10 px-4 py-2 text-xs font-bold text-white backdrop-blur transition hover:bg-white/20 md:px-5 md:text-sm"
+                    >
+                      تعرّف على خدماتنا
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
-          </div>
+          )}
 
           {/* Slider arrows */}
           {slides.length > 1 && (
@@ -143,6 +154,7 @@ function Index() {
             </>
           )}
         </div>
+
 
         {/* Service circles row connected by orange line */}
         <ServiceCircles services={services} />
