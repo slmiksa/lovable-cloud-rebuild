@@ -53,17 +53,11 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
               const cls = `transition hover:text-[var(--brand)] ${active === it.id ? "text-[var(--brand)]" : ""}`;
               return it.to ? (
                 <Link key={it.id} to={it.to} className={cls}>
-                  <span className="inline-flex items-center gap-1">
-                    {it.label}
-                    <ChevronDown className="h-3.5 w-3.5 opacity-60" />
-                  </span>
+                  {it.label}
                 </Link>
               ) : (
                 <a key={it.id} href={it.href} className={cls}>
-                  <span className="inline-flex items-center gap-1">
-                    {it.label}
-                    <ChevronDown className="h-3.5 w-3.5 opacity-60" />
-                  </span>
+                  {it.label}
                 </a>
               );
             })}
