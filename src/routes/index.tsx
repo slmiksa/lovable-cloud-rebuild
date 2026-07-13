@@ -85,15 +85,15 @@ function Index() {
       <SiteHeader active="home" />
 
       {/* Hero slider — full-bleed image, optional compact bottom bar */}
-      <section id="home" className="relative overflow-hidden text-white" dir="rtl">
-        <div className="relative h-[560px] md:h-[640px]">
+      <section id="home" className="relative overflow-hidden bg-[var(--purple-dark)] text-white" dir="rtl">
+        <div className="relative aspect-[16/7] max-h-[640px] w-full sm:aspect-[16/6]">
           {slides.map((s, i) => (
             <div
               key={s.id}
               className={`absolute inset-0 transition-opacity duration-700 ${i === active ? "opacity-100" : "opacity-0"}`}
             >
               {s.image_url && (
-                <img src={s.image_url} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                <img src={s.image_url} alt="" className="absolute inset-0 h-full w-full object-contain" />
               )}
             </div>
           ))}

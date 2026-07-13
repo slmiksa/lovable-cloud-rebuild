@@ -106,9 +106,13 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-[1400px] flex-col items-center justify-between gap-2 px-5 py-5 text-xs text-white/60 md:flex-row md:px-10">
-          <div>© {new Date().getFullYear()} Lamha Secure for Technical Solutions. جميع الحقوق محفوظة.</div>
-          <div>لمحة الآمنة للحلول التقنية</div>
+        <div className="mx-auto max-w-[1400px] px-5 py-5 text-center text-xs leading-loose text-white/70 md:px-10">
+          <div className="font-bold text-white">علامة تجارية تابعة لمؤسسة لمحة الحدث للدعاية والإعلان</div>
+          <div className="mt-1">رقم سجل تجاري: 7054222174</div>
+          <div className="mt-3 flex flex-col items-center justify-between gap-1 border-t border-white/10 pt-4 text-white/60 md:flex-row">
+            <div>© {new Date().getFullYear()} Lamha Secure for Technical Solutions. جميع الحقوق محفوظة.</div>
+            <div>لمحة الآمنة للحلول التقنية</div>
+          </div>
         </div>
       </div>
     </footer>

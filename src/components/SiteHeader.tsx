@@ -1,14 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import {
-  Phone,
-  MapPin,
-  Mail,
-  Search,
-  Menu,
-  X,
-  Circle,
-  ChevronDown,
-} from "lucide-react";
+import { Search, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { LogoMark } from "./LogoMark";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
@@ -26,36 +17,7 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
 
   return (
     <header className="font-arabic" dir="rtl">
-      {/* Top utility strip */}
-      <div className="bg-[var(--purple)] text-white text-[12px]">
-        <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-2 px-5 py-2 md:px-10">
-          <div className="flex items-center gap-3">
-            <SocialDot label="LinkedIn">in</SocialDot>
-            <SocialDot label="Instagram">ig</SocialDot>
-            <SocialDot label="X">x</SocialDot>
-            <SocialDot label="Facebook">f</SocialDot>
-            <span className="hidden items-center gap-1 opacity-90 md:flex">
-              <Circle className="h-2.5 w-2.5 animate-pulse fill-emerald-400 text-emerald-400" />
-              <span>حالة الخدمة:</span>
-              <span className="font-bold">جميع الأنظمة تعمل</span>
-            </span>
-          </div>
-          <div className="flex flex-wrap items-center gap-4">
-            <a href="tel:8003040304" className="flex items-center gap-1.5 hover:underline">
-              <Phone className="h-3.5 w-3.5" />
-              <span dir="ltr">800 304 0304</span>
-            </a>
-            <span className="hidden items-center gap-1.5 md:flex">
-              <MapPin className="h-3.5 w-3.5" />
-              <span>الرياض، المملكة العربية السعودية</span>
-            </span>
-            <a href="mailto:info@lamhasec.com" className="hidden items-center gap-1.5 hover:underline md:flex">
-              <Mail className="h-3.5 w-3.5" />
-              <span>info@lamhasec.com</span>
-            </a>
-          </div>
-        </div>
-      </div>
+      {/* Top utility strip hidden per request */}
 
       {/* Main nav */}
       <div className="border-b border-[var(--line)] bg-white">
@@ -82,17 +44,11 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
               const cls = `transition hover:text-[var(--brand)] ${active === it.id ? "text-[var(--brand)]" : ""}`;
               return it.to ? (
                 <Link key={it.id} to={it.to} className={cls}>
-                  <span className="inline-flex items-center gap-1">
-                    {it.label}
-                    <ChevronDown className="h-3.5 w-3.5 opacity-60" />
-                  </span>
+                  {it.label}
                 </Link>
               ) : (
                 <a key={it.id} href={it.href} className={cls}>
-                  <span className="inline-flex items-center gap-1">
-                    {it.label}
-                    <ChevronDown className="h-3.5 w-3.5 opacity-60" />
-                  </span>
+                  {it.label}
                 </a>
               );
             })}
@@ -123,16 +79,14 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
           <div className="border-t border-[var(--line)] bg-white lg:hidden">
             <nav className="mx-auto flex max-w-[1400px] flex-col px-5 py-3 text-[15px] font-bold text-[var(--ink)] md:px-10">
               {navItems.map((it) => {
-                const cls = `flex items-center justify-between rounded-md px-3 py-3 transition hover:bg-[var(--line)]/40 hover:text-[var(--brand)] ${active === it.id ? "text-[var(--brand)]" : ""}`;
+                const cls = `rounded-md px-3 py-3 transition hover:bg-[var(--line)]/40 hover:text-[var(--brand)] ${active === it.id ? "text-[var(--brand)]" : ""}`;
                 return it.to ? (
                   <Link key={it.id} to={it.to} className={cls} onClick={() => setOpen(false)}>
-                    <span>{it.label}</span>
-                    <ChevronDown className="h-4 w-4 opacity-60" />
+                    {it.label}
                   </Link>
                 ) : (
                   <a key={it.id} href={it.href} className={cls} onClick={() => setOpen(false)}>
-                    <span>{it.label}</span>
-                    <ChevronDown className="h-4 w-4 opacity-60" />
+                    {it.label}
                   </a>
                 );
               })}
@@ -141,16 +95,5 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
         )}
       </div>
     </header>
-  );
-}
-
-function SocialDot({ children, label }: { children: React.ReactNode; label: string }) {
-  return (
-    <span
-      aria-label={label}
-      className="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 text-[10px] font-bold uppercase tracking-tight text-white transition hover:bg-white/25"
-    >
-      {children}
-    </span>
   );
 }
