@@ -1,14 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import {
-  Phone,
-  MapPin,
-  Mail,
-  Search,
-  Menu,
-  X,
-  Circle,
-  ChevronDown,
-} from "lucide-react";
+import { Search, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { LogoMark } from "./LogoMark";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
