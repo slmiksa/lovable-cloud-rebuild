@@ -79,9 +79,35 @@ function NewsDetail() {
         )}
 
         <div className="prose prose-lg mt-8 max-w-none space-y-5 text-base leading-loose text-[var(--ink)] md:text-lg">
-          {item.content.map((p, i) => (
-            <p key={i}>{p}</p>
-          ))}
+          {item.content.map((p, i) => {
+            const md = p.match(/^!\[([^\]]*)\]\((\S+)\)$/);
+            const bareImg = /^https?:\/\/\S+\.(png|jpe?g|webp|gif|svg)(\?\S*)?$/i.test(p);
+            if (md) {
+              return (
+                <img
+                  key={i}
+                  src={md[2]}
+                  alt={md[1]}
+                  className="my-4 h-auto w-full rounded-2xl border border-[var(--line)] object-cover"
+                />
+              );
+            }
+            if (bareImg) {
+              return (
+                <img
+                  key={i}
+                  src={p}
+                  alt=""
+                  className="my-4 h-auto w-full rounded-2xl border border-[var(--line)] object-cover"
+                />
+              );
+            }
+            return (
+              <p key={i} className="whitespace-pre-line">
+                {p}
+              </p>
+            );
+          })}
         </div>
       </article>
 
