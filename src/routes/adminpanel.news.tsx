@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { Plus, Trash2, Loader2, Save } from "lucide-react";
+import { useRef, useState } from "react";
+import { Plus, Trash2, Loader2, Save, ImagePlus } from "lucide-react";
 import { AdminSection } from "@/components/admin/AdminSection";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useAdminTable } from "@/hooks/useAdminTable";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { adminUploadImage } from "@/lib/admin.functions";
 
 export const Route = createFileRoute("/adminpanel/news")({
   component: NewsAdmin,
