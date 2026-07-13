@@ -26,36 +26,7 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
 
   return (
     <header className="font-arabic" dir="rtl">
-      {/* Top utility strip */}
-      <div className="bg-[var(--purple)] text-white text-[12px]">
-        <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-2 px-5 py-2 md:px-10">
-          <div className="flex items-center gap-3">
-            <SocialDot label="LinkedIn">in</SocialDot>
-            <SocialDot label="Instagram">ig</SocialDot>
-            <SocialDot label="X">x</SocialDot>
-            <SocialDot label="Facebook">f</SocialDot>
-            <span className="hidden items-center gap-1 opacity-90 md:flex">
-              <Circle className="h-2.5 w-2.5 animate-pulse fill-emerald-400 text-emerald-400" />
-              <span>حالة الخدمة:</span>
-              <span className="font-bold">جميع الأنظمة تعمل</span>
-            </span>
-          </div>
-          <div className="flex flex-wrap items-center gap-4">
-            <a href="tel:8003040304" className="flex items-center gap-1.5 hover:underline">
-              <Phone className="h-3.5 w-3.5" />
-              <span dir="ltr">800 304 0304</span>
-            </a>
-            <span className="hidden items-center gap-1.5 md:flex">
-              <MapPin className="h-3.5 w-3.5" />
-              <span>الرياض، المملكة العربية السعودية</span>
-            </span>
-            <a href="mailto:info@lamhasec.com" className="hidden items-center gap-1.5 hover:underline md:flex">
-              <Mail className="h-3.5 w-3.5" />
-              <span>info@lamhasec.com</span>
-            </a>
-          </div>
-        </div>
-      </div>
+      {/* Top utility strip hidden per request */}
 
       {/* Main nav */}
       <div className="border-b border-[var(--line)] bg-white">
