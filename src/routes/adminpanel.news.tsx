@@ -80,7 +80,46 @@ function ArticleCard({
 }) {
   const [draft, setDraft] = useState(item);
   const [saving, setSaving] = useState(false);
+  const [uploadingInline, setUploadingInline] = useState(false);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
+  const inlineImgRef = useRef<HTMLInputElement>(null);
   const set = (patch: Partial<Article>) => setDraft((d) => ({ ...d, ...patch }));
+
+  async function readAsDataUrl(file: File): Promise<string> {
+    return await new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(r.result as string);
+      r.onerror = () => reject(r.error);
+      r.readAsDataURL(file);
+    });
+  }
+
+  async function insertInlineImage(file: File) {
+    setUploadingInline(true);
+    try {
+      const dataUrl = await readAsDataUrl(file);
+      const { url } = await adminUploadImage({ data: { filename: file.name, dataUrl } });
+      const snippet = `\n\n![](${url})\n\n`;
+      const ta = contentRef.current;
+      const current = draft.content ?? "";
+      if (ta) {
+        const start = ta.selectionStart ?? current.length;
+        const end = ta.selectionEnd ?? current.length;
+        const next = current.slice(0, start) + snippet + current.slice(end);
+        set({ content: next });
+        setTimeout(() => {
+          ta.focus();
+          const pos = start + snippet.length;
+          ta.setSelectionRange(pos, pos);
+        }, 0);
+      } else {
+        set({ content: current + snippet });
+      }
+    } finally {
+      setUploadingInline(false);
+      if (inlineImgRef.current) inlineImgRef.current.value = "";
+    }
+  }
 
   return (
     <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
