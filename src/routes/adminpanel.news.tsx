@@ -156,8 +156,44 @@ function ArticleCard({
           <Textarea rows={2} value={draft.excerpt ?? ""} onChange={(e) => set({ excerpt: e.target.value })} />
         </div>
         <div className="md:col-span-2">
-          <Label>المحتوى</Label>
-          <Textarea rows={5} value={draft.content ?? ""} onChange={(e) => set({ content: e.target.value })} />
+          <div className="flex items-center justify-between">
+            <Label>المحتوى</Label>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={uploadingInline}
+              onClick={() => inlineImgRef.current?.click()}
+            >
+              {uploadingInline ? (
+                <Loader2 className="ms-2 h-4 w-4 animate-spin" />
+              ) : (
+                <ImagePlus className="ms-2 h-4 w-4" />
+              )}
+              إدراج صورة داخل المقال
+            </Button>
+            <input
+              ref={inlineImgRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) void insertInlineImage(f);
+              }}
+            />
+          </div>
+          <Textarea
+            ref={contentRef}
+            rows={10}
+            className="whitespace-pre-wrap font-mono"
+            value={draft.content ?? ""}
+            onChange={(e) => set({ content: e.target.value })}
+            placeholder="اكتب محتوى المقال. اترك سطراً فارغاً بين الفقرات. لإدراج صورة داخل المقال استخدم الزر بالأعلى."
+          />
+          <p className="mt-1 text-xs text-muted-foreground">
+            تُدرَج الصور بصيغة <code dir="ltr">![](URL)</code> — أبقِها في سطر مستقل.
+          </p>
         </div>
         <label className="flex items-center gap-2 text-sm">
           <input type="checkbox" checked={draft.is_published} onChange={(e) => set({ is_published: e.target.checked })} />
