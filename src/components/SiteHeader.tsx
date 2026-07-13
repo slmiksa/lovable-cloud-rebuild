@@ -97,14 +97,3 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
     </header>
   );
 }
-
-function SocialDot({ children, label }: { children: React.ReactNode; label: string }) {
-  return (
-    <span
-      aria-label={label}
-      className="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 text-[10px] font-bold uppercase tracking-tight text-white transition hover:bg-white/25"
-    >
-      {children}
-    </span>
-  );
-}
