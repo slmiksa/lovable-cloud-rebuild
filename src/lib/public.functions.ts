@@ -182,7 +182,7 @@ export async function getPublicNewsBySlug({
       image_url: row.image_url,
       date: fmtDate(row.published_at),
       content: (row.content ?? "")
-        .split(/\n\n+/)
+        .split(/\n{2,}/)
         .map((p: string) => p.trim())
         .filter(Boolean),
     },
