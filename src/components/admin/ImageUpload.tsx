@@ -51,6 +51,7 @@ export function ImageUpload({ value, onChange, aspect = "video", label = "الص
   return (
     <div className="space-y-2">
       <Label>{label}</Label>
+      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
       <div
         className={`relative overflow-hidden rounded-lg border-2 border-dashed border-border bg-muted/30 ${aspectClass[aspect]}`}
       >
