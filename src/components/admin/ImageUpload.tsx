@@ -9,6 +9,7 @@ interface ImageUploadProps {
   onChange?: (url: string | undefined) => void;
   aspect?: "video" | "square" | "wide";
   label?: string;
+  hint?: string;
 }
 
 const aspectClass: Record<string, string> = {
