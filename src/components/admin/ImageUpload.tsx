@@ -27,7 +27,7 @@ function readAsDataUrl(file: File): Promise<string> {
   });
 }
 
-export function ImageUpload({ value, onChange, aspect = "video", label = "الصورة" }: ImageUploadProps) {
+export function ImageUpload({ value, onChange, aspect = "video", label = "الصورة", hint }: ImageUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
