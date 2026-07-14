@@ -84,81 +84,101 @@ function Index() {
     <div className="min-h-screen font-arabic bg-white text-[var(--ink)]">
       <SiteHeader active="home" />
 
-      {/* Hero slider — full-bleed image, optional compact bottom bar */}
-      <section id="home" className="relative overflow-hidden bg-[var(--purple-dark)] text-white" dir="rtl">
-        <div className="relative aspect-[16/7] max-h-[640px] w-full sm:aspect-[16/6]">
-          {slides.map((s, i) => (
-            <div
-              key={s.id}
-              className={`absolute inset-0 transition-opacity duration-700 ${i === active ? "opacity-100" : "opacity-0"}`}
-            >
-              {s.image_url && (
-                <img src={s.image_url} alt="" className="absolute inset-0 h-full w-full object-contain" />
-              )}
-            </div>
-          ))}
-
-          {/* Optional slide content — bottom bar, appears only when configured */}
-          {slide && (slide.title || slide.subtitle || slide.cta_label || slide.cta_url) && (
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent">
-              <div className="mx-auto flex max-w-[1400px] flex-col items-start gap-3 px-5 py-5 md:flex-row md:items-end md:justify-between md:px-10 md:pb-6">
-                <div className="max-w-2xl">
-                  {slide.title && (
-                    <h1 className="whitespace-pre-line text-lg font-black leading-snug text-white drop-shadow md:text-2xl">
-                      {slide.title}
-                    </h1>
-                  )}
-                  {slide.subtitle && (
-                    <p className="mt-1 text-sm leading-relaxed text-white/90 drop-shadow md:text-base">
-                      {slide.subtitle}
-                    </p>
+      {/* Hero slider — brand-framed, full image visible */}
+      <section id="home" className="relative bg-white pt-4 pb-2 md:pt-6" dir="rtl">
+        <div className="mx-auto max-w-[1400px] px-3 md:px-6">
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--brand)]/15 via-white to-[var(--purple)]/10 p-1 shadow-[0_20px_60px_-30px_color-mix(in_oklab,var(--brand)_45%,transparent)] ring-1 ring-[var(--brand)]/25 md:rounded-3xl md:p-1.5">
+            <div className="relative aspect-[16/7] w-full overflow-hidden rounded-xl bg-gradient-to-br from-[var(--purple)]/5 to-[var(--brand)]/5 sm:aspect-[16/6] md:rounded-2xl">
+              {slides.map((s, i) => (
+                <div
+                  key={s.id}
+                  className={`absolute inset-0 transition-opacity duration-700 ${i === active ? "opacity-100" : "opacity-0"}`}
+                >
+                  {s.image_url && (
+                    <img src={s.image_url} alt="" className="absolute inset-0 h-full w-full object-cover" />
                   )}
                 </div>
-                {(slide.cta_label || slide.cta_url) && (
-                  <div className="flex flex-wrap items-center gap-2">
-                    <a
-                      href={slide.cta_url || "#contact"}
-                      className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-gradient-to-b from-[var(--brand)] to-[var(--brand-dark)] px-4 py-2 text-xs font-extrabold text-white shadow-[0_8px_18px_-8px_color-mix(in_oklab,var(--brand)_45%,transparent)] transition hover:brightness-110 md:px-5 md:text-sm"
-                    >
-                      {slide.cta_label || "اكتشف حلول Lamha Secure"}
-                    </a>
-                    <a
-                      href="#services"
-                      className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-white/10 px-4 py-2 text-xs font-bold text-white backdrop-blur transition hover:bg-white/20 md:px-5 md:text-sm"
-                    >
-                      تعرّف على خدماتنا
-                    </a>
+              ))}
+
+              {/* Optional slide content — bottom bar, appears only when configured */}
+              {slide && (slide.title || slide.subtitle || slide.cta_label || slide.cta_url) && (
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[var(--purple-dark)]/90 via-[var(--purple-dark)]/60 to-transparent">
+                  <div className="mx-auto flex max-w-[1400px] flex-col items-start gap-3 px-5 py-4 md:flex-row md:items-end md:justify-between md:px-8 md:pb-5">
+                    <div className="max-w-2xl">
+                      {slide.title && (
+                        <h1 className="whitespace-pre-line text-lg font-black leading-snug text-white drop-shadow md:text-2xl">
+                          {slide.title}
+                        </h1>
+                      )}
+                      {slide.subtitle && (
+                        <p className="mt-1 text-sm leading-relaxed text-white/90 drop-shadow md:text-base">
+                          {slide.subtitle}
+                        </p>
+                      )}
+                    </div>
+                    {(slide.cta_label || slide.cta_url) && (
+                      <div className="flex flex-wrap items-center gap-2">
+                        <a
+                          href={slide.cta_url || "#contact"}
+                          className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-gradient-to-b from-[var(--brand)] to-[var(--brand-dark)] px-4 py-2 text-xs font-extrabold text-white shadow-[0_8px_18px_-8px_color-mix(in_oklab,var(--brand)_45%,transparent)] transition hover:brightness-110 md:px-5 md:text-sm"
+                        >
+                          {slide.cta_label || "اكتشف حلول Lamha Secure"}
+                        </a>
+                        <a
+                          href="#services"
+                          className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-white/15 px-4 py-2 text-xs font-bold text-white backdrop-blur transition hover:bg-white/25 md:px-5 md:text-sm"
+                        >
+                          تعرّف على خدماتنا
+                        </a>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+                </div>
+              )}
+
+              {/* Slider arrows */}
+              {slides.length > 1 && (
+                <>
+                  <button
+                    onClick={() => setActive((i) => (i - 1 + slides.length) % slides.length)}
+                    aria-label="السابق"
+                    className="absolute right-4 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--brand)]/40 bg-white/90 text-[var(--brand)] shadow-lg backdrop-blur transition hover:bg-[var(--brand)] hover:text-white md:flex"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                  <button
+                    onClick={() => setActive((i) => (i + 1) % slides.length)}
+                    aria-label="التالي"
+                    className="absolute left-4 top-1/2 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--brand)]/40 bg-white/90 text-[var(--brand)] shadow-lg backdrop-blur transition hover:bg-[var(--brand)] hover:text-white md:flex"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                </>
+              )}
+
+              {/* Slide dots */}
+              {slides.length > 1 && (
+                <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
+                  {slides.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActive(i)}
+                      aria-label={`سلايد ${i + 1}`}
+                      className={`h-1.5 rounded-full transition-all ${
+                        i === active ? "w-6 bg-[var(--brand)]" : "w-1.5 bg-white/70 hover:bg-white"
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
-          )}
-
-          {/* Slider arrows */}
-          {slides.length > 1 && (
-            <>
-              <button
-                onClick={() => setActive((i) => (i - 1 + slides.length) % slides.length)}
-                aria-label="السابق"
-                className="absolute right-4 top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 md:flex"
-              >
-                <ChevronRight className="h-6 w-6" />
-              </button>
-              <button
-                onClick={() => setActive((i) => (i + 1) % slides.length)}
-                aria-label="التالي"
-                className="absolute left-4 top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 md:flex"
-              >
-                <ChevronLeft className="h-6 w-6" />
-              </button>
-            </>
-          )}
+          </div>
         </div>
-
 
         {/* Service circles row connected by orange line */}
         <ServiceCircles services={services} />
       </section>
+
 
       {/* Services */}
       <section id="services" className="mx-auto max-w-[1400px] px-5 py-16 md:px-10 md:py-24" dir="rtl">

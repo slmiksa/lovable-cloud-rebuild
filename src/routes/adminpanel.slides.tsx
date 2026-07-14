@@ -113,6 +113,7 @@ function SlideCard({
             aspect="wide"
             value={draft.image_url}
             onChange={(url) => set({ image_url: url ?? null })}
+            hint="المقاس الموصى به: 1920×820 بكسل (نسبة 21:9). صيغة PNG أو JPG، حجم أقل من 500KB لأفضل سرعة تحميل."
           />
         </div>
         <div>

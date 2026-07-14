@@ -9,6 +9,7 @@ interface ImageUploadProps {
   onChange?: (url: string | undefined) => void;
   aspect?: "video" | "square" | "wide";
   label?: string;
+  hint?: string;
 }
 
 const aspectClass: Record<string, string> = {
@@ -26,7 +27,7 @@ function readAsDataUrl(file: File): Promise<string> {
   });
 }
 
-export function ImageUpload({ value, onChange, aspect = "video", label = "الصورة" }: ImageUploadProps) {
+export function ImageUpload({ value, onChange, aspect = "video", label = "الصورة", hint }: ImageUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,6 +51,7 @@ export function ImageUpload({ value, onChange, aspect = "video", label = "الص
   return (
     <div className="space-y-2">
       <Label>{label}</Label>
+      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
       <div
         className={`relative overflow-hidden rounded-lg border-2 border-dashed border-border bg-muted/30 ${aspectClass[aspect]}`}
       >
