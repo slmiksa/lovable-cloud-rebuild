@@ -23,14 +23,29 @@ interface SocialLink {
 function SocialAdmin() {
   const { rows, loading, error, save, remove } = useAdminTable<SocialLink>("social_links");
 
+  const PRESETS: Array<{ platform: string; icon: string }> = [
+    { platform: "X", icon: "x" },
+    { platform: "LinkedIn", icon: "linkedin" },
+    { platform: "Instagram", icon: "instagram" },
+    { platform: "Facebook", icon: "facebook" },
+    { platform: "YouTube", icon: "youtube" },
+  ];
+
+  const addPreset = (p: { platform: string; icon: string }) =>
+    save({ platform: p.platform, icon: p.icon, url: "https://", sort_order: rows.length + 1, is_active: true });
+
   return (
     <AdminSection
       title="وسائل التواصل"
-      description="روابط حسابات التواصل الاجتماعي التي تظهر في الموقع. محفوظة في قاعدة البيانات."
+      description="روابط حسابات التواصل الاجتماعي التي تظهر في الموقع. أضف الرابط لكل منصة من الأزرار الجاهزة أدناه."
       action={
-        <Button onClick={() => save({ platform: "منصة جديدة", url: "https://", sort_order: rows.length + 1 })}>
-          <Plus className="ms-2 h-4 w-4" /> إضافة رابط
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          {PRESETS.map((p) => (
+            <Button key={p.platform} size="sm" variant="outline" onClick={() => addPreset(p)}>
+              <Plus className="ms-1 h-4 w-4" /> {p.platform}
+            </Button>
+          ))}
+        </div>
       }
     >
       {error && <p className="text-sm text-destructive">{error}</p>}
