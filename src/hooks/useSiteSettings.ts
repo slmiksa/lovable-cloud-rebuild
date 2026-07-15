@@ -16,13 +16,36 @@ function applyFavicon(url: string | null) {
   if (typeof document === "undefined") return;
   const href = url || "/favicon.svg";
   const type = url ? "" : "image/svg+xml";
-  document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"]').forEach((el) => el.remove());
+  document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"]').forEach((el) => el.remove());
   const link = document.createElement("link");
   link.rel = "icon";
   link.href = href + (url ? `?t=${Date.now()}` : "");
   if (type) link.type = type;
   document.head.appendChild(link);
+  if (url) {
+    const apple = document.createElement("link");
+    apple.rel = "apple-touch-icon";
+    apple.href = link.href;
+    document.head.appendChild(apple);
+  }
 }
+
+function applySocialImage(url: string | null) {
+  if (typeof document === "undefined" || !url) return;
+  const setMeta = (selector: string, attr: string, value: string) => {
+    let el = document.head.querySelector(selector) as HTMLMetaElement | null;
+    if (!el) {
+      el = document.createElement("meta");
+      const [key, val] = selector.replace(/[[\]"]/g, "").split("=");
+      el.setAttribute(key, val);
+      document.head.appendChild(el);
+    }
+    el.setAttribute(attr, value);
+  };
+  setMeta('meta[property="og:image"]', "content", url);
+  setMeta('meta[name="twitter:image"]', "content", url);
+}
+
 
 const EMPTY: SiteSettings = {
   logo_url: null,
