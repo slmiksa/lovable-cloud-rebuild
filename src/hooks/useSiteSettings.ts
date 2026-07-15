@@ -69,7 +69,8 @@ export async function refreshSiteSettings() {
     contact_address: data?.contact_address ?? null,
   };
   cache = next;
-  applyFavicon(next.favicon_url);
+  applyFavicon(next.favicon_url || next.logo_url);
+  applySocialImage(next.logo_url);
   listeners.forEach((l) => l(next));
   return next;
 }
