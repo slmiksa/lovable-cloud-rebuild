@@ -59,8 +59,7 @@ function parseOffer(desc: string | null): { note: string; features: string[] } {
 }
 
 function Index() {
-  const { slides, services, offers, systems, clients, news } = Route.useLoaderData() as {
-    slides: PublicSlide[];
+  const { services, offers, systems, clients, news } = Route.useLoaderData() as {
     services: PublicService[];
     offers: PublicOffer[];
     systems: PublicSystem[];
@@ -68,17 +67,9 @@ function Index() {
     news: PublicNews[];
     socialLinks: import("@/lib/public.functions").PublicSocialLink[];
   };
-  const [active, setActive] = useState(0);
   const [openSystem, setOpenSystem] = useState<SystemItem | null>(null);
 
-  useEffect(() => {
-    if (slides.length <= 1) return;
-    const t = setInterval(() => setActive((i) => (i + 1) % slides.length), 6000);
-    return () => clearInterval(t);
-  }, [slides.length]);
-
   const systemItems = systems.map((s, i) => toSystemItem(s, i));
-  const slide: PublicSlide | undefined = slides[active];
 
   return (
     <div className="min-h-screen font-arabic bg-white text-[var(--ink)]">
