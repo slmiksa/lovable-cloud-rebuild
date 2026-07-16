@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -17,7 +17,6 @@ import {
   type PublicNews,
   type PublicOffer,
   type PublicService,
-  type PublicSlide,
   type PublicSystem,
 } from "@/lib/public.functions";
 import { ArrowLeft, Check, Loader2, CheckCircle2 } from "lucide-react";
