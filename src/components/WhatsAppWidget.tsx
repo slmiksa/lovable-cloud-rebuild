@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X, MessageCircle, ChevronLeft } from "lucide-react";
 import { LogoMark } from "./LogoMark";
+import { supabase } from "@/integrations/supabase/client";
 
 const PHONE = "966552553315";
 
-const faqs = [
+type Faq = { q: string; a: string };
+
+const FALLBACK_FAQS: Faq[] = [
   {
     q: "ما هي الخدمات التي تقدمونها؟",
     a: "نقدّم حلولاً متكاملة في الأمن السيبراني والحلول التقنية والبرمجية والاستشارات: اختبار الاختراق، أمن الشبكات، أمن السحابة، الاستجابة للحوادث، والحوكمة والامتثال.",
@@ -31,6 +34,23 @@ function openWhatsApp(text?: string) {
 export default function WhatsAppWidget() {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
+  const [faqs, setFaqs] = useState<Faq[]>(FALLBACK_FAQS);
+
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      const { data, error } = await supabase
+        .from("whatsapp_faqs")
+        .select("question,answer,sort_order,is_active")
+        .eq("is_active", true)
+        .order("sort_order", { ascending: true });
+      if (!alive || error || !data || data.length === 0) return;
+      setFaqs(data.map((r) => ({ q: r.question, a: r.answer })));
+    })();
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   return (
     <div className="fixed bottom-8 right-5 z-[60] md:bottom-12 md:right-8" dir="rtl">

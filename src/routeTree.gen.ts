@@ -22,6 +22,7 @@ import { Route as AdminpanelServicesRouteImport } from './routes/adminpanel.serv
 import { Route as AdminpanelOrdersRouteImport } from './routes/adminpanel.orders'
 import { Route as AdminpanelOffersRouteImport } from './routes/adminpanel.offers'
 import { Route as AdminpanelNewsRouteImport } from './routes/adminpanel.news'
+import { Route as AdminpanelFaqsRouteImport } from './routes/adminpanel.faqs'
 import { Route as AdminpanelContactRouteImport } from './routes/adminpanel.contact'
 import { Route as AdminpanelClientsRouteImport } from './routes/adminpanel.clients'
 import { Route as AdminpanelBrandingRouteImport } from './routes/adminpanel.branding'
@@ -91,6 +92,11 @@ const AdminpanelNewsRoute = AdminpanelNewsRouteImport.update({
   path: '/news',
   getParentRoute: () => AdminpanelRoute,
 } as any)
+const AdminpanelFaqsRoute = AdminpanelFaqsRouteImport.update({
+  id: '/faqs',
+  path: '/faqs',
+  getParentRoute: () => AdminpanelRoute,
+} as any)
 const AdminpanelContactRoute = AdminpanelContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -115,6 +121,7 @@ export interface FileRoutesByFullPath {
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/contact': typeof AdminpanelContactRoute
+  '/adminpanel/faqs': typeof AdminpanelFaqsRoute
   '/adminpanel/news': typeof AdminpanelNewsRoute
   '/adminpanel/offers': typeof AdminpanelOffersRoute
   '/adminpanel/orders': typeof AdminpanelOrdersRoute
@@ -132,6 +139,7 @@ export interface FileRoutesByTo {
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/contact': typeof AdminpanelContactRoute
+  '/adminpanel/faqs': typeof AdminpanelFaqsRoute
   '/adminpanel/news': typeof AdminpanelNewsRoute
   '/adminpanel/offers': typeof AdminpanelOffersRoute
   '/adminpanel/orders': typeof AdminpanelOrdersRoute
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/contact': typeof AdminpanelContactRoute
+  '/adminpanel/faqs': typeof AdminpanelFaqsRoute
   '/adminpanel/news': typeof AdminpanelNewsRoute
   '/adminpanel/offers': typeof AdminpanelOffersRoute
   '/adminpanel/orders': typeof AdminpanelOrdersRoute
@@ -171,6 +180,7 @@ export interface FileRouteTypes {
     | '/adminpanel/branding'
     | '/adminpanel/clients'
     | '/adminpanel/contact'
+    | '/adminpanel/faqs'
     | '/adminpanel/news'
     | '/adminpanel/offers'
     | '/adminpanel/orders'
@@ -188,6 +198,7 @@ export interface FileRouteTypes {
     | '/adminpanel/branding'
     | '/adminpanel/clients'
     | '/adminpanel/contact'
+    | '/adminpanel/faqs'
     | '/adminpanel/news'
     | '/adminpanel/offers'
     | '/adminpanel/orders'
@@ -206,6 +217,7 @@ export interface FileRouteTypes {
     | '/adminpanel/branding'
     | '/adminpanel/clients'
     | '/adminpanel/contact'
+    | '/adminpanel/faqs'
     | '/adminpanel/news'
     | '/adminpanel/offers'
     | '/adminpanel/orders'
@@ -318,6 +330,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminpanelNewsRouteImport
       parentRoute: typeof AdminpanelRoute
     }
+    '/adminpanel/faqs': {
+      id: '/adminpanel/faqs'
+      path: '/faqs'
+      fullPath: '/adminpanel/faqs'
+      preLoaderRoute: typeof AdminpanelFaqsRouteImport
+      parentRoute: typeof AdminpanelRoute
+    }
     '/adminpanel/contact': {
       id: '/adminpanel/contact'
       path: '/contact'
@@ -346,6 +365,7 @@ interface AdminpanelRouteChildren {
   AdminpanelBrandingRoute: typeof AdminpanelBrandingRoute
   AdminpanelClientsRoute: typeof AdminpanelClientsRoute
   AdminpanelContactRoute: typeof AdminpanelContactRoute
+  AdminpanelFaqsRoute: typeof AdminpanelFaqsRoute
   AdminpanelNewsRoute: typeof AdminpanelNewsRoute
   AdminpanelOffersRoute: typeof AdminpanelOffersRoute
   AdminpanelOrdersRoute: typeof AdminpanelOrdersRoute
@@ -360,6 +380,7 @@ const AdminpanelRouteChildren: AdminpanelRouteChildren = {
   AdminpanelBrandingRoute: AdminpanelBrandingRoute,
   AdminpanelClientsRoute: AdminpanelClientsRoute,
   AdminpanelContactRoute: AdminpanelContactRoute,
+  AdminpanelFaqsRoute: AdminpanelFaqsRoute,
   AdminpanelNewsRoute: AdminpanelNewsRoute,
   AdminpanelOffersRoute: AdminpanelOffersRoute,
   AdminpanelOrdersRoute: AdminpanelOrdersRoute,
