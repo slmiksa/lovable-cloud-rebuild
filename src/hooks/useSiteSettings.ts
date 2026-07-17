@@ -14,20 +14,19 @@ const listeners = new Set<(s: SiteSettings) => void>();
 
 function applyFavicon(url: string | null) {
   if (typeof document === "undefined") return;
-  const href = url || "/favicon.svg";
-  const type = url ? "" : "image/svg+xml";
-  document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"]').forEach((el) => el.remove());
+  document
+    .querySelectorAll('link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"]')
+    .forEach((el) => el.remove());
+  if (!url) return;
+  const href = `${url}${url.includes("?") ? "&" : "?"}t=${Date.now()}`;
   const link = document.createElement("link");
   link.rel = "icon";
-  link.href = href + (url ? `?t=${Date.now()}` : "");
-  if (type) link.type = type;
+  link.href = href;
   document.head.appendChild(link);
-  if (url) {
-    const apple = document.createElement("link");
-    apple.rel = "apple-touch-icon";
-    apple.href = link.href;
-    document.head.appendChild(apple);
-  }
+  const apple = document.createElement("link");
+  apple.rel = "apple-touch-icon";
+  apple.href = href;
+  document.head.appendChild(apple);
 }
 
 function applySocialImage(url: string | null) {
