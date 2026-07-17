@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X, MessageCircle, ChevronLeft } from "lucide-react";
 import { LogoMark } from "./LogoMark";
+import { supabase } from "@/integrations/supabase/client";
 
 const PHONE = "966552553315";
 
-const faqs = [
+type Faq = { q: string; a: string };
+
+const FALLBACK_FAQS: Faq[] = [
   {
     q: "ما هي الخدمات التي تقدمونها؟",
     a: "نقدّم حلولاً متكاملة في الأمن السيبراني والحلول التقنية والبرمجية والاستشارات: اختبار الاختراق، أمن الشبكات، أمن السحابة، الاستجابة للحوادث، والحوكمة والامتثال.",
