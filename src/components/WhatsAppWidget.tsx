@@ -34,6 +34,23 @@ function openWhatsApp(text?: string) {
 export default function WhatsAppWidget() {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
+  const [faqs, setFaqs] = useState<Faq[]>(FALLBACK_FAQS);
+
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      const { data, error } = await supabase
+        .from("whatsapp_faqs")
+        .select("question,answer,sort_order,is_active")
+        .eq("is_active", true)
+        .order("sort_order", { ascending: true });
+      if (!alive || error || !data || data.length === 0) return;
+      setFaqs(data.map((r) => ({ q: r.question, a: r.answer })));
+    })();
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   return (
     <div className="fixed bottom-8 right-5 z-[60] md:bottom-12 md:right-8" dir="rtl">
