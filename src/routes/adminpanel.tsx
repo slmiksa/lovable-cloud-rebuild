@@ -15,6 +15,7 @@ import {
   Palette,
   Phone,
   HelpCircle,
+  Info,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -45,6 +46,7 @@ const navItems = [
   { to: "/adminpanel/branding", label: "الهوية البصرية", icon: Palette, exact: false },
   { to: "/adminpanel/contact", label: "بيانات التواصل", icon: Phone, exact: false },
   { to: "/adminpanel/faqs", label: "أسئلة زر التواصل", icon: HelpCircle, exact: false },
+  { to: "/adminpanel/about", label: "نبذة عنا", icon: Info, exact: false },
 ] as const;
 
 function AdminGate() {
