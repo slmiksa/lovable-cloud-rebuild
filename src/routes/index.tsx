@@ -251,19 +251,19 @@ function ServiceCircles({ services }: { services: { id: string; title: string; i
   const items = services.slice(0, 4);
   if (items.length === 0) return <div className="h-6" />;
   return (
-    <div className="relative -mt-12 md:-mt-16">
-      <div className="mx-auto max-w-[1100px] px-5 md:px-10">
+    <div className="relative -mt-6 md:-mt-10">
+      <div className="mx-auto max-w-[1100px] px-4 md:px-10">
         <div className="relative">
-          <div className="absolute left-[10%] right-[10%] top-[55px] hidden h-[3px] bg-[var(--brand)] md:block" />
-          <div className="relative grid grid-cols-2 gap-6 md:grid-cols-4">
+          <div className="absolute left-[10%] right-[10%] top-[38px] hidden h-[3px] bg-[var(--brand)] md:top-[46px] md:block" />
+          <div className="relative grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
             {items.map((it) => {
               const Icon = getIcon(it.icon);
               return (
                 <div key={it.id} className="flex flex-col items-center text-center">
-                  <div className="flex h-[110px] w-[110px] items-center justify-center rounded-full border-[6px] border-[var(--brand)] bg-white shadow-[0_12px_30px_-12px_color-mix(in_oklab,var(--brand)_40%,transparent)]">
-                    <Icon className="h-12 w-12 text-[var(--brand)]" strokeWidth={1.8} />
+                  <div className="flex h-[76px] w-[76px] items-center justify-center rounded-full border-[4px] border-[var(--brand)] bg-white shadow-[0_8px_20px_-8px_color-mix(in_oklab,var(--brand)_40%,transparent)] md:h-[96px] md:w-[96px] md:border-[5px]">
+                    <Icon className="h-7 w-7 text-[var(--brand)] md:h-9 md:w-9" strokeWidth={1.8} />
                   </div>
-                  <div className="mt-4 text-base font-extrabold text-[var(--purple)]">{it.title}</div>
+                  <div className="mt-3 text-sm font-extrabold text-[var(--purple)] md:mt-4 md:text-base">{it.title}</div>
                 </div>
               );
             })}
