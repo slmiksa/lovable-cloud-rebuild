@@ -253,6 +253,8 @@ export type Database = {
       }
       site_settings: {
         Row: {
+          about_content: string | null
+          about_title: string | null
           contact_address: string | null
           contact_email: string | null
           contact_phone: string | null
@@ -262,6 +264,8 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          about_content?: string | null
+          about_title?: string | null
           contact_address?: string | null
           contact_email?: string | null
           contact_phone?: string | null
@@ -271,6 +275,8 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          about_content?: string | null
+          about_title?: string | null
           contact_address?: string | null
           contact_email?: string | null
           contact_phone?: string | null
