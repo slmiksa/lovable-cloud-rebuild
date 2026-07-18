@@ -25,10 +25,10 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-5 py-3 md:px-10 md:py-4">
           <Link to="/" className="flex min-w-0 items-center gap-3">
             {logo_url ? (
-              <LogoMark className="h-16 w-16 shrink-0 sm:h-20 sm:w-20 md:h-32 md:w-32 lg:h-40 lg:w-40" />
+              <LogoMark className="h-24 w-24 shrink-0 sm:h-28 sm:w-28 md:h-40 md:w-40 lg:h-48 lg:w-48" />
             ) : (
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand)] to-[var(--brand-dark)] shadow-[0_8px_18px_-8px_color-mix(in_oklab,var(--brand)_35%,transparent)] md:h-16 md:w-16">
-                <LogoMark className="h-9 w-9 text-white md:h-10 md:w-10" />
+              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand)] to-[var(--brand-dark)] shadow-[0_8px_18px_-8px_color-mix(in_oklab,var(--brand)_35%,transparent)] md:h-24 md:w-24">
+                <LogoMark className="h-12 w-12 text-white md:h-14 md:w-14" />
               </div>
             )}
             <div className="hidden min-w-0 leading-tight md:block">
