@@ -4,7 +4,7 @@ import { useState } from "react";
 import { LogoMark } from "./LogoMark";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 
-export function SiteHeader({ active }: { active?: "home" | "services" | "systems" | "clients" | "contact" }) {
+export function SiteHeader({ active }: { active?: "home" | "services" | "systems" | "clients" | "about" | "contact" }) {
   const [open, setOpen] = useState(false);
   const { logo_url } = useSiteSettings();
   const navItems: { id: NonNullable<typeof active>; label: string; href: string; to?: undefined }[] | { id: NonNullable<typeof active>; label: string; to: string; href?: undefined }[] = [
@@ -12,6 +12,7 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
     { id: "services", label: "خدماتنا", href: "/#services" },
     { id: "systems", label: "تطبيقاتنا", to: "/systems" },
     { id: "clients", label: "عملاؤنا", to: "/clients" },
+    { id: "about", label: "نبذة عنا", to: "/about" },
     { id: "contact", label: "تواصل معنا", href: "/#contact" },
   ] as any;
 
