@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SystemsRouteImport } from './routes/systems'
 import { Route as ClientsRouteImport } from './routes/clients'
 import { Route as AdminpanelRouteImport } from './routes/adminpanel'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminpanelIndexRouteImport } from './routes/adminpanel.index'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
@@ -26,6 +27,7 @@ import { Route as AdminpanelFaqsRouteImport } from './routes/adminpanel.faqs'
 import { Route as AdminpanelContactRouteImport } from './routes/adminpanel.contact'
 import { Route as AdminpanelClientsRouteImport } from './routes/adminpanel.clients'
 import { Route as AdminpanelBrandingRouteImport } from './routes/adminpanel.branding'
+import { Route as AdminpanelAboutRouteImport } from './routes/adminpanel.about'
 
 const SystemsRoute = SystemsRouteImport.update({
   id: '/systems',
@@ -40,6 +42,11 @@ const ClientsRoute = ClientsRouteImport.update({
 const AdminpanelRoute = AdminpanelRouteImport.update({
   id: '/adminpanel',
   path: '/adminpanel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -112,12 +119,19 @@ const AdminpanelBrandingRoute = AdminpanelBrandingRouteImport.update({
   path: '/branding',
   getParentRoute: () => AdminpanelRoute,
 } as any)
+const AdminpanelAboutRoute = AdminpanelAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => AdminpanelRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/adminpanel': typeof AdminpanelRouteWithChildren
   '/clients': typeof ClientsRoute
   '/systems': typeof SystemsRoute
+  '/adminpanel/about': typeof AdminpanelAboutRoute
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/contact': typeof AdminpanelContactRoute
@@ -134,8 +148,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/clients': typeof ClientsRoute
   '/systems': typeof SystemsRoute
+  '/adminpanel/about': typeof AdminpanelAboutRoute
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/contact': typeof AdminpanelContactRoute
@@ -153,9 +169,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/adminpanel': typeof AdminpanelRouteWithChildren
   '/clients': typeof ClientsRoute
   '/systems': typeof SystemsRoute
+  '/adminpanel/about': typeof AdminpanelAboutRoute
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/contact': typeof AdminpanelContactRoute
@@ -174,9 +192,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/adminpanel'
     | '/clients'
     | '/systems'
+    | '/adminpanel/about'
     | '/adminpanel/branding'
     | '/adminpanel/clients'
     | '/adminpanel/contact'
@@ -193,8 +213,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/clients'
     | '/systems'
+    | '/adminpanel/about'
     | '/adminpanel/branding'
     | '/adminpanel/clients'
     | '/adminpanel/contact'
@@ -211,9 +233,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/adminpanel'
     | '/clients'
     | '/systems'
+    | '/adminpanel/about'
     | '/adminpanel/branding'
     | '/adminpanel/clients'
     | '/adminpanel/contact'
@@ -231,6 +255,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   AdminpanelRoute: typeof AdminpanelRouteWithChildren
   ClientsRoute: typeof ClientsRoute
   SystemsRoute: typeof SystemsRoute
@@ -258,6 +283,13 @@ declare module '@tanstack/react-router' {
       path: '/adminpanel'
       fullPath: '/adminpanel'
       preLoaderRoute: typeof AdminpanelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -358,10 +390,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminpanelBrandingRouteImport
       parentRoute: typeof AdminpanelRoute
     }
+    '/adminpanel/about': {
+      id: '/adminpanel/about'
+      path: '/about'
+      fullPath: '/adminpanel/about'
+      preLoaderRoute: typeof AdminpanelAboutRouteImport
+      parentRoute: typeof AdminpanelRoute
+    }
   }
 }
 
 interface AdminpanelRouteChildren {
+  AdminpanelAboutRoute: typeof AdminpanelAboutRoute
   AdminpanelBrandingRoute: typeof AdminpanelBrandingRoute
   AdminpanelClientsRoute: typeof AdminpanelClientsRoute
   AdminpanelContactRoute: typeof AdminpanelContactRoute
@@ -377,6 +417,7 @@ interface AdminpanelRouteChildren {
 }
 
 const AdminpanelRouteChildren: AdminpanelRouteChildren = {
+  AdminpanelAboutRoute: AdminpanelAboutRoute,
   AdminpanelBrandingRoute: AdminpanelBrandingRoute,
   AdminpanelClientsRoute: AdminpanelClientsRoute,
   AdminpanelContactRoute: AdminpanelContactRoute,
@@ -397,6 +438,7 @@ const AdminpanelRouteWithChildren = AdminpanelRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   AdminpanelRoute: AdminpanelRouteWithChildren,
   ClientsRoute: ClientsRoute,
   SystemsRoute: SystemsRoute,

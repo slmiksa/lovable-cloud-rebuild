@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { WhatsAppWidget } from "@/components/WhatsAppWidget";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/about")({
