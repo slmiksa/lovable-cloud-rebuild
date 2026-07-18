@@ -25,18 +25,18 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-5 py-3 md:px-10 md:py-4">
           <Link to="/" className="flex min-w-0 items-center gap-3">
             {logo_url ? (
-              <LogoMark className="h-28 w-28 shrink-0 md:h-40 md:w-40" />
+              <LogoMark className="h-16 w-16 shrink-0 sm:h-20 sm:w-20 md:h-32 md:w-32 lg:h-40 lg:w-40" />
             ) : (
-              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand)] to-[var(--brand-dark)] shadow-[0_8px_18px_-8px_color-mix(in_oklab,var(--brand)_35%,transparent)]">
-                <LogoMark className="h-10 w-10 text-white" />
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--brand)] to-[var(--brand-dark)] shadow-[0_8px_18px_-8px_color-mix(in_oklab,var(--brand)_35%,transparent)] md:h-16 md:w-16">
+                <LogoMark className="h-9 w-9 text-white md:h-10 md:w-10" />
               </div>
             )}
-            <div className="min-w-0 leading-tight">
-              <div className="text-[10px] font-extrabold leading-tight tracking-wider text-[var(--purple)] sm:text-xs md:text-sm">
+            <div className="hidden min-w-0 leading-tight md:block">
+              <div className="text-xs font-extrabold leading-tight tracking-wider text-[var(--purple)] md:text-sm">
                 <span className="block">Lamha Secure</span>
                 <span className="block">for Technical Solutions</span>
               </div>
-              <div className="truncate text-[9px] tracking-[0.12em] text-[var(--ink-soft)] sm:text-[10px]">لمحة الآمنة للحلول التقنية</div>
+              <div className="truncate text-[10px] tracking-[0.12em] text-[var(--ink-soft)]">لمحة الآمنة للحلول التقنية</div>
             </div>
           </Link>
 
@@ -59,21 +59,16 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
             <button className="hidden h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] text-[var(--ink-soft)] transition hover:text-[var(--brand)] md:flex" aria-label="بحث">
               <Search className="h-5 w-5" />
             </button>
-            <a
-              href="/#contact"
-              className="whitespace-nowrap rounded-md bg-gradient-to-b from-[var(--brand)] to-[var(--brand-dark)] px-4 py-2 text-xs font-extrabold text-white shadow-[0_8px_18px_-8px_color-mix(in_oklab,var(--brand)_40%,transparent)] transition hover:brightness-110 sm:px-6 sm:py-2.5 sm:text-sm"
-            >
-              ابدأ الآن
-            </a>
             <button
               onClick={() => setOpen((v) => !v)}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] text-[var(--ink-soft)] transition hover:text-[var(--brand)] lg:hidden"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--line)] text-[var(--ink-soft)] transition hover:text-[var(--brand)] lg:hidden"
               aria-label="القائمة"
               aria-expanded={open}
             >
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
+
         </div>
 
         {open && (
