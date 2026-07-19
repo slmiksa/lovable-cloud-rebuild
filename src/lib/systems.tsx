@@ -130,8 +130,19 @@ export function SystemCard({ system, onOpen }: { system: SystemItem; onOpen: () 
       onClick={onOpen}
       className="group w-full rounded-2xl border border-[var(--line)] bg-white p-4 text-right shadow-sm transition hover:-translate-y-1 hover:border-[var(--brand)]/40 hover:shadow-[0_18px_40px_-20px_color-mix(in_oklab,var(--brand)_30%,transparent)]"
     >
-      <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-bl from-[var(--purple)] to-[var(--purple-dark)] p-3`}>
-        <SystemMock system={system} />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-bl from-[var(--purple)] to-[var(--purple-dark)] p-3">
+        {system.imageUrl ? (
+          <div className="relative h-40 w-full overflow-hidden rounded-xl bg-white">
+            <img
+              src={system.imageUrl}
+              alt={system.name}
+              className="h-full w-full object-contain"
+              loading="lazy"
+            />
+          </div>
+        ) : (
+          <SystemMock system={system} />
+        )}
       </div>
       <div className="mt-4 flex items-center gap-3 px-1">
         <div
