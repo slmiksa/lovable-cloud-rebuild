@@ -10,6 +10,7 @@ export type SystemItem = {
   Icon: LucideIcon;
   gradient: string;
   accent: string;
+  imageUrl: string | null;
   metrics: { label: string; value: string }[];
 };
 
