@@ -340,7 +340,7 @@ function ServiceCircles({ services }: { services: { id: string; title: string; i
   const items = services.slice(0, 4);
   if (items.length === 0) return <div className="h-6" />;
   return (
-    <div className="relative -mt-4 md:-mt-6">
+    <div className="relative mt-4 md:mt-6">
       <div className="mx-auto max-w-[1100px] px-4 md:px-10">
         <div className="relative">
           <div className="absolute left-[10%] right-[10%] top-[34px] hidden h-[3px] bg-[var(--brand)] md:top-[42px] md:block" />
