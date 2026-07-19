@@ -59,7 +59,8 @@ function parseOffer(desc: string | null): { note: string; features: string[] } {
 }
 
 function Index() {
-  const { services, offers, systems, clients, news } = Route.useLoaderData() as {
+  const { slides, services, offers, systems, clients, news } = Route.useLoaderData() as {
+    slides: PublicSlide[];
     services: PublicService[];
     offers: PublicOffer[];
     systems: PublicSystem[];
