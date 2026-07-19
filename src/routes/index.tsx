@@ -250,23 +250,109 @@ function Index() {
   );
 }
 
+function HeroSlider({ slides }: { slides: PublicSlide[] }) {
+  const [active, setActive] = useState(0);
+  const activeSlides = slides.filter((s) => s.image_url);
+
+  useEffect(() => {
+    if (activeSlides.length <= 1) return;
+    const timer = setInterval(() => {
+      setActive((i) => (i + 1) % activeSlides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [activeSlides.length]);
+
+  if (activeSlides.length === 0) {
+    return <div className="h-6" />;
+  }
+
+  const slide = activeSlides[active];
+  const hasContent = Boolean(slide.title || slide.subtitle || slide.cta_label);
+
+  return (
+    <div className="mx-auto max-w-[1400px] px-4 md:px-8">
+      <div className="relative overflow-hidden rounded-2xl md:rounded-3xl border-[3px] border-[var(--brand)] shadow-[0_20px_60px_-20px_color-mix(in_oklab,var(--brand)_35%,transparent)] bg-gradient-to-br from-[var(--purple-dark)] to-[var(--purple)]">
+        {/* Slide image container — full image without cropping */}
+        <div className="relative aspect-[16/10] sm:aspect-[16/8] md:aspect-[16/7] lg:aspect-[16/6] w-full overflow-hidden">
+          {activeSlides.map((s, i) => (
+            <div
+              key={s.id}
+              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${i === active ? "opacity-100" : "opacity-0"}`}
+            >
+              <img
+                src={s.image_url!}
+                alt={s.title || "Slide"}
+                className="h-full w-full object-contain"
+                loading={i === 0 ? "eager" : "lazy"}
+              />
+            </div>
+          ))}
+
+          {/* Bottom content bar — only when data exists */}
+          {hasContent && (
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[var(--purple-dark)]/95 via-[var(--purple-dark)]/70 to-transparent px-4 py-4 sm:px-6 sm:py-5 md:px-10 md:py-6">
+              <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div className="max-w-2xl">
+                  {slide.title && (
+                    <h2 className="text-base font-black text-white drop-shadow sm:text-xl md:text-2xl lg:text-3xl">
+                      {slide.title}
+                    </h2>
+                  )}
+                  {slide.subtitle && (
+                    <p className="mt-1 text-xs font-medium text-white/90 drop-shadow sm:text-sm md:text-base">
+                      {slide.subtitle}
+                    </p>
+                  )}
+                </div>
+                {slide.cta_label && slide.cta_url && (
+                  <Link
+                    to={slide.cta_url}
+                    className="mt-2 inline-flex items-center gap-1.5 rounded-md bg-[var(--brand)] px-3 py-1.5 text-xs font-bold text-white shadow transition hover:bg-[var(--brand-light)] hover:text-[var(--brand-foreground)] sm:mt-0 sm:px-4 sm:py-2 sm:text-sm"
+                  >
+                    {slide.cta_label}
+                    <ArrowLeft className="h-3 w-3 sm:h-4 sm:w-4" />
+                  </Link>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Dots */}
+        {activeSlides.length > 1 && (
+          <div className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 gap-1.5 sm:bottom-3">
+            {activeSlides.map((s, i) => (
+              <button
+                key={s.id}
+                onClick={() => setActive(i)}
+                aria-label={`انتقل للشريحة ${i + 1}`}
+                className={`h-2 w-2 rounded-full transition sm:h-2.5 sm:w-2.5 ${i === active ? "bg-white" : "bg-white/40 hover:bg-white/70"}`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function ServiceCircles({ services }: { services: { id: string; title: string; icon: string | null }[] }) {
   const items = services.slice(0, 4);
   if (items.length === 0) return <div className="h-6" />;
   return (
-    <div className="relative -mt-6 md:-mt-10">
+    <div className="relative -mt-4 md:-mt-6">
       <div className="mx-auto max-w-[1100px] px-4 md:px-10">
         <div className="relative">
-          <div className="absolute left-[10%] right-[10%] top-[38px] hidden h-[3px] bg-[var(--brand)] md:top-[46px] md:block" />
+          <div className="absolute left-[10%] right-[10%] top-[34px] hidden h-[3px] bg-[var(--brand)] md:top-[42px] md:block" />
           <div className="relative grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
             {items.map((it) => {
               const Icon = getIcon(it.icon);
               return (
                 <div key={it.id} className="flex flex-col items-center text-center">
-                  <div className="flex h-[76px] w-[76px] items-center justify-center rounded-full border-[4px] border-[var(--brand)] bg-white shadow-[0_8px_20px_-8px_color-mix(in_oklab,var(--brand)_40%,transparent)] md:h-[96px] md:w-[96px] md:border-[5px]">
-                    <Icon className="h-7 w-7 text-[var(--brand)] md:h-9 md:w-9" strokeWidth={1.8} />
+                  <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full border-[4px] border-[var(--brand)] bg-white shadow-[0_8px_20px_-8px_color-mix(in_oklab,var(--brand)_40%,transparent)] md:h-[88px] md:w-[88px] md:border-[5px]">
+                    <Icon className="h-6 w-6 text-[var(--brand)] md:h-8 md:w-8" strokeWidth={1.8} />
                   </div>
-                  <div className="mt-3 text-sm font-extrabold text-[var(--purple)] md:mt-4 md:text-base">{it.title}</div>
+                  <div className="mt-3 text-xs font-extrabold text-[var(--purple)] md:mt-4 md:text-sm">{it.title}</div>
                 </div>
               );
             })}
