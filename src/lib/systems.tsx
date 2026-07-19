@@ -10,6 +10,7 @@ export type SystemItem = {
   Icon: LucideIcon;
   gradient: string;
   accent: string;
+  imageUrl: string | null;
   metrics: { label: string; value: string }[];
 };
 
@@ -46,6 +47,7 @@ export function toSystemItem(row: PublicSystem, index: number): SystemItem {
     Icon: getIcon(row.icon),
     gradient,
     accent,
+    imageUrl: row.image_url ?? null,
     metrics,
   };
 }
@@ -128,8 +130,19 @@ export function SystemCard({ system, onOpen }: { system: SystemItem; onOpen: () 
       onClick={onOpen}
       className="group w-full rounded-2xl border border-[var(--line)] bg-white p-4 text-right shadow-sm transition hover:-translate-y-1 hover:border-[var(--brand)]/40 hover:shadow-[0_18px_40px_-20px_color-mix(in_oklab,var(--brand)_30%,transparent)]"
     >
-      <div className={`relative overflow-hidden rounded-2xl bg-gradient-to-bl from-[var(--purple)] to-[var(--purple-dark)] p-3`}>
-        <SystemMock system={system} />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-bl from-[var(--purple)] to-[var(--purple-dark)] p-3">
+        {system.imageUrl ? (
+          <div className="relative h-40 w-full overflow-hidden rounded-xl bg-white">
+            <img
+              src={system.imageUrl}
+              alt={system.name}
+              className="h-full w-full object-contain"
+              loading="lazy"
+            />
+          </div>
+        ) : (
+          <SystemMock system={system} />
+        )}
       </div>
       <div className="mt-4 flex items-center gap-3 px-1">
         <div
@@ -152,9 +165,19 @@ export function SystemDialogContent({ system }: { system: SystemItem }) {
   return (
     <>
       <div
-        className={`relative overflow-hidden rounded-t-3xl bg-gradient-to-bl from-[var(--purple)] to-[var(--purple-dark)] p-8`}
+        className="relative overflow-hidden rounded-t-3xl bg-gradient-to-bl from-[var(--purple)] to-[var(--purple-dark)] p-8"
       >
-        <SystemMock system={system} large />
+        {system.imageUrl ? (
+          <div className="relative h-56 w-full overflow-hidden rounded-2xl bg-white md:h-72">
+            <img
+              src={system.imageUrl}
+              alt={system.name}
+              className="h-full w-full object-contain"
+            />
+          </div>
+        ) : (
+          <SystemMock system={system} large />
+        )}
       </div>
       <div className="space-y-5 p-8 pt-6">
         <div className="space-y-2 text-right">
@@ -162,7 +185,7 @@ export function SystemDialogContent({ system }: { system: SystemItem }) {
             {system.tagline}
           </div>
           <h2 className="text-2xl font-black text-[var(--purple)]">{system.name}</h2>
-          <p className="text-base leading-loose text-[var(--ink-soft)]">{system.description}</p>
+          <p className="whitespace-pre-line text-base leading-loose text-[var(--ink-soft)]">{system.description}</p>
         </div>
         {system.metrics.length > 0 && (
           <div className="grid grid-cols-2 gap-3 border-t border-[var(--line)] pt-5">
