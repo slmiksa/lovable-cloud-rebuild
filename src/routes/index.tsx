@@ -76,8 +76,9 @@ function Index() {
     <div className="min-h-screen font-arabic bg-white text-[var(--ink)]">
       <SiteHeader active="home" />
 
-      {/* Hero area — service circles only */}
-      <section id="home" className="relative bg-white pt-6 pb-2 md:pt-10" dir="rtl">
+      {/* Hero slider + service circles */}
+      <section id="home" className="relative bg-white pt-4 pb-2 md:pt-6" dir="rtl">
+        <HeroSlider slides={slides} />
         <ServiceCircles services={services} />
       </section>
 
