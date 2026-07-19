@@ -47,6 +47,7 @@ export function toSystemItem(row: PublicSystem, index: number): SystemItem {
     Icon: getIcon(row.icon),
     gradient,
     accent,
+    imageUrl: row.image_url ?? null,
     metrics,
   };
 }
