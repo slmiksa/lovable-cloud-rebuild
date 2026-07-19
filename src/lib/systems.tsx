@@ -169,13 +169,28 @@ export function SystemDialogContent({ system }: { system: SystemItem }) {
       >
         <SystemMock system={system} large />
       </div>
+      <div
+        className="relative overflow-hidden rounded-t-3xl bg-gradient-to-bl from-[var(--purple)] to-[var(--purple-dark)] p-8"
+      >
+        {system.imageUrl ? (
+          <div className="relative h-56 w-full overflow-hidden rounded-2xl bg-white md:h-72">
+            <img
+              src={system.imageUrl}
+              alt={system.name}
+              className="h-full w-full object-contain"
+            />
+          </div>
+        ) : (
+          <SystemMock system={system} large />
+        )}
+      </div>
       <div className="space-y-5 p-8 pt-6">
         <div className="space-y-2 text-right">
           <div className="text-xs font-bold tracking-widest text-[var(--brand)]">
             {system.tagline}
           </div>
           <h2 className="text-2xl font-black text-[var(--purple)]">{system.name}</h2>
-          <p className="text-base leading-loose text-[var(--ink-soft)]">{system.description}</p>
+          <p className="whitespace-pre-line text-base leading-loose text-[var(--ink-soft)]">{system.description}</p>
         </div>
         {system.metrics.length > 0 && (
           <div className="grid grid-cols-2 gap-3 border-t border-[var(--line)] pt-5">
