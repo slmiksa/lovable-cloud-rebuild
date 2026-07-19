@@ -165,11 +165,6 @@ export function SystemDialogContent({ system }: { system: SystemItem }) {
   return (
     <>
       <div
-        className={`relative overflow-hidden rounded-t-3xl bg-gradient-to-bl from-[var(--purple)] to-[var(--purple-dark)] p-8`}
-      >
-        <SystemMock system={system} large />
-      </div>
-      <div
         className="relative overflow-hidden rounded-t-3xl bg-gradient-to-bl from-[var(--purple)] to-[var(--purple-dark)] p-8"
       >
         {system.imageUrl ? (
