@@ -43,6 +43,8 @@ function applySocialImage(url: string | null) {
     el.setAttribute("content", value);
   };
   setMeta("property", "og:image", url);
+  setMeta("property", "og:image:secure_url", url);
+  setMeta("property", "og:image:alt", "لمحة الآمنة");
   setMeta("name", "twitter:image", url);
 }
 
