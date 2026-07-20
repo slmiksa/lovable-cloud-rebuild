@@ -19,30 +19,31 @@ function applyFavicon(url: string | null) {
     .forEach((el) => el.remove());
   if (!url) return;
   const href = `${url}${url.includes("?") ? "&" : "?"}t=${Date.now()}`;
-  const link = document.createElement("link");
-  link.rel = "icon";
-  link.href = href;
-  document.head.appendChild(link);
-  const apple = document.createElement("link");
-  apple.rel = "apple-touch-icon";
-  apple.href = href;
-  document.head.appendChild(apple);
+  const makeIcon = (rel: string) => {
+    const link = document.createElement("link");
+    link.rel = rel;
+    link.href = href;
+    document.head.appendChild(link);
+  };
+  makeIcon("icon");
+  makeIcon("shortcut icon");
+  makeIcon("apple-touch-icon");
 }
 
 function applySocialImage(url: string | null) {
   if (typeof document === "undefined" || !url) return;
-  const setMeta = (selector: string, attr: string, value: string) => {
+  const setMeta = (kind: "property" | "name", key: string, value: string) => {
+    const selector = `meta[${kind}="${key}"]`;
     let el = document.head.querySelector(selector) as HTMLMetaElement | null;
     if (!el) {
       el = document.createElement("meta");
-      const [key, val] = selector.replace(/[[\]"]/g, "").split("=");
-      el.setAttribute(key, val);
+      el.setAttribute(kind, key);
       document.head.appendChild(el);
     }
-    el.setAttribute(attr, value);
+    el.setAttribute("content", value);
   };
-  setMeta('meta[property="og:image"]', "content", url);
-  setMeta('meta[name="twitter:image"]', "content", url);
+  setMeta("property", "og:image", url);
+  setMeta("name", "twitter:image", url);
 }
 
 
@@ -69,7 +70,7 @@ export async function refreshSiteSettings() {
   };
   cache = next;
   applyFavicon(next.favicon_url || next.logo_url);
-  applySocialImage(next.logo_url);
+  applySocialImage(next.logo_url || next.favicon_url);
   listeners.forEach((l) => l(next));
   return next;
 }
