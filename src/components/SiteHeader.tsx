@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Search, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { LogoMark } from "./LogoMark";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
@@ -18,12 +18,11 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
 
   return (
     <header className="font-arabic" dir="rtl">
-      {/* Top utility strip hidden per request */}
-
       {/* Main nav */}
       <div className="border-b border-[var(--line)] bg-white">
-        <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-5 py-3 md:px-10 md:py-4">
-          <Link to="/" className="flex min-w-0 items-center gap-3">
+        <div className="mx-auto grid max-w-[1400px] grid-cols-[auto_1fr_auto] items-center gap-4 px-5 py-3 md:px-10 md:py-4">
+          {/* Logo */}
+          <Link to="/" className="flex min-w-0 items-center justify-self-end">
             {logo_url ? (
               <LogoMark className="h-24 w-24 shrink-0 sm:h-28 sm:w-28 md:h-40 md:w-40 lg:h-48 lg:w-48" />
             ) : (
@@ -31,16 +30,10 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
                 <LogoMark className="h-12 w-12 text-white md:h-14 md:w-14" />
               </div>
             )}
-            <div className="hidden min-w-0 leading-tight md:block">
-              <div className="text-xs font-extrabold leading-tight tracking-wider text-[var(--purple)] md:text-sm">
-                <span className="block">Lamha Secure</span>
-                <span className="block">for Technical Solutions</span>
-              </div>
-              <div className="truncate text-[10px] tracking-[0.12em] text-[var(--ink-soft)]">لمحة الآمنة للحلول التقنية</div>
-            </div>
           </Link>
 
-          <nav className="hidden items-center gap-7 text-[15px] font-bold text-[var(--ink)] lg:flex">
+          {/* Centered navigation */}
+          <nav className="hidden items-center justify-center gap-7 text-[15px] font-bold text-[var(--ink)] lg:flex">
             {navItems.map((it) => {
               const cls = `transition hover:text-[var(--brand)] ${active === it.id ? "text-[var(--brand)]" : ""}`;
               return it.to ? (
@@ -55,10 +48,8 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
             })}
           </nav>
 
-          <div className="flex items-center gap-2">
-            <button className="hidden h-10 w-10 items-center justify-center rounded-full border border-[var(--line)] text-[var(--ink-soft)] transition hover:text-[var(--brand)] md:flex" aria-label="بحث">
-              <Search className="h-5 w-5" />
-            </button>
+          {/* Mobile menu only */}
+          <div className="flex items-center justify-self-start">
             <button
               onClick={() => setOpen((v) => !v)}
               className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--line)] text-[var(--ink-soft)] transition hover:text-[var(--brand)] lg:hidden"
@@ -68,7 +59,6 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
-
         </div>
 
         {open && (
@@ -93,3 +83,4 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
     </header>
   );
 }
+
