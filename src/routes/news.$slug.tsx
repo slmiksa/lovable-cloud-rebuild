@@ -45,7 +45,7 @@ export const Route = createFileRoute("/news/$slug")({
 
 function renderInline(text: string) {
   // Tokenize markdown links [text](url) and bare URLs; render <a> for both.
-  const nodes: (string | JSX.Element)[] = [];
+  const nodes: ReactNode[] = [];
   const regex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s)]+)/g;
   let last = 0;
   let m: RegExpExecArray | null;
