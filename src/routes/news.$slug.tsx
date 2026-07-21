@@ -42,6 +42,34 @@ export const Route = createFileRoute("/news/$slug")({
   component: NewsDetail,
 });
 
+function renderInline(text: string) {
+  // Tokenize markdown links [text](url) and bare URLs; render <a> for both.
+  const nodes: (string | JSX.Element)[] = [];
+  const regex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s)]+)/g;
+  let last = 0;
+  let m: RegExpExecArray | null;
+  let key = 0;
+  while ((m = regex.exec(text)) !== null) {
+    if (m.index > last) nodes.push(text.slice(last, m.index));
+    const label = m[1] ?? m[3];
+    const url = m[2] ?? m[3];
+    nodes.push(
+      <a
+        key={key++}
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[var(--brand)] font-semibold underline underline-offset-2 hover:opacity-80 break-all"
+      >
+        {label}
+      </a>
+    );
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) nodes.push(text.slice(last));
+  return nodes;
+}
+
 function NewsDetail() {
   const { item, others } = Route.useLoaderData() as { item: PublicNewsFull; others: PublicNews[] };
 
