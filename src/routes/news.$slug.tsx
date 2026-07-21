@@ -104,7 +104,7 @@ function NewsDetail() {
             }
             return (
               <p key={i} className="whitespace-pre-line">
-                {p}
+                {renderInline(p)}
               </p>
             );
           })}
