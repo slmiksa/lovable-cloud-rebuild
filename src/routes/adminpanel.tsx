@@ -46,7 +46,7 @@ const navItems = [
   { to: "/adminpanel/branding", label: "الهوية البصرية", icon: Palette, exact: false },
   { to: "/adminpanel/contact", label: "بيانات التواصل", icon: Phone, exact: false },
   { to: "/adminpanel/faqs", label: "أسئلة زر التواصل", icon: HelpCircle, exact: false },
-  { to: "/adminpanel/about", label: "نبذة عنا", icon: Info, exact: false },
+  { to: "/adminpanel/about", label: "من نحن", icon: Info, exact: false },
 ] as const;
 
 function AdminGate() {
