@@ -144,6 +144,25 @@ function ArticleCard({
           <Label>الرابط (slug)</Label>
           <Input dir="ltr" value={draft.slug} onChange={(e) => set({ slug: e.target.value })} />
         </div>
+        <div className="md:col-span-2">
+          <Label>تاريخ النشر</Label>
+          <Input
+            type="datetime-local"
+            dir="ltr"
+            value={
+              draft.published_at
+                ? new Date(draft.published_at).toISOString().slice(0, 16)
+                : ""
+            }
+            onChange={(e) => {
+              const v = e.target.value;
+              set({ published_at: v ? new Date(v).toISOString() : null });
+            }}
+          />
+          <p className="mt-1 text-xs text-muted-foreground">
+            يمكنك تحديد تاريخ ووقت نشر التدوينة يدويًا.
+          </p>
+        </div>
         <div>
           <ImageUpload
             label="صورة المقال"
