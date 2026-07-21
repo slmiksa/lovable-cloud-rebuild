@@ -68,9 +68,9 @@ function AboutAdminPage() {
           <Info className="h-5 w-5" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-foreground">نبذة عنا</h1>
+          <h1 className="text-2xl font-bold text-foreground">من نحن</h1>
           <p className="text-sm text-muted-foreground">
-            العنوان والنص الذي يظهر في صفحة «نبذة عنا». يدعم النص الأسطر المتعددة — كل سطر جديد تكتبه سيظهر كما هو في الموقع.
+            العنوان والنص الذي يظهر في صفحة «من نحن». يدعم النص الأسطر المتعددة — كل سطر جديد تكتبه سيظهر كما هو في الموقع.
           </p>
         </div>
       </div>
@@ -82,7 +82,7 @@ function AboutAdminPage() {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="نبذة عنا"
+            placeholder="من نحن"
             className={inputCls}
           />
         </div>

@@ -9,10 +9,10 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
   const { logo_url } = useSiteSettings();
   const navItems: { id: NonNullable<typeof active>; label: string; href: string; to?: undefined }[] | { id: NonNullable<typeof active>; label: string; to: string; href?: undefined }[] = [
     { id: "home", label: "الرئيسية", to: "/" },
+    { id: "about", label: "من نحن", to: "/about" },
     { id: "services", label: "خدماتنا", href: "/#services" },
     { id: "systems", label: "تطبيقاتنا", to: "/systems" },
     { id: "clients", label: "عملاؤنا", to: "/clients" },
-    { id: "about", label: "نبذة عنا", to: "/about" },
     { id: "contact", label: "تواصل معنا", href: "/#contact" },
   ] as any;
 

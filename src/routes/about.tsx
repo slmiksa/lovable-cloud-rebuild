@@ -9,7 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "نبذة عنا — Lamha Secure" },
+      { title: "من نحن — Lamha Secure" },
       { name: "description", content: "تعرّف على لمحة الآمنة للحلول التقنية ورؤيتنا ورسالتنا." },
     ],
   }),
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/about")({
 
 function AboutPage() {
   const [loading, setLoading] = useState(true);
-  const [title, setTitle] = useState("نبذة عنا");
+  const [title, setTitle] = useState("من نحن");
   const [content, setContent] = useState("");
 
   useEffect(() => {
