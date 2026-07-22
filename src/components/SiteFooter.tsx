@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Twitter, Youtube, type LucideIcon } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, X, Youtube, type LucideIcon } from "lucide-react";
 import { LogoMark } from "./LogoMark";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { getPublicSocialLinks, type PublicSocialLink } from "@/lib/public.functions";
@@ -7,8 +7,8 @@ import { getPublicSocialLinks, type PublicSocialLink } from "@/lib/public.functi
 const SOCIAL_ICONS: Record<string, LucideIcon> = {
   facebook: Facebook,
   instagram: Instagram,
-  twitter: Twitter,
-  x: Twitter,
+  twitter: X,
+  x: X,
   linkedin: Linkedin,
   youtube: Youtube,
 };
