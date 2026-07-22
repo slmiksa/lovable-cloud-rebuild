@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, X, Youtube, type LucideIcon } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Youtube, type LucideIcon } from "lucide-react";
 import { LogoMark } from "./LogoMark";
+import { XLogo } from "./XLogo";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { getPublicSocialLinks, type PublicSocialLink } from "@/lib/public.functions";
 
-const SOCIAL_ICONS: Record<string, LucideIcon> = {
+const SOCIAL_ICONS: Record<string, LucideIcon | React.FC<{ className?: string }>> = {
   facebook: Facebook,
   instagram: Instagram,
-  twitter: X,
-  x: X,
+  twitter: XLogo,
+  x: XLogo,
   linkedin: Linkedin,
   youtube: Youtube,
 };
