@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Youtube, type LucideIcon } from "lucide-react";
 import { LogoMark } from "./LogoMark";
 import { XLogo } from "./XLogo";
