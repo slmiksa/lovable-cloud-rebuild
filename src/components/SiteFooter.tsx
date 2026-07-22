@@ -35,8 +35,8 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-[1400px] gap-10 px-5 py-14 md:grid-cols-3 md:px-10">
         <div>
           <div className="flex items-center gap-3">
-            <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-white/10 p-1 ring-1 ring-white/20 backdrop-blur-sm md:h-28 md:w-28">
-              <LogoMark className="h-[5.5rem] w-[5.5rem] md:h-24 md:w-24" />
+            <div className="flex h-28 w-28 shrink-0 items-center justify-center rounded-2xl bg-white p-1 ring-1 ring-white/30 md:h-32 md:w-32">
+              <LogoMark className="h-24 w-24 md:h-28 md:w-28" />
             </div>
             <div className="leading-tight">
               <div className="text-base font-extrabold tracking-wider">Lamha Secure</div>
