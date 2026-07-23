@@ -14,6 +14,7 @@ export const ADMIN_TABLES = [
   "social_links",
   "contact_requests",
   "whatsapp_faqs",
+  "home_circles",
 ] as const;
 
 export type AdminTable = (typeof ADMIN_TABLES)[number];
@@ -28,6 +29,7 @@ const ORDER: Record<AdminTable, { col: string; asc: boolean }> = {
   news: { col: "published_at", asc: false },
   contact_requests: { col: "created_at", asc: false },
   whatsapp_faqs: { col: "sort_order", asc: true },
+  home_circles: { col: "sort_order", asc: true },
 };
 
 export async function getAdminStatus(): Promise<{ isAdmin: boolean; userId: string }> {
