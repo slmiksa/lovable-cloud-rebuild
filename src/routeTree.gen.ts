@@ -26,6 +26,7 @@ import { Route as AdminpanelNewsRouteImport } from './routes/adminpanel.news'
 import { Route as AdminpanelFaqsRouteImport } from './routes/adminpanel.faqs'
 import { Route as AdminpanelContactRouteImport } from './routes/adminpanel.contact'
 import { Route as AdminpanelClientsRouteImport } from './routes/adminpanel.clients'
+import { Route as AdminpanelCirclesRouteImport } from './routes/adminpanel.circles'
 import { Route as AdminpanelBrandingRouteImport } from './routes/adminpanel.branding'
 import { Route as AdminpanelAboutRouteImport } from './routes/adminpanel.about'
 
@@ -114,6 +115,11 @@ const AdminpanelClientsRoute = AdminpanelClientsRouteImport.update({
   path: '/clients',
   getParentRoute: () => AdminpanelRoute,
 } as any)
+const AdminpanelCirclesRoute = AdminpanelCirclesRouteImport.update({
+  id: '/circles',
+  path: '/circles',
+  getParentRoute: () => AdminpanelRoute,
+} as any)
 const AdminpanelBrandingRoute = AdminpanelBrandingRouteImport.update({
   id: '/branding',
   path: '/branding',
@@ -133,6 +139,7 @@ export interface FileRoutesByFullPath {
   '/systems': typeof SystemsRoute
   '/adminpanel/about': typeof AdminpanelAboutRoute
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
+  '/adminpanel/circles': typeof AdminpanelCirclesRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/contact': typeof AdminpanelContactRoute
   '/adminpanel/faqs': typeof AdminpanelFaqsRoute
@@ -153,6 +160,7 @@ export interface FileRoutesByTo {
   '/systems': typeof SystemsRoute
   '/adminpanel/about': typeof AdminpanelAboutRoute
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
+  '/adminpanel/circles': typeof AdminpanelCirclesRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/contact': typeof AdminpanelContactRoute
   '/adminpanel/faqs': typeof AdminpanelFaqsRoute
@@ -175,6 +183,7 @@ export interface FileRoutesById {
   '/systems': typeof SystemsRoute
   '/adminpanel/about': typeof AdminpanelAboutRoute
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
+  '/adminpanel/circles': typeof AdminpanelCirclesRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/contact': typeof AdminpanelContactRoute
   '/adminpanel/faqs': typeof AdminpanelFaqsRoute
@@ -198,6 +207,7 @@ export interface FileRouteTypes {
     | '/systems'
     | '/adminpanel/about'
     | '/adminpanel/branding'
+    | '/adminpanel/circles'
     | '/adminpanel/clients'
     | '/adminpanel/contact'
     | '/adminpanel/faqs'
@@ -218,6 +228,7 @@ export interface FileRouteTypes {
     | '/systems'
     | '/adminpanel/about'
     | '/adminpanel/branding'
+    | '/adminpanel/circles'
     | '/adminpanel/clients'
     | '/adminpanel/contact'
     | '/adminpanel/faqs'
@@ -239,6 +250,7 @@ export interface FileRouteTypes {
     | '/systems'
     | '/adminpanel/about'
     | '/adminpanel/branding'
+    | '/adminpanel/circles'
     | '/adminpanel/clients'
     | '/adminpanel/contact'
     | '/adminpanel/faqs'
@@ -383,6 +395,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminpanelClientsRouteImport
       parentRoute: typeof AdminpanelRoute
     }
+    '/adminpanel/circles': {
+      id: '/adminpanel/circles'
+      path: '/circles'
+      fullPath: '/adminpanel/circles'
+      preLoaderRoute: typeof AdminpanelCirclesRouteImport
+      parentRoute: typeof AdminpanelRoute
+    }
     '/adminpanel/branding': {
       id: '/adminpanel/branding'
       path: '/branding'
@@ -403,6 +422,7 @@ declare module '@tanstack/react-router' {
 interface AdminpanelRouteChildren {
   AdminpanelAboutRoute: typeof AdminpanelAboutRoute
   AdminpanelBrandingRoute: typeof AdminpanelBrandingRoute
+  AdminpanelCirclesRoute: typeof AdminpanelCirclesRoute
   AdminpanelClientsRoute: typeof AdminpanelClientsRoute
   AdminpanelContactRoute: typeof AdminpanelContactRoute
   AdminpanelFaqsRoute: typeof AdminpanelFaqsRoute
@@ -419,6 +439,7 @@ interface AdminpanelRouteChildren {
 const AdminpanelRouteChildren: AdminpanelRouteChildren = {
   AdminpanelAboutRoute: AdminpanelAboutRoute,
   AdminpanelBrandingRoute: AdminpanelBrandingRoute,
+  AdminpanelCirclesRoute: AdminpanelCirclesRoute,
   AdminpanelClientsRoute: AdminpanelClientsRoute,
   AdminpanelContactRoute: AdminpanelContactRoute,
   AdminpanelFaqsRoute: AdminpanelFaqsRoute,

@@ -16,6 +16,7 @@ import {
   Phone,
   HelpCircle,
   Info,
+  Circle,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -37,6 +38,7 @@ const navItems = [
   { to: "/adminpanel", label: "الرئيسية", icon: LayoutDashboard, exact: true },
   { to: "/adminpanel/orders", label: "الطلبات", icon: Inbox, exact: false },
   { to: "/adminpanel/slides", label: "السلايدات", icon: Images, exact: false },
+  { to: "/adminpanel/circles", label: "الدوائر الرئيسية", icon: Circle, exact: false },
   { to: "/adminpanel/services", label: "خدماتنا", icon: Sparkles, exact: false },
   { to: "/adminpanel/offers", label: "أحدث العروض", icon: Tag, exact: false },
   { to: "/adminpanel/systems", label: "التطبيقات والأنظمة", icon: AppWindow, exact: false },

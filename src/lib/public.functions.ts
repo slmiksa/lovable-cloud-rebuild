@@ -68,6 +68,12 @@ export interface PublicSocialLink {
   url: string;
   icon: string | null;
 }
+export interface PublicCircle {
+  id: string;
+  title: string;
+  icon: string | null;
+  image_url: string | null;
+}
 
 async function fetchSlides(): Promise<PublicSlide[]> {
   const { data } = await supabase
@@ -133,9 +139,17 @@ async function fetchSocialLinks(): Promise<PublicSocialLink[]> {
     .order("sort_order", { ascending: true });
   return (data ?? []) as PublicSocialLink[];
 }
+async function fetchCircles(): Promise<PublicCircle[]> {
+  const { data } = await supabase
+    .from("home_circles")
+    .select("id,title,icon,image_url")
+    .eq("is_active", true)
+    .order("sort_order", { ascending: true });
+  return (data ?? []) as PublicCircle[];
+}
 
 export async function getPublicHome() {
-  const [slides, services, offers, systems, clients, news, socialLinks] = await Promise.all([
+  const [slides, services, offers, systems, clients, news, socialLinks, circles] = await Promise.all([
     fetchSlides(),
     fetchServices(),
     fetchOffers(),
@@ -143,8 +157,9 @@ export async function getPublicHome() {
     fetchClients(),
     fetchNews(),
     fetchSocialLinks(),
+    fetchCircles(),
   ]);
-  return { slides, services, offers, systems, clients, news, socialLinks };
+  return { slides, services, offers, systems, clients, news, socialLinks, circles };
 }
 
 export async function getPublicSystems() {
