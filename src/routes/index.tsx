@@ -13,6 +13,7 @@ import {
 import { getIcon } from "@/lib/icons";
 import {
   getPublicHome,
+  type PublicCircle,
   type PublicClient,
   type PublicNews,
   type PublicOffer,
@@ -59,13 +60,14 @@ function parseOffer(desc: string | null): { note: string; features: string[] } {
 }
 
 function Index() {
-  const { slides, services, offers, systems, clients, news } = Route.useLoaderData() as {
+  const { slides, services, offers, systems, clients, news, circles } = Route.useLoaderData() as {
     slides: PublicSlide[];
     services: PublicService[];
     offers: PublicOffer[];
     systems: PublicSystem[];
     clients: PublicClient[];
     news: PublicNews[];
+    circles: PublicCircle[];
     socialLinks: import("@/lib/public.functions").PublicSocialLink[];
   };
   const [openSystem, setOpenSystem] = useState<SystemItem | null>(null);
@@ -76,11 +78,17 @@ function Index() {
     <div className="min-h-screen font-arabic bg-white text-[var(--ink)]">
       <SiteHeader active="home" />
 
-      {/* Hero slider + service circles */}
+      {/* Hero slider */}
       <section id="home" className="relative bg-white pt-4 pb-2 md:pt-6" dir="rtl">
         <HeroSlider slides={slides} />
-        <ServiceCircles services={services} />
       </section>
+
+      {/* Standalone home circles section */}
+      {circles.length > 0 && (
+        <section className="bg-white py-10 md:py-14" dir="rtl">
+          <HomeCircles items={circles} />
+        </section>
+      )}
 
 
 
@@ -336,27 +344,36 @@ function HeroSlider({ slides }: { slides: PublicSlide[] }) {
   );
 }
 
-function ServiceCircles({ services }: { services: { id: string; title: string; icon: string | null }[] }) {
-  const items = services.slice(0, 4);
-  if (items.length === 0) return <div className="h-6" />;
+function HomeCircles({ items }: { items: PublicCircle[] }) {
+  const list = items.slice(0, 4);
+  if (list.length === 0) return null;
   return (
-    <div className="relative mt-4 md:mt-6">
-      <div className="mx-auto max-w-[1100px] px-4 md:px-10">
-        <div className="relative">
-          <div className="absolute left-[10%] right-[10%] top-[34px] hidden h-[3px] bg-[var(--brand)] md:top-[42px] md:block" />
-          <div className="relative grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-            {items.map((it) => {
-              const Icon = getIcon(it.icon);
-              return (
-                <div key={it.id} className="flex flex-col items-center text-center">
-                  <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full border-[4px] border-[var(--brand)] bg-white shadow-[0_8px_20px_-8px_color-mix(in_oklab,var(--brand)_40%,transparent)] md:h-[88px] md:w-[88px] md:border-[5px]">
-                    <Icon className="h-6 w-6 text-[var(--brand)] md:h-8 md:w-8" strokeWidth={1.8} />
-                  </div>
-                  <div className="mt-3 text-xs font-extrabold text-[var(--purple)] md:mt-4 md:text-sm">{it.title}</div>
+    <div className="mx-auto max-w-[1100px] px-4 md:px-10">
+      <div className="relative">
+        <div className="absolute left-[10%] right-[10%] top-[38px] hidden h-[3px] bg-[var(--brand)] md:top-[46px] md:block" />
+        <div className="relative grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+          {list.map((it) => {
+            const Icon = getIcon(it.icon);
+            return (
+              <div key={it.id} className="flex flex-col items-center text-center">
+                <div className="flex h-[76px] w-[76px] items-center justify-center overflow-hidden rounded-full border-[4px] border-[var(--brand)] bg-white shadow-[0_8px_20px_-8px_color-mix(in_oklab,var(--brand)_40%,transparent)] md:h-[96px] md:w-[96px] md:border-[5px]">
+                  {it.image_url ? (
+                    <img
+                      src={it.image_url}
+                      alt={it.title}
+                      loading="lazy"
+                      className="h-full w-full object-contain p-2"
+                    />
+                  ) : (
+                    <Icon className="h-7 w-7 text-[var(--brand)] md:h-9 md:w-9" strokeWidth={1.8} />
+                  )}
                 </div>
-              );
-            })}
-          </div>
+                <div className="mt-3 text-xs font-extrabold text-[var(--purple)] md:mt-4 md:text-sm">
+                  {it.title}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
