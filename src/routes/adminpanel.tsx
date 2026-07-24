@@ -17,6 +17,7 @@ import {
   HelpCircle,
   Info,
   Circle,
+  Type,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -49,6 +50,7 @@ const navItems = [
   { to: "/adminpanel/contact", label: "بيانات التواصل", icon: Phone, exact: false },
   { to: "/adminpanel/faqs", label: "أسئلة زر التواصل", icon: HelpCircle, exact: false },
   { to: "/adminpanel/about", label: "من نحن", icon: Info, exact: false },
+  { to: "/adminpanel/sections", label: "نصوص الأقسام", icon: Type, exact: false },
 ] as const;
 
 function AdminGate() {
