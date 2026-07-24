@@ -274,13 +274,13 @@ function Index() {
             ))}
           </div>
           <div className="mt-6 flex justify-center">
-            <Link
-              to="/news"
+            <a
+              href={news[0] ? `/news/${news[0].slug}` : "#"}
               className="inline-flex items-center gap-2 rounded-md border border-[var(--brand)] bg-white px-5 py-2 text-sm font-bold text-[var(--brand)] transition hover:bg-[var(--brand)] hover:text-white"
             >
               <span>مشاهدة الكل</span>
               <ArrowLeft className="h-4 w-4" />
-            </Link>
+            </a>
           </div>
         </section>
       )}
