@@ -41,14 +41,20 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
           {/* Centered navigation (absolutely centered on page) */}
           <nav className="pointer-events-none absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-7 whitespace-nowrap text-[15px] font-bold text-[var(--ink)] lg:flex">
             {navItems.map((it) => {
-              const cls = `pointer-events-auto transition hover:text-[var(--brand)] ${active === it.id ? "text-[var(--brand)]" : ""}`;
+              const cls = `pointer-events-auto inline-flex items-center gap-1.5 transition hover:text-[var(--brand)] ${active === it.id ? "text-[var(--brand)]" : ""}`;
+              const label = (
+                <>
+                  {it.label}
+                  {it.hasHint ? aboutHint : null}
+                </>
+              );
               return it.to ? (
                 <Link key={it.id} to={it.to} className={cls}>
-                  {it.label}
+                  {label}
                 </Link>
               ) : (
                 <a key={it.id} href={it.href} className={cls}>
-                  {it.label}
+                  {label}
                 </a>
               );
             })}
