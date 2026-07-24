@@ -170,13 +170,10 @@ function Index() {
       {/* Promo / Offer cards */}
       {offers.length > 0 && (
         <section className="mx-auto max-w-[1400px] px-5 pb-6 md:px-10" dir="rtl">
-          <div className="mb-8 text-center">
-            <div className="inline-flex items-center gap-2 text-sm font-bold text-[var(--brand)]">
-              <span className="h-2 w-2 rounded-full bg-[var(--brand)]" />
-              أحدث عروضنا
-            </div>
-            <h3 className="mt-2 text-2xl font-black text-[var(--purple)] md:text-3xl">باقات مصمّمة لحماية مؤسستك</h3>
-          </div>
+          <SectionHeader
+            data={sec("offers")}
+            fallback={{ eyebrow: "أحدث عروضنا", title: "باقات مصمّمة لحماية مؤسستك" }}
+          />
           <div className="grid gap-6 md:grid-cols-2">
             {offers.map((o) => (
               <PromoCard key={o.id} offer={o} />
@@ -188,16 +185,15 @@ function Index() {
       {/* Systems */}
       {systemItems.length > 0 && (
         <section id="systems" className="mx-auto max-w-[1400px] px-5 pb-6 pt-20 md:px-10" dir="rtl">
-          <div className="mb-8 text-center">
-            <div className="inline-flex items-center gap-2 text-sm font-bold text-[var(--brand)]">
-              <span className="h-2 w-2 rounded-full bg-[var(--brand)]" />
-              منصاتنا
-            </div>
-            <h3 className="mt-2 text-2xl font-black text-[var(--purple)] md:text-3xl">تطبيقاتنا وأنظمتنا</h3>
-            <p className="mx-auto mt-3 max-w-xl text-sm text-[var(--ink-soft)] md:text-base">
-              اضغط على أي نظام لعرض تفاصيله. تعمل جميع منصاتنا بشكل متكامل لحماية مؤسستك من جميع الزوايا.
-            </p>
-          </div>
+          <SectionHeader
+            data={sec("systems")}
+            fallback={{
+              eyebrow: "منصاتنا",
+              title: "تطبيقاتنا وأنظمتنا",
+              description:
+                "اضغط على أي نظام لعرض تفاصيله. تعمل جميع منصاتنا بشكل متكامل لحماية مؤسستك من جميع الزوايا.",
+            }}
+          />
           <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {systemItems.slice(0, 4).map((sys) => (
               <SystemCard key={sys.id} system={sys} onOpen={() => setOpenSystem(sys)} />
@@ -219,13 +215,10 @@ function Index() {
       {clients.length > 0 && (
         <section className="bg-[oklch(0.98_0.005_270)] py-14" dir="rtl">
           <div className="mx-auto max-w-[1400px] px-5 md:px-10">
-            <div className="mb-8 text-center">
-              <div className="inline-flex items-center gap-2 text-sm font-bold text-[var(--brand)]">
-                <span className="h-2 w-2 rounded-full bg-[var(--brand)]" />
-                عملاء Lamha Secure
-              </div>
-              <h3 className="mt-2 text-2xl font-black text-[var(--purple)] md:text-3xl">يثقون بنا</h3>
-            </div>
+            <SectionHeader
+              data={sec("clients")}
+              fallback={{ eyebrow: "عملاء Lamha Secure", title: "يثقون بنا" }}
+            />
             <ClientsCarousel clients={clients} />
             <div className="mt-6 flex justify-center">
               <Link
