@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
+import { HelpCircle, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { LogoMark } from "./LogoMark";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
@@ -7,14 +7,20 @@ import { useSiteSettings } from "@/hooks/useSiteSettings";
 export function SiteHeader({ active }: { active?: "home" | "services" | "systems" | "clients" | "about" | "contact" }) {
   const [open, setOpen] = useState(false);
   const { logo_url } = useSiteSettings();
-  const navItems: { id: NonNullable<typeof active>; label: string; href: string; to?: undefined }[] | { id: NonNullable<typeof active>; label: string; to: string; href?: undefined }[] = [
+  const navItems: { id: NonNullable<typeof active>; label: string; href: string; to?: undefined; hasHint?: boolean }[] | { id: NonNullable<typeof active>; label: string; to: string; href?: undefined; hasHint?: boolean }[] = [
     { id: "home", label: "الرئيسية", to: "/" },
-    { id: "about", label: "من نحن", to: "/about" },
+    { id: "about", label: "من نحن", to: "/about", hasHint: true },
     { id: "services", label: "خدماتنا", href: "/#services" },
     { id: "systems", label: "تطبيقاتنا", to: "/systems" },
     { id: "clients", label: "عملاؤنا", to: "/clients" },
     { id: "contact", label: "تواصل معنا", href: "/#contact" },
   ] as any;
+
+  const aboutHint = (
+    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-[var(--brand)] text-white shadow-sm md:h-[22px] md:w-[22px]">
+      <HelpCircle className="h-3 w-3 md:h-3.5 md:w-3.5" />
+    </span>
+  );
 
   return (
     <header className="font-arabic" dir="rtl">
@@ -35,14 +41,20 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
           {/* Centered navigation (absolutely centered on page) */}
           <nav className="pointer-events-none absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-7 whitespace-nowrap text-[15px] font-bold text-[var(--ink)] lg:flex">
             {navItems.map((it) => {
-              const cls = `pointer-events-auto transition hover:text-[var(--brand)] ${active === it.id ? "text-[var(--brand)]" : ""}`;
+              const cls = `pointer-events-auto inline-flex items-center gap-1.5 transition hover:text-[var(--brand)] ${active === it.id ? "text-[var(--brand)]" : ""}`;
+              const label = (
+                <>
+                  {it.label}
+                  {it.hasHint ? aboutHint : null}
+                </>
+              );
               return it.to ? (
                 <Link key={it.id} to={it.to} className={cls}>
-                  {it.label}
+                  {label}
                 </Link>
               ) : (
                 <a key={it.id} href={it.href} className={cls}>
-                  {it.label}
+                  {label}
                 </a>
               );
             })}
@@ -63,14 +75,20 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
           <div className="border-t border-[var(--line)] bg-white lg:hidden">
             <nav className="mx-auto flex max-w-[1400px] flex-col px-5 py-3 text-[15px] font-bold text-[var(--ink)] md:px-10">
               {navItems.map((it) => {
-                const cls = `rounded-md px-3 py-3 transition hover:bg-[var(--line)]/40 hover:text-[var(--brand)] ${active === it.id ? "text-[var(--brand)]" : ""}`;
+                const cls = `flex items-center gap-2 rounded-md px-3 py-3 transition hover:bg-[var(--line)]/40 hover:text-[var(--brand)] ${active === it.id ? "text-[var(--brand)]" : ""}`;
+                const label = (
+                  <>
+                    {it.label}
+                    {it.hasHint ? aboutHint : null}
+                  </>
+                );
                 return it.to ? (
                   <Link key={it.id} to={it.to} className={cls} onClick={() => setOpen(false)}>
-                    {it.label}
+                    {label}
                   </Link>
                 ) : (
                   <a key={it.id} href={it.href} className={cls} onClick={() => setOpen(false)}>
-                    {it.label}
+                    {label}
                   </a>
                 );
               })}
