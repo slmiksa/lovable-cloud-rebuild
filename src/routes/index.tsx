@@ -138,16 +138,16 @@ function Index() {
 
       {/* Services */}
       <section id="services" className="mx-auto max-w-[1400px] px-5 py-16 md:px-10 md:py-24" dir="rtl">
-        <div className="mx-auto max-w-2xl text-center">
-          <div className="inline-flex items-center gap-2 text-sm font-bold text-[var(--brand)]">
-            <span className="h-2 w-2 rounded-full bg-[var(--brand)]" />
-            خدماتنا
-          </div>
-          <h2 className="mt-3 text-3xl font-black text-[var(--purple)] md:text-5xl">حلول متكاملة لأمنك الرقمي</h2>
-          <p className="mt-4 text-base text-[var(--ink-soft)] md:text-lg">
-            نقدم باقة شاملة من خدمات الأمن السيبراني والحلول التقنية والبرمجية والاستشارات لحماية أعمالك ودعم نموها بثقة.
-          </p>
-        </div>
+        <SectionHeader
+          data={sec("services")}
+          size="lg"
+          fallback={{
+            eyebrow: "خدماتنا",
+            title: "حلول متكاملة لأمنك الرقمي",
+            description:
+              "نقدم باقة شاملة من خدمات الأمن السيبراني والحلول التقنية والبرمجية والاستشارات لحماية أعمالك ودعم نموها بثقة.",
+          }}
+        />
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s) => {
             const Icon = getIcon(s.icon);
