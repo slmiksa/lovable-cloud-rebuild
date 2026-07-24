@@ -235,10 +235,11 @@ function Index() {
       {/* News-style cards */}
       {news.length > 0 && (
         <section className="mx-auto max-w-[1400px] px-5 pb-20 md:px-10" dir="rtl">
-          <div className="mb-8 text-center">
-            <h3 className="text-2xl font-black text-[var(--purple)] md:text-3xl">أهم أخبار Lamha Secure</h3>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
+          <SectionHeader
+            data={sec("news")}
+            fallback={{ eyebrow: "أخبارنا", title: "أهم أخبار Lamha Secure" }}
+          />
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
             {news.slice(0, 3).map((n: PublicNews) => (
               <Link
                 key={n.slug}
@@ -271,6 +272,15 @@ function Index() {
                 </div>
               </Link>
             ))}
+          </div>
+          <div className="mt-6 flex justify-center">
+            <Link
+              to="/news"
+              className="inline-flex items-center gap-2 rounded-md border border-[var(--brand)] bg-white px-5 py-2 text-sm font-bold text-[var(--brand)] transition hover:bg-[var(--brand)] hover:text-white"
+            >
+              <span>مشاهدة الكل</span>
+              <ArrowLeft className="h-4 w-4" />
+            </Link>
           </div>
         </section>
       )}
