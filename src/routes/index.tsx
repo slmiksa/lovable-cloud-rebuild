@@ -86,6 +86,8 @@ function SectionHeader({
       )}
     </div>
   );
+}
+
 
 function parseOffer(desc: string | null): { note: string; features: string[] } {
   const lines = (desc ?? "").split("\n").map((l) => l.trim()).filter(Boolean);
