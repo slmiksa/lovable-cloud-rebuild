@@ -75,14 +75,20 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
           <div className="border-t border-[var(--line)] bg-white lg:hidden">
             <nav className="mx-auto flex max-w-[1400px] flex-col px-5 py-3 text-[15px] font-bold text-[var(--ink)] md:px-10">
               {navItems.map((it) => {
-                const cls = `rounded-md px-3 py-3 transition hover:bg-[var(--line)]/40 hover:text-[var(--brand)] ${active === it.id ? "text-[var(--brand)]" : ""}`;
+                const cls = `flex items-center gap-2 rounded-md px-3 py-3 transition hover:bg-[var(--line)]/40 hover:text-[var(--brand)] ${active === it.id ? "text-[var(--brand)]" : ""}`;
+                const label = (
+                  <>
+                    {it.label}
+                    {it.hasHint ? aboutHint : null}
+                  </>
+                );
                 return it.to ? (
                   <Link key={it.id} to={it.to} className={cls} onClick={() => setOpen(false)}>
-                    {it.label}
+                    {label}
                   </Link>
                 ) : (
                   <a key={it.id} href={it.href} className={cls} onClick={() => setOpen(false)}>
-                    {it.label}
+                    {label}
                   </a>
                 );
               })}
