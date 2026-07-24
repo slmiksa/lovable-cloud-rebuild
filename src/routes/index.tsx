@@ -20,6 +20,7 @@ import {
   type PublicService,
   type PublicSlide,
   type PublicSystem,
+  type SectionTextsMap,
 } from "@/lib/public.functions";
 import { ArrowLeft, Check, Loader2, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -60,7 +61,7 @@ function parseOffer(desc: string | null): { note: string; features: string[] } {
 }
 
 function Index() {
-  const { slides, services, offers, systems, clients, news, circles } = Route.useLoaderData() as {
+  const { slides, services, offers, systems, clients, news, circles, sections } = Route.useLoaderData() as {
     slides: PublicSlide[];
     services: PublicService[];
     offers: PublicOffer[];
@@ -68,9 +69,11 @@ function Index() {
     clients: PublicClient[];
     news: PublicNews[];
     circles: PublicCircle[];
+    sections: SectionTextsMap;
     socialLinks: import("@/lib/public.functions").PublicSocialLink[];
   };
   const [openSystem, setOpenSystem] = useState<SystemItem | null>(null);
+  const sec = (k: string) => sections?.[k] ?? null;
 
   const systemItems = systems.map((s, i) => toSystemItem(s, i));
 
