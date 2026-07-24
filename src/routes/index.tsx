@@ -20,6 +20,7 @@ import {
   type PublicService,
   type PublicSlide,
   type PublicSystem,
+  type SectionTextsMap,
 } from "@/lib/public.functions";
 import { ArrowLeft, Check, Loader2, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -47,6 +48,47 @@ function clientShort(name: string): string {
   return name.replace(/\s/g, "").slice(0, 2).toUpperCase();
 }
 
+function SectionHeader({
+  data,
+  fallback,
+  size = "md",
+}: {
+  data: import("@/lib/public.functions").PublicSectionText | null;
+  fallback: { eyebrow?: string; title: string; description?: string; icon?: string };
+  size?: "sm" | "md" | "lg";
+}) {
+  const eyebrow = data?.eyebrow ?? fallback.eyebrow;
+  const title = data?.title ?? fallback.title;
+  const description = data?.description ?? fallback.description;
+  const iconName = data?.icon ?? fallback.icon;
+  const Icon = iconName ? getIcon(iconName) : null;
+  const titleCls =
+    size === "lg"
+      ? "mt-3 text-3xl font-black text-[var(--purple)] md:text-5xl"
+      : "mt-2 text-2xl font-black text-[var(--purple)] md:text-3xl";
+  return (
+    <div className="mx-auto max-w-2xl text-center">
+      {eyebrow && (
+        <div className="inline-flex items-center gap-2 text-sm font-bold text-[var(--brand)]">
+          {Icon ? (
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--brand)]/10 text-[var(--brand)]">
+              <Icon className="h-3.5 w-3.5" strokeWidth={2.5} />
+            </span>
+          ) : (
+            <span className="h-2 w-2 rounded-full bg-[var(--brand)]" />
+          )}
+          {eyebrow}
+        </div>
+      )}
+      <h2 className={titleCls}>{title}</h2>
+      {description && (
+        <p className="mt-3 text-sm text-[var(--ink-soft)] md:text-base whitespace-pre-line">{description}</p>
+      )}
+    </div>
+  );
+}
+
+
 function parseOffer(desc: string | null): { note: string; features: string[] } {
   const lines = (desc ?? "").split("\n").map((l) => l.trim()).filter(Boolean);
   let note = "";
@@ -60,7 +102,7 @@ function parseOffer(desc: string | null): { note: string; features: string[] } {
 }
 
 function Index() {
-  const { slides, services, offers, systems, clients, news, circles } = Route.useLoaderData() as {
+  const { slides, services, offers, systems, clients, news, circles, sections } = Route.useLoaderData() as {
     slides: PublicSlide[];
     services: PublicService[];
     offers: PublicOffer[];
@@ -68,9 +110,11 @@ function Index() {
     clients: PublicClient[];
     news: PublicNews[];
     circles: PublicCircle[];
+    sections: SectionTextsMap;
     socialLinks: import("@/lib/public.functions").PublicSocialLink[];
   };
   const [openSystem, setOpenSystem] = useState<SystemItem | null>(null);
+  const sec = (k: string) => sections?.[k] ?? null;
 
   const systemItems = systems.map((s, i) => toSystemItem(s, i));
 
@@ -94,16 +138,16 @@ function Index() {
 
       {/* Services */}
       <section id="services" className="mx-auto max-w-[1400px] px-5 py-16 md:px-10 md:py-24" dir="rtl">
-        <div className="mx-auto max-w-2xl text-center">
-          <div className="inline-flex items-center gap-2 text-sm font-bold text-[var(--brand)]">
-            <span className="h-2 w-2 rounded-full bg-[var(--brand)]" />
-            خدماتنا
-          </div>
-          <h2 className="mt-3 text-3xl font-black text-[var(--purple)] md:text-5xl">حلول متكاملة لأمنك الرقمي</h2>
-          <p className="mt-4 text-base text-[var(--ink-soft)] md:text-lg">
-            نقدم باقة شاملة من خدمات الأمن السيبراني والحلول التقنية والبرمجية والاستشارات لحماية أعمالك ودعم نموها بثقة.
-          </p>
-        </div>
+        <SectionHeader
+          data={sec("services")}
+          size="lg"
+          fallback={{
+            eyebrow: "خدماتنا",
+            title: "حلول متكاملة لأمنك الرقمي",
+            description:
+              "نقدم باقة شاملة من خدمات الأمن السيبراني والحلول التقنية والبرمجية والاستشارات لحماية أعمالك ودعم نموها بثقة.",
+          }}
+        />
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s) => {
             const Icon = getIcon(s.icon);
@@ -126,13 +170,10 @@ function Index() {
       {/* Promo / Offer cards */}
       {offers.length > 0 && (
         <section className="mx-auto max-w-[1400px] px-5 pb-6 md:px-10" dir="rtl">
-          <div className="mb-8 text-center">
-            <div className="inline-flex items-center gap-2 text-sm font-bold text-[var(--brand)]">
-              <span className="h-2 w-2 rounded-full bg-[var(--brand)]" />
-              أحدث عروضنا
-            </div>
-            <h3 className="mt-2 text-2xl font-black text-[var(--purple)] md:text-3xl">باقات مصمّمة لحماية مؤسستك</h3>
-          </div>
+          <SectionHeader
+            data={sec("offers")}
+            fallback={{ eyebrow: "أحدث عروضنا", title: "باقات مصمّمة لحماية مؤسستك" }}
+          />
           <div className="grid gap-6 md:grid-cols-2">
             {offers.map((o) => (
               <PromoCard key={o.id} offer={o} />
@@ -144,16 +185,15 @@ function Index() {
       {/* Systems */}
       {systemItems.length > 0 && (
         <section id="systems" className="mx-auto max-w-[1400px] px-5 pb-6 pt-20 md:px-10" dir="rtl">
-          <div className="mb-8 text-center">
-            <div className="inline-flex items-center gap-2 text-sm font-bold text-[var(--brand)]">
-              <span className="h-2 w-2 rounded-full bg-[var(--brand)]" />
-              منصاتنا
-            </div>
-            <h3 className="mt-2 text-2xl font-black text-[var(--purple)] md:text-3xl">تطبيقاتنا وأنظمتنا</h3>
-            <p className="mx-auto mt-3 max-w-xl text-sm text-[var(--ink-soft)] md:text-base">
-              اضغط على أي نظام لعرض تفاصيله. تعمل جميع منصاتنا بشكل متكامل لحماية مؤسستك من جميع الزوايا.
-            </p>
-          </div>
+          <SectionHeader
+            data={sec("systems")}
+            fallback={{
+              eyebrow: "منصاتنا",
+              title: "تطبيقاتنا وأنظمتنا",
+              description:
+                "اضغط على أي نظام لعرض تفاصيله. تعمل جميع منصاتنا بشكل متكامل لحماية مؤسستك من جميع الزوايا.",
+            }}
+          />
           <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {systemItems.slice(0, 4).map((sys) => (
               <SystemCard key={sys.id} system={sys} onOpen={() => setOpenSystem(sys)} />
@@ -175,13 +215,10 @@ function Index() {
       {clients.length > 0 && (
         <section className="bg-[oklch(0.98_0.005_270)] py-14" dir="rtl">
           <div className="mx-auto max-w-[1400px] px-5 md:px-10">
-            <div className="mb-8 text-center">
-              <div className="inline-flex items-center gap-2 text-sm font-bold text-[var(--brand)]">
-                <span className="h-2 w-2 rounded-full bg-[var(--brand)]" />
-                عملاء Lamha Secure
-              </div>
-              <h3 className="mt-2 text-2xl font-black text-[var(--purple)] md:text-3xl">يثقون بنا</h3>
-            </div>
+            <SectionHeader
+              data={sec("clients")}
+              fallback={{ eyebrow: "عملاء Lamha Secure", title: "يثقون بنا" }}
+            />
             <ClientsCarousel clients={clients} />
             <div className="mt-6 flex justify-center">
               <Link
@@ -198,10 +235,11 @@ function Index() {
       {/* News-style cards */}
       {news.length > 0 && (
         <section className="mx-auto max-w-[1400px] px-5 pb-20 md:px-10" dir="rtl">
-          <div className="mb-8 text-center">
-            <h3 className="text-2xl font-black text-[var(--purple)] md:text-3xl">أهم أخبار Lamha Secure</h3>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
+          <SectionHeader
+            data={sec("news")}
+            fallback={{ eyebrow: "أخبارنا", title: "أهم أخبار Lamha Secure" }}
+          />
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
             {news.slice(0, 3).map((n: PublicNews) => (
               <Link
                 key={n.slug}
@@ -234,6 +272,15 @@ function Index() {
                 </div>
               </Link>
             ))}
+          </div>
+          <div className="mt-6 flex justify-center">
+            <a
+              href={news[0] ? `/news/${news[0].slug}` : "#"}
+              className="inline-flex items-center gap-2 rounded-md border border-[var(--brand)] bg-white px-5 py-2 text-sm font-bold text-[var(--brand)] transition hover:bg-[var(--brand)] hover:text-white"
+            >
+              <span>مشاهدة الكل</span>
+              <ArrowLeft className="h-4 w-4" />
+            </a>
           </div>
         </section>
       )}

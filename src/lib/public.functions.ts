@@ -74,6 +74,15 @@ export interface PublicCircle {
   icon: string | null;
   image_url: string | null;
 }
+export interface PublicSectionText {
+  key: string;
+  eyebrow: string | null;
+  title: string | null;
+  description: string | null;
+  icon: string | null;
+  image_url: string | null;
+}
+export type SectionTextsMap = Record<string, PublicSectionText>;
 
 async function fetchSlides(): Promise<PublicSlide[]> {
   const { data } = await supabase
@@ -147,9 +156,17 @@ async function fetchCircles(): Promise<PublicCircle[]> {
     .order("sort_order", { ascending: true });
   return (data ?? []) as PublicCircle[];
 }
+async function fetchSectionTexts(): Promise<SectionTextsMap> {
+  const { data } = await supabase
+    .from("section_texts")
+    .select("key,eyebrow,title,description,icon,image_url");
+  const map: SectionTextsMap = {};
+  for (const r of (data ?? []) as PublicSectionText[]) map[r.key] = r;
+  return map;
+}
 
 export async function getPublicHome() {
-  const [slides, services, offers, systems, clients, news, socialLinks, circles] = await Promise.all([
+  const [slides, services, offers, systems, clients, news, socialLinks, circles, sections] = await Promise.all([
     fetchSlides(),
     fetchServices(),
     fetchOffers(),
@@ -158,8 +175,9 @@ export async function getPublicHome() {
     fetchNews(),
     fetchSocialLinks(),
     fetchCircles(),
+    fetchSectionTexts(),
   ]);
-  return { slides, services, offers, systems, clients, news, socialLinks, circles };
+  return { slides, services, offers, systems, clients, news, socialLinks, circles, sections };
 }
 
 export async function getPublicSystems() {
