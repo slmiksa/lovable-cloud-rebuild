@@ -83,8 +83,6 @@ export interface PublicSectionText {
   image_url: string | null;
 }
 export type SectionTextsMap = Record<string, PublicSectionText>;
-  image_url: string | null;
-}
 
 async function fetchSlides(): Promise<PublicSlide[]> {
   const { data } = await supabase
