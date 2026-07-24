@@ -248,6 +248,42 @@ export type Database = {
         }
         Relationships: []
       }
+      section_texts: {
+        Row: {
+          created_at: string
+          description: string | null
+          eyebrow: string | null
+          icon: string | null
+          id: string
+          image_url: string | null
+          key: string
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          eyebrow?: string | null
+          icon?: string | null
+          id?: string
+          image_url?: string | null
+          key: string
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          eyebrow?: string | null
+          icon?: string | null
+          id?: string
+          image_url?: string | null
+          key?: string
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       services: {
         Row: {
           created_at: string
