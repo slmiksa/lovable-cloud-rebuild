@@ -48,6 +48,45 @@ function clientShort(name: string): string {
   return name.replace(/\s/g, "").slice(0, 2).toUpperCase();
 }
 
+function SectionHeader({
+  data,
+  fallback,
+  size = "md",
+}: {
+  data: import("@/lib/public.functions").PublicSectionText | null;
+  fallback: { eyebrow?: string; title: string; description?: string; icon?: string };
+  size?: "sm" | "md" | "lg";
+}) {
+  const eyebrow = data?.eyebrow ?? fallback.eyebrow;
+  const title = data?.title ?? fallback.title;
+  const description = data?.description ?? fallback.description;
+  const iconName = data?.icon ?? fallback.icon;
+  const Icon = iconName ? getIcon(iconName) : null;
+  const titleCls =
+    size === "lg"
+      ? "mt-3 text-3xl font-black text-[var(--purple)] md:text-5xl"
+      : "mt-2 text-2xl font-black text-[var(--purple)] md:text-3xl";
+  return (
+    <div className="mx-auto max-w-2xl text-center">
+      {eyebrow && (
+        <div className="inline-flex items-center gap-2 text-sm font-bold text-[var(--brand)]">
+          {Icon ? (
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--brand)]/10 text-[var(--brand)]">
+              <Icon className="h-3.5 w-3.5" strokeWidth={2.5} />
+            </span>
+          ) : (
+            <span className="h-2 w-2 rounded-full bg-[var(--brand)]" />
+          )}
+          {eyebrow}
+        </div>
+      )}
+      <h2 className={titleCls}>{title}</h2>
+      {description && (
+        <p className="mt-3 text-sm text-[var(--ink-soft)] md:text-base whitespace-pre-line">{description}</p>
+      )}
+    </div>
+  );
+
 function parseOffer(desc: string | null): { note: string; features: string[] } {
   const lines = (desc ?? "").split("\n").map((l) => l.trim()).filter(Boolean);
   let note = "";
