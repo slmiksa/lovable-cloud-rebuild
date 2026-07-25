@@ -2,7 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { HelpCircle, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { LogoMark } from "./LogoMark";
+import { ThemeToggle } from "./ThemeToggle";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+
 
 export function SiteHeader({ active }: { active?: "home" | "services" | "systems" | "clients" | "about" | "contact" }) {
   const [open, setOpen] = useState(false);
@@ -60,16 +62,20 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
             })}
           </nav>
 
-          {/* Mobile menu button (far left in RTL) */}
-          <button
-            onClick={() => setOpen((v) => !v)}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--line)] text-[var(--ink-soft)] transition hover:text-[var(--brand)] lg:hidden"
-            aria-label="القائمة"
-            aria-expanded={open}
-          >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          {/* Right cluster: theme toggle + mobile menu (far left in RTL) */}
+          <div className="flex shrink-0 items-center gap-2">
+            <ThemeToggle />
+            <button
+              onClick={() => setOpen((v) => !v)}
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--line)] text-[var(--ink-soft)] transition hover:text-[var(--brand)] lg:hidden"
+              aria-label="القائمة"
+              aria-expanded={open}
+            >
+              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
+
 
         {open && (
           <div className="border-t border-[var(--line)] bg-white lg:hidden">

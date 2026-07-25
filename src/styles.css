@@ -117,6 +117,21 @@
 .dark {
   --background: oklch(0.14 0.015 215);
   --foreground: oklch(0.96 0.008 195);
+
+  --brand: oklch(0.75 0.11 193);
+  --brand-foreground: oklch(0.12 0.015 220);
+  --brand-dark: oklch(0.58 0.10 197);
+  --brand-light: oklch(0.85 0.09 193);
+
+  --purple: oklch(0.10 0.012 220);
+  --purple-dark: oklch(0.07 0.010 220);
+  --purple-light: oklch(0.18 0.02 215);
+
+  --ink: oklch(0.96 0.008 195);
+  --ink-soft: oklch(0.75 0.02 200);
+  --line: oklch(1 0 0 / 12%);
+  --hero-gradient: linear-gradient(120deg, oklch(0.07 0.010 220) 0%, oklch(0.14 0.02 215) 45%, oklch(0.28 0.07 197) 100%);
+
   --card: oklch(0.20 0.02 215);
   --card-foreground: oklch(0.96 0.008 195);
   --popover: oklch(0.20 0.02 215);
@@ -126,12 +141,12 @@
   --secondary: oklch(0.26 0.025 215);
   --secondary-foreground: oklch(0.96 0.008 195);
   --muted: oklch(0.26 0.025 215);
-  --muted-foreground: oklch(0.72 0.02 195);
+  --muted-foreground: oklch(0.78 0.02 195);
   --accent: oklch(0.30 0.05 197);
   --accent-foreground: oklch(0.96 0.008 195);
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
+  --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.75 0.11 193);
   --chart-1: oklch(0.75 0.11 193);
@@ -148,6 +163,45 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.75 0.11 193);
 }
+
+/* Dark-mode overrides for hardcoded utility colors used across the marketing site.
+   We remap literal whites/near-whites and pure-black text to semantic tokens so
+   surfaces flip cleanly without touching every component. */
+.dark .bg-white { background-color: var(--card) !important; }
+.dark .bg-white\/10 { background-color: color-mix(in oklab, var(--foreground) 8%, transparent) !important; }
+.dark .bg-white\/15 { background-color: color-mix(in oklab, var(--foreground) 12%, transparent) !important; }
+.dark .bg-white\/20 { background-color: color-mix(in oklab, var(--foreground) 16%, transparent) !important; }
+.dark .bg-white\/70,
+.dark .bg-white\/80,
+.dark .bg-white\/90,
+.dark .bg-white\/95 { background-color: color-mix(in oklab, var(--card) 92%, transparent) !important; }
+.dark .bg-slate-50,
+.dark .bg-slate-100,
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-neutral-50,
+.dark .bg-neutral-100 { background-color: var(--muted) !important; }
+.dark .text-black { color: var(--foreground) !important; }
+.dark .text-slate-900,
+.dark .text-gray-900,
+.dark .text-neutral-900,
+.dark .text-slate-800,
+.dark .text-gray-800 { color: var(--foreground) !important; }
+.dark .text-slate-700,
+.dark .text-gray-700,
+.dark .text-slate-600,
+.dark .text-gray-600,
+.dark .text-slate-500,
+.dark .text-gray-500 { color: var(--muted-foreground) !important; }
+.dark .border-slate-100,
+.dark .border-slate-200,
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-neutral-200 { border-color: var(--border) !important; }
+.dark .ring-white\/30,
+.dark .ring-white\/40,
+.dark .ring-white\/50 { --tw-ring-color: color-mix(in oklab, var(--foreground) 20%, transparent) !important; }
+
 
 @layer base {
   * {
