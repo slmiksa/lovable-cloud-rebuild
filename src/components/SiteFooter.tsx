@@ -32,7 +32,7 @@ export function SiteFooter() {
 
   return (
     <footer className="bg-[var(--purple-dark)] font-arabic text-white" dir="rtl">
-      <div className="mx-auto grid max-w-[1400px] gap-10 px-5 py-14 md:grid-cols-3 md:px-10">
+      <div className="mx-auto grid max-w-[1400px] gap-10 px-5 py-14 md:grid-cols-2 md:px-10">
         <div>
           <div className="flex items-center gap-3">
             <div className="flex h-28 w-28 shrink-0 items-center justify-center rounded-2xl bg-white p-1 ring-1 ring-white/30 md:h-32 md:w-32">
@@ -68,17 +68,6 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h4 className="border-b border-white/15 pb-3 text-sm font-bold text-white">روابط سريعة</h4>
-          <ul className="mt-4 space-y-2.5 text-sm text-white/70">
-            <li><a href="/" className="transition hover:text-[var(--brand)]">الرئيسية</a></li>
-            <li><a href="/#services" className="transition hover:text-[var(--brand)]">خدماتنا</a></li>
-            <li><a href="/systems" className="transition hover:text-[var(--brand)]">تطبيقاتنا</a></li>
-            <li><a href="/clients" className="transition hover:text-[var(--brand)]">عملاؤنا</a></li>
-            <li><a href="/#contact" className="transition hover:text-[var(--brand)]">تواصل معنا</a></li>
-          </ul>
-        </div>
-
-        <div>
           <h4 className="border-b border-white/15 pb-3 text-sm font-bold text-white">تواصل معنا</h4>
           <ul className="mt-4 space-y-3 text-sm text-white/70">
             {contact_phone && (
@@ -102,6 +91,7 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
+
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-[1400px] items-center justify-center px-5 py-5 text-center text-xs text-white/70 md:px-10">
           © {new Date().getFullYear()} جميع الحقوق محفوظة للمحة الآمنة للحلول التقنية
