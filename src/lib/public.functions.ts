@@ -28,6 +28,7 @@ export interface PublicService {
   title: string;
   description: string | null;
   icon: string | null;
+  image_url: string | null;
 }
 export interface PublicOffer {
   id: string;
