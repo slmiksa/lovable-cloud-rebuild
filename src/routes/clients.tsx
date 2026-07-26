@@ -29,8 +29,8 @@ function ClientsPage() {
     sections: SectionTextsMap;
   };
   const s = sections?.["clients_page"];
-  const eyebrow = s?.eyebrow ?? " ";
-  const title = s?.title ?? " ";
+  const eyebrow = s?.eyebrow ?? "شركاؤنا";
+  const title = s?.title ?? "عملاؤنا";
   const description =
     s?.description ??
     "نفخر بثقة عملائنا من مختلف القطاعات، ونلتزم بتقديم حلول أمنية وتقنية متقدمة لحماية الأعمال الرقمية، وتعزيز الأمن السيبراني، وتطوير حلول تقنية مبتكرة تحقق أعلى معايير الكفاءة والموثوقية.";
@@ -41,8 +41,6 @@ function ClientsPage() {
 
       <section className="bg-gradient-to-l from-[var(--purple)] to-[var(--purple-dark)] py-16 text-white">
         <div className="mx-auto max-w-[1400px] px-5 text-center md:px-10">
-          <div className="text-sm font-bold tracking-widest text-[var(--brand)]">{eyebrow}</div>
-          <h1 className="mt-2 text-3xl font-black md:text-5xl">{title}</h1>
           <p className="mx-auto mt-3 max-w-xl whitespace-pre-line text-base text-white/85">
             {description}
           </p>
