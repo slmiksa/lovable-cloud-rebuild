@@ -186,7 +186,8 @@ export async function getPublicSystems() {
 }
 
 export async function getPublicClients() {
-  return fetchClients();
+  const [clients, sections] = await Promise.all([fetchClients(), fetchSectionTexts()]);
+  return { clients, sections };
 }
 
 export async function getPublicSocialLinks() {
