@@ -203,13 +203,12 @@ function Index() {
               <SystemCard key={sys.id} system={sys} onOpen={() => setOpenSystem(sys)} />
             ))}
           </div>
-          <div className="mt-8 flex justify-center">
+          <div className="mt-6 flex justify-center">
             <Link
               to="/systems"
-              className="inline-flex items-center gap-2 rounded-md border-2 border-[var(--brand)] bg-white px-8 py-3 text-base font-bold text-[var(--brand)] transition hover:bg-[var(--brand)] hover:text-white"
+              className="rounded-md border border-[var(--brand)] bg-white px-6 py-2.5 text-sm font-bold text-[var(--brand)] transition hover:bg-[var(--brand)] hover:text-white"
             >
-              <span>مشاهدة الكل</span>
-              <ArrowLeft className="h-4 w-4" />
+              عرض الكل
             </Link>
           </div>
         </section>
