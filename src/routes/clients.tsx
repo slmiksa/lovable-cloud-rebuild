@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { getPublicClients, type PublicClient } from "@/lib/public.functions";
+import { getPublicClients, type PublicClient, type SectionTextsMap } from "@/lib/public.functions";
 
 export const Route = createFileRoute("/clients")({
   head: () => ({
@@ -24,17 +24,27 @@ function clientShort(name: string): string {
 }
 
 function ClientsPage() {
-  const clients = Route.useLoaderData() as PublicClient[];
+  const { clients, sections } = Route.useLoaderData() as {
+    clients: PublicClient[];
+    sections: SectionTextsMap;
+  };
+  const s = sections?.["clients_page"];
+  const eyebrow = s?.eyebrow ?? "شركاؤنا";
+  const title = s?.title ?? "عملاؤنا";
+  const description =
+    s?.description ??
+    "نفخر بثقة عملائنا من مختلف القطاعات في حماية أعمالهم الرقمية وتطوير حلولهم التقنية.";
+
   return (
     <div className="min-h-screen bg-white font-arabic text-[var(--ink)]" dir="rtl">
       <SiteHeader active="clients" />
 
       <section className="bg-gradient-to-l from-[var(--purple)] to-[var(--purple-dark)] py-16 text-white">
         <div className="mx-auto max-w-[1400px] px-5 text-center md:px-10">
-          <div className="text-sm font-bold tracking-widest text-[var(--brand)]">شركاؤنا</div>
-          <h1 className="mt-2 text-3xl font-black md:text-5xl">عملاؤنا</h1>
-          <p className="mx-auto mt-3 max-w-xl text-base text-white/85">
-            نفخر بثقة عملائنا من مختلف القطاعات في حماية أعمالهم الرقمية وتطوير حلولهم التقنية.
+          <div className="text-sm font-bold tracking-widest text-[var(--brand)]">{eyebrow}</div>
+          <h1 className="mt-2 text-3xl font-black md:text-5xl">{title}</h1>
+          <p className="mx-auto mt-3 max-w-xl whitespace-pre-line text-base text-white/85">
+            {description}
           </p>
         </div>
       </section>
