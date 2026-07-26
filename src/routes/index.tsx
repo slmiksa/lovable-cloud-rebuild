@@ -578,7 +578,6 @@ function ContactSection() {
         <div className="grid gap-10 md:grid-cols-2 md:items-center">
           <div>
             <span className="inline-block rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold text-white/90 backdrop-blur">
-              تواصل معنا
             </span>
             <h3 className="mt-4 text-3xl font-black leading-tight md:text-5xl">تواصل معنا الآن</h3>
             <p className="mt-4 text-white/85 md:text-lg">
