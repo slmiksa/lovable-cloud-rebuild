@@ -156,11 +156,15 @@ function Index() {
                 key={s.id}
                 className="group rounded-2xl border border-[var(--line)] bg-white p-6 shadow-[0_2px_10px_rgba(0,0,0,0.04)] transition hover:-translate-y-1 hover:border-[var(--brand)]/40 hover:shadow-[0_18px_40px_-20px_color-mix(in_oklab,var(--brand)_30%,transparent)]"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--brand)]/10 text-[var(--brand)] transition group-hover:bg-gradient-to-br group-hover:from-[var(--brand)] group-hover:to-[var(--brand-dark)] group-hover:text-white">
-                  <Icon className="h-7 w-7" strokeWidth={2} />
+                <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-[var(--brand)]/10 text-[var(--brand)] transition group-hover:bg-gradient-to-br group-hover:from-[var(--brand)] group-hover:to-[var(--brand-dark)] group-hover:text-white">
+                  {s.image_url ? (
+                    <img src={s.image_url} alt={s.title} loading="lazy" className="h-full w-full object-contain p-1.5" />
+                  ) : (
+                    <Icon className="h-7 w-7" strokeWidth={2} />
+                  )}
                 </div>
                 <h3 className="mt-5 text-xl font-bold text-[var(--purple)]">{s.title}</h3>
-                <p className="mt-2 text-sm leading-loose text-[var(--ink-soft)]">{s.description}</p>
+                <p className="mt-2 text-sm leading-loose text-[var(--ink-soft)] whitespace-pre-line">{s.description}</p>
               </div>
             );
           })}
