@@ -29,6 +29,8 @@ function ClientsPage() {
     sections: SectionTextsMap;
   };
   const s = sections?.["clients_page"];
+  const eyebrow = s?.eyebrow ?? "";
+  const title = s?.title ?? "";
   const description =
     s?.description ??
     "نفخر بثقة عملائنا من مختلف القطاعات، ونلتزم بتقديم حلول أمنية وتقنية متقدمة لحماية الأعمال الرقمية، وتعزيز الأمن السيبراني، وتطوير حلول تقنية مبتكرة تحقق أعلى معايير الكفاءة والموثوقية.";
