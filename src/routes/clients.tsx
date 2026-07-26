@@ -29,11 +29,9 @@ function ClientsPage() {
     sections: SectionTextsMap;
   };
   const s = sections?.["clients_page"];
-  const eyebrow = s?.eyebrow ?? "شركاؤنا";
-  const title = s?.title ?? "عملاؤنا";
   const description =
     s?.description ??
-    "نفخر بثقة عملائنا من مختلف القطاعات في حماية أعمالهم الرقمية وتطوير حلولهم التقنية.";
+    "نفخر بثقة عملائنا من مختلف القطاعات، ونلتزم بتقديم حلول أمنية وتقنية متقدمة لحماية الأعمال الرقمية، وتعزيز الأمن السيبراني، وتطوير حلول تقنية مبتكرة تحقق أعلى معايير الكفاءة والموثوقية.";
 
   return (
     <div className="min-h-screen bg-white font-arabic text-[var(--ink)]" dir="rtl">
