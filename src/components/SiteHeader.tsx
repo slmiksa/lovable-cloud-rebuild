@@ -61,9 +61,8 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
             })}
           </nav>
 
-          {/* Right cluster: theme toggle + mobile menu (far left in RTL) */}
+          {/* Right cluster: mobile menu (far left in RTL) */}
           <div className="flex shrink-0 items-center gap-2">
-            <ThemeToggle />
             <button
               onClick={() => setOpen((v) => !v)}
               className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--line)] text-[var(--ink-soft)] transition hover:text-[var(--brand)] lg:hidden"
