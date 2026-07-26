@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { HelpCircle, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { LogoMark } from "./LogoMark";
-import { ThemeToggle } from "./ThemeToggle";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 
 
@@ -20,7 +19,7 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
 
   const aboutHint = (
     <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-[var(--brand)] text-white shadow-sm md:h-[22px] md:w-[22px]">
-      <HelpCircle className="h-3 w-3 md:h-3.5 md:w-3.5" />
+      <HelpCircle className="h-3 w-3 -scale-x-100 md:h-3.5 md:w-3.5" />
     </span>
   );
 
