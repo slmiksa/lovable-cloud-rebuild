@@ -3,6 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      // Dark mode removed — force light theme and clear any legacy preference.
+      try {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.style.colorScheme = 'light';
+        localStorage.removeItem('lamha-theme');
+      } catch (e) {}
+    </script>
     <title>Lamha Secure for Technical Solutions — لمحة الآمنة للحلول التقنية</title>
     <meta
       name="description"

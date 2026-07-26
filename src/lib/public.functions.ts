@@ -28,6 +28,7 @@ export interface PublicService {
   title: string;
   description: string | null;
   icon: string | null;
+  image_url: string | null;
 }
 export interface PublicOffer {
   id: string;
@@ -95,7 +96,7 @@ async function fetchSlides(): Promise<PublicSlide[]> {
 async function fetchServices(): Promise<PublicService[]> {
   const { data } = await supabase
     .from("services")
-    .select("id,title,description,icon")
+    .select("id,title,description,icon,image_url")
     .eq("is_active", true)
     .order("sort_order", { ascending: true });
   return (data ?? []) as PublicService[];
@@ -185,7 +186,8 @@ export async function getPublicSystems() {
 }
 
 export async function getPublicClients() {
-  return fetchClients();
+  const [clients, sections] = await Promise.all([fetchClients(), fetchSectionTexts()]);
+  return { clients, sections };
 }
 
 export async function getPublicSocialLinks() {

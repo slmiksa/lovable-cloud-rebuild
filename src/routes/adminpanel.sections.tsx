@@ -26,7 +26,8 @@ const LABELS: Record<string, string> = {
   services: "خدماتنا",
   offers: "أحدث العروض",
   systems: "التطبيقات والأنظمة",
-  clients: "العملاء",
+  clients: "العملاء (الرئيسية)",
+  clients_page: "صفحة عملاؤنا",
   news: "الأخبار",
   circles: "الدوائر الرئيسية",
 };
