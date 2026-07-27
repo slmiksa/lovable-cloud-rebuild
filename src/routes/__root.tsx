@@ -82,9 +82,6 @@ function RootComponent() {
   );
 }
 
-import { lazy, Suspense } from "react";
-import { useRouterState } from "@tanstack/react-router";
-const WhatsAppWidgetImpl = lazy(() => import("@/components/WhatsAppWidget"));
 function WhatsAppWidgetLazy() {
   return (
     <Suspense fallback={null}>
