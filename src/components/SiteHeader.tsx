@@ -12,7 +12,7 @@ export function SiteHeader({ active }: { active?: "home" | "services" | "systems
     { id: "home", label: "الرئيسية", to: "/" },
     { id: "about", label: "من نحن", to: "/about", hasHint: true },
     { id: "services", label: "خدماتنا", href: "/#services" },
-    { id: "systems", label: "تطبيقاتنا", to: "/systems" },
+    { id: "systems", label: "أنظمتنا", to: "/systems" },
     { id: "clients", label: "عملاؤنا", to: "/clients" },
     { id: "contact", label: "تواصل معنا", href: "/#contact" },
   ] as any;

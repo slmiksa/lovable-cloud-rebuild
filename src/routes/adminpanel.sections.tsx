@@ -30,6 +30,8 @@ const LABELS: Record<string, string> = {
   clients_page: "صفحة عملاؤنا",
   news: "الأخبار",
   circles: "الدوائر الرئيسية",
+  contact: "تواصل معنا",
+  certifications: "الشهادات الاحترافية",
 };
 
 function SectionsAdmin() {
