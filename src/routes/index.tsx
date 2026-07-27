@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -463,55 +463,33 @@ function PromoCard({ offer }: { offer: PublicOffer }) {
 
 function ClientLogo({ name, logoUrl }: { name: string; logoUrl: string | null }) {
   return (
-    <div className="flex h-28 shrink-0 flex-col items-center justify-center gap-2 rounded-xl border border-[var(--line)] bg-white px-3 grayscale transition hover:grayscale-0 hover:border-[var(--brand)]/40">
+    <div className="flex h-32 w-36 shrink-0 flex-col items-center justify-center gap-2 rounded-xl border border-[var(--line)] bg-white px-3 py-2 grayscale transition hover:grayscale-0 hover:border-[var(--brand)]/40 sm:w-40 md:h-36 md:w-44">
       {logoUrl ? (
-        <img src={logoUrl} alt={name} className="h-12 w-12 rounded-xl object-contain" />
+        <img src={logoUrl} alt={name} className="h-14 w-14 rounded-xl object-contain md:h-16 md:w-16" />
       ) : (
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--purple)]/10 text-base font-black text-[var(--purple)]">
+        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[var(--purple)]/10 text-base font-black text-[var(--purple)] md:h-16 md:w-16">
           {clientShort(name)}
         </div>
       )}
-      <div className="text-center text-xs font-bold tracking-wide text-[var(--ink)] md:text-sm">{name}</div>
+      <div className="line-clamp-2 text-center text-[11px] font-bold leading-tight tracking-wide text-[var(--ink)] sm:text-xs md:text-sm">{name}</div>
     </div>
   );
 }
 
 function ClientsCarousel({ clients }: { clients: PublicClient[] }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const drag = useRef({ down: false, startX: 0, scroll: 0, moved: false });
-
-  const onDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    const el = ref.current;
-    if (!el) return;
-    drag.current = { down: true, startX: e.clientX, scroll: el.scrollLeft, moved: false };
-    el.setPointerCapture(e.pointerId);
-  };
-  const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    const el = ref.current;
-    if (!el || !drag.current.down) return;
-    const dx = e.clientX - drag.current.startX;
-    if (Math.abs(dx) > 4) drag.current.moved = true;
-    el.scrollLeft = drag.current.scroll - dx;
-  };
-  const onUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    const el = ref.current;
-    if (!el) return;
-    drag.current.down = false;
-    try { el.releasePointerCapture(e.pointerId); } catch { /* noop */ }
-  };
+  // Duplicate the list so the marquee can loop seamlessly.
+  const loop = [...clients, ...clients];
+  // Slow down for very short lists so items don't fly by.
+  const duration = Math.max(20, clients.length * 4);
 
   return (
-    <div className="rounded-2xl border border-[var(--line)] bg-white p-4">
+    <div className="marquee-wrap marquee-mask group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-white p-4">
       <div
-        ref={ref}
-        onPointerDown={onDown}
-        onPointerMove={onMove}
-        onPointerUp={onUp}
-        onPointerCancel={onUp}
-        className="grid auto-cols-[calc((100%-4*1rem)/5)] grid-flow-col gap-4 overflow-x-auto overscroll-x-contain cursor-grab active:cursor-grabbing select-none touch-pan-x [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="marquee-track gap-4"
+        style={{ animationDuration: `${duration}s` }}
       >
-        {clients.map((c) => (
-          <ClientLogo key={c.id} name={c.name} logoUrl={c.logo_url} />
+        {loop.map((c, i) => (
+          <ClientLogo key={`${c.id}-${i}`} name={c.name} logoUrl={c.logo_url} />
         ))}
       </div>
     </div>
