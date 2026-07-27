@@ -566,7 +566,7 @@ function CertificationsStrip({
   );
 }
 
-function ContactSection() {
+function ContactSection({ sectionData: _sectionData }: { sectionData?: import("@/lib/public.functions").PublicSectionText | null } = {}) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
