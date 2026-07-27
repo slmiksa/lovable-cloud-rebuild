@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import WhatsAppWidget from "@/components/WhatsAppWidget";
+// WhatsApp widget is now mounted globally in the root layout.
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -20,6 +20,7 @@ import {
   type PublicService,
   type PublicSlide,
   type PublicSystem,
+  type PublicCertification,
   type SectionTextsMap,
 } from "@/lib/public.functions";
 import { ArrowLeft, Check, Loader2, CheckCircle2 } from "lucide-react";
@@ -102,7 +103,7 @@ function parseOffer(desc: string | null): { note: string; features: string[] } {
 }
 
 function Index() {
-  const { slides, services, offers, systems, clients, news, circles, sections } = Route.useLoaderData() as {
+  const { slides, services, offers, systems, clients, news, circles, sections, certifications } = Route.useLoaderData() as {
     slides: PublicSlide[];
     services: PublicService[];
     offers: PublicOffer[];
@@ -111,6 +112,7 @@ function Index() {
     news: PublicNews[];
     circles: PublicCircle[];
     sections: SectionTextsMap;
+    certifications: PublicCertification[];
     socialLinks: import("@/lib/public.functions").PublicSocialLink[];
   };
   const [openSystem, setOpenSystem] = useState<SystemItem | null>(null);
@@ -240,7 +242,7 @@ function Index() {
         <section className="mx-auto max-w-[1400px] px-5 pb-20 md:px-10" dir="rtl">
           <SectionHeader
             data={sec("news")}
-            fallback={{ eyebrow: "أخبارنا", title: "أهم أخبار Lamha Secure" }}
+            fallback={{ eyebrow: "الأخبار", title: "أهم أخبار Lamha Secure" }}
           />
           <div className="mt-8 grid gap-6 md:grid-cols-3">
             {news.slice(0, 3).map((n: PublicNews) => (
@@ -289,12 +291,14 @@ function Index() {
       )}
 
       {/* Contact Form */}
-      <ContactSection />
+      <ContactSection sectionData={sec("contact")} />
 
+      {/* Professional certifications strip */}
+      <CertificationsStrip items={certifications} sectionData={sec("certifications")} />
 
       <SiteFooter />
 
-      <WhatsAppWidget />
+      {/* WhatsApp widget mounted globally in root layout */}
 
       <Dialog open={!!openSystem} onOpenChange={(o) => !o && setOpenSystem(null)}>
         <DialogContent
