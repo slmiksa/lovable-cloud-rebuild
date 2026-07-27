@@ -483,12 +483,9 @@ function ClientsCarousel({ clients }: { clients: PublicClient[] }) {
   const duration = Math.max(20, clients.length * 4);
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-white p-4">
-      {/* edge fades */}
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-white to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-white to-transparent" />
+    <div className="marquee-wrap marquee-mask group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-white p-4">
       <div
-        className="flex w-max gap-4 animate-marquee group-hover:[animation-play-state:paused]"
+        className="marquee-track gap-4"
         style={{ animationDuration: `${duration}s` }}
       >
         {loop.map((c, i) => (
