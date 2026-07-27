@@ -28,6 +28,7 @@ import { Route as AdminpanelFaqsRouteImport } from './routes/adminpanel.faqs'
 import { Route as AdminpanelContactRouteImport } from './routes/adminpanel.contact'
 import { Route as AdminpanelClientsRouteImport } from './routes/adminpanel.clients'
 import { Route as AdminpanelCirclesRouteImport } from './routes/adminpanel.circles'
+import { Route as AdminpanelCertificationsRouteImport } from './routes/adminpanel.certifications'
 import { Route as AdminpanelBrandingRouteImport } from './routes/adminpanel.branding'
 import { Route as AdminpanelAboutRouteImport } from './routes/adminpanel.about'
 
@@ -126,6 +127,12 @@ const AdminpanelCirclesRoute = AdminpanelCirclesRouteImport.update({
   path: '/circles',
   getParentRoute: () => AdminpanelRoute,
 } as any)
+const AdminpanelCertificationsRoute =
+  AdminpanelCertificationsRouteImport.update({
+    id: '/certifications',
+    path: '/certifications',
+    getParentRoute: () => AdminpanelRoute,
+  } as any)
 const AdminpanelBrandingRoute = AdminpanelBrandingRouteImport.update({
   id: '/branding',
   path: '/branding',
@@ -145,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/systems': typeof SystemsRoute
   '/adminpanel/about': typeof AdminpanelAboutRoute
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
+  '/adminpanel/certifications': typeof AdminpanelCertificationsRoute
   '/adminpanel/circles': typeof AdminpanelCirclesRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/contact': typeof AdminpanelContactRoute
@@ -167,6 +175,7 @@ export interface FileRoutesByTo {
   '/systems': typeof SystemsRoute
   '/adminpanel/about': typeof AdminpanelAboutRoute
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
+  '/adminpanel/certifications': typeof AdminpanelCertificationsRoute
   '/adminpanel/circles': typeof AdminpanelCirclesRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/contact': typeof AdminpanelContactRoute
@@ -191,6 +200,7 @@ export interface FileRoutesById {
   '/systems': typeof SystemsRoute
   '/adminpanel/about': typeof AdminpanelAboutRoute
   '/adminpanel/branding': typeof AdminpanelBrandingRoute
+  '/adminpanel/certifications': typeof AdminpanelCertificationsRoute
   '/adminpanel/circles': typeof AdminpanelCirclesRoute
   '/adminpanel/clients': typeof AdminpanelClientsRoute
   '/adminpanel/contact': typeof AdminpanelContactRoute
@@ -216,6 +226,7 @@ export interface FileRouteTypes {
     | '/systems'
     | '/adminpanel/about'
     | '/adminpanel/branding'
+    | '/adminpanel/certifications'
     | '/adminpanel/circles'
     | '/adminpanel/clients'
     | '/adminpanel/contact'
@@ -238,6 +249,7 @@ export interface FileRouteTypes {
     | '/systems'
     | '/adminpanel/about'
     | '/adminpanel/branding'
+    | '/adminpanel/certifications'
     | '/adminpanel/circles'
     | '/adminpanel/clients'
     | '/adminpanel/contact'
@@ -261,6 +273,7 @@ export interface FileRouteTypes {
     | '/systems'
     | '/adminpanel/about'
     | '/adminpanel/branding'
+    | '/adminpanel/certifications'
     | '/adminpanel/circles'
     | '/adminpanel/clients'
     | '/adminpanel/contact'
@@ -421,6 +434,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminpanelCirclesRouteImport
       parentRoute: typeof AdminpanelRoute
     }
+    '/adminpanel/certifications': {
+      id: '/adminpanel/certifications'
+      path: '/certifications'
+      fullPath: '/adminpanel/certifications'
+      preLoaderRoute: typeof AdminpanelCertificationsRouteImport
+      parentRoute: typeof AdminpanelRoute
+    }
     '/adminpanel/branding': {
       id: '/adminpanel/branding'
       path: '/branding'
@@ -441,6 +461,7 @@ declare module '@tanstack/react-router' {
 interface AdminpanelRouteChildren {
   AdminpanelAboutRoute: typeof AdminpanelAboutRoute
   AdminpanelBrandingRoute: typeof AdminpanelBrandingRoute
+  AdminpanelCertificationsRoute: typeof AdminpanelCertificationsRoute
   AdminpanelCirclesRoute: typeof AdminpanelCirclesRoute
   AdminpanelClientsRoute: typeof AdminpanelClientsRoute
   AdminpanelContactRoute: typeof AdminpanelContactRoute
@@ -459,6 +480,7 @@ interface AdminpanelRouteChildren {
 const AdminpanelRouteChildren: AdminpanelRouteChildren = {
   AdminpanelAboutRoute: AdminpanelAboutRoute,
   AdminpanelBrandingRoute: AdminpanelBrandingRoute,
+  AdminpanelCertificationsRoute: AdminpanelCertificationsRoute,
   AdminpanelCirclesRoute: AdminpanelCirclesRoute,
   AdminpanelClientsRoute: AdminpanelClientsRoute,
   AdminpanelContactRoute: AdminpanelContactRoute,

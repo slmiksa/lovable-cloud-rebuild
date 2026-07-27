@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import WhatsAppWidget from "@/components/WhatsAppWidget";
+// WhatsApp widget is now mounted globally in the root layout.
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -20,6 +20,7 @@ import {
   type PublicService,
   type PublicSlide,
   type PublicSystem,
+  type PublicCertification,
   type SectionTextsMap,
 } from "@/lib/public.functions";
 import { ArrowLeft, Check, Loader2, CheckCircle2 } from "lucide-react";
@@ -102,7 +103,7 @@ function parseOffer(desc: string | null): { note: string; features: string[] } {
 }
 
 function Index() {
-  const { slides, services, offers, systems, clients, news, circles, sections } = Route.useLoaderData() as {
+  const { slides, services, offers, systems, clients, news, circles, sections, certifications } = Route.useLoaderData() as {
     slides: PublicSlide[];
     services: PublicService[];
     offers: PublicOffer[];
@@ -111,6 +112,7 @@ function Index() {
     news: PublicNews[];
     circles: PublicCircle[];
     sections: SectionTextsMap;
+    certifications: PublicCertification[];
     socialLinks: import("@/lib/public.functions").PublicSocialLink[];
   };
   const [openSystem, setOpenSystem] = useState<SystemItem | null>(null);
@@ -240,7 +242,7 @@ function Index() {
         <section className="mx-auto max-w-[1400px] px-5 pb-20 md:px-10" dir="rtl">
           <SectionHeader
             data={sec("news")}
-            fallback={{ eyebrow: "أخبارنا", title: "أهم أخبار Lamha Secure" }}
+            fallback={{ eyebrow: "الأخبار", title: "أهم أخبار Lamha Secure" }}
           />
           <div className="mt-8 grid gap-6 md:grid-cols-3">
             {news.slice(0, 3).map((n: PublicNews) => (
@@ -289,12 +291,14 @@ function Index() {
       )}
 
       {/* Contact Form */}
-      <ContactSection />
+      <ContactSection sectionData={sec("contact")} />
 
+      {/* Professional certifications strip */}
+      <CertificationsStrip items={certifications} sectionData={sec("certifications")} />
 
       <SiteFooter />
 
-      <WhatsAppWidget />
+      {/* WhatsApp widget mounted globally in root layout */}
 
       <Dialog open={!!openSystem} onOpenChange={(o) => !o && setOpenSystem(null)}>
         <DialogContent
@@ -477,17 +481,15 @@ function ClientLogo({ name, logoUrl }: { name: string; logoUrl: string | null })
 }
 
 function ClientsCarousel({ clients }: { clients: PublicClient[] }) {
-  // Duplicate the list so the marquee can loop seamlessly.
+  // Duplicate the list so the marquee can loop seamlessly. Each item carries
+  // its own trailing margin (see .marquee-track > * in styles.css), so the
+  // total track width is exactly 2× one loop → translateX(-50%) is pixel-perfect.
   const loop = [...clients, ...clients];
-  // Slow down for very short lists so items don't fly by.
   const duration = Math.max(20, clients.length * 4);
 
   return (
     <div className="marquee-wrap marquee-mask group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-white p-4">
-      <div
-        className="marquee-track gap-4"
-        style={{ animationDuration: `${duration}s` }}
-      >
+      <div className="marquee-track" style={{ animationDuration: `${duration}s` }}>
         {loop.map((c, i) => (
           <ClientLogo key={`${c.id}-${i}`} name={c.name} logoUrl={c.logo_url} />
         ))}
@@ -496,7 +498,75 @@ function ClientsCarousel({ clients }: { clients: PublicClient[] }) {
   );
 }
 
-function ContactSection() {
+function CertificationsStrip({
+  items,
+  sectionData,
+}: {
+  items: PublicCertification[];
+  sectionData: import("@/lib/public.functions").PublicSectionText | null;
+}) {
+  if (!items || items.length === 0) return null;
+  const loop = [...items, ...items];
+  const duration = Math.max(24, items.length * 5);
+  return (
+    <section className="bg-white py-14 md:py-16" dir="rtl">
+      <div className="mx-auto max-w-[1400px] px-5 md:px-10">
+        <SectionHeader
+          data={sectionData}
+          fallback={{
+            eyebrow: "اعتماداتنا",
+            title: "الشهادات الاحترافية",
+            description:
+              "نفتخر باعتماداتنا وشهاداتنا من كبرى الجهات المتخصصة في الأمن السيبراني.",
+            icon: "BadgeCheck",
+          }}
+        />
+        <div className="marquee-wrap marquee-mask group relative mt-8 overflow-hidden rounded-2xl border border-[var(--line)] bg-white p-4">
+          <div className="marquee-track" style={{ animationDuration: `${duration}s` }}>
+            {loop.map((c, i) => {
+              const inner = c.logo_url ? (
+                <img
+                  src={c.logo_url}
+                  alt={c.name}
+                  loading="lazy"
+                  className="h-16 w-16 object-contain md:h-20 md:w-20"
+                />
+              ) : (
+                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-[var(--brand)]/10 text-sm font-black text-[var(--brand)] md:h-20 md:w-20">
+                  {c.name.slice(0, 2)}
+                </div>
+              );
+              return (
+                <div
+                  key={`${c.id}-${i}`}
+                  className="flex h-28 w-32 shrink-0 flex-col items-center justify-center gap-2 rounded-xl border border-[var(--line)] bg-white px-3 py-2 grayscale transition hover:grayscale-0 hover:border-[var(--brand)]/40 sm:w-36 md:h-32 md:w-40"
+                >
+                  {c.website_url ? (
+                    <a href={c.website_url} target="_blank" rel="noreferrer" aria-label={c.name} className="flex flex-col items-center gap-2">
+                      {inner}
+                      <span className="line-clamp-2 text-center text-[11px] font-bold leading-tight text-[var(--ink)] md:text-xs">
+                        {c.name}
+                      </span>
+                    </a>
+                  ) : (
+                    <>
+                      {inner}
+                      <span className="line-clamp-2 text-center text-[11px] font-bold leading-tight text-[var(--ink)] md:text-xs">
+                        {c.name}
+                      </span>
+                    </>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContactSection({ sectionData: _sectionData }: { sectionData?: import("@/lib/public.functions").PublicSectionText | null } = {}) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");

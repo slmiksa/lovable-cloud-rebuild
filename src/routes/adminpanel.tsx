@@ -18,6 +18,7 @@ import {
   Info,
   Circle,
   Type,
+  BadgeCheck,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
@@ -44,6 +45,7 @@ const navItems = [
   { to: "/adminpanel/offers", label: "أحدث العروض", icon: Tag, exact: false },
   { to: "/adminpanel/systems", label: "التطبيقات والأنظمة", icon: AppWindow, exact: false },
   { to: "/adminpanel/clients", label: "عملاؤنا", icon: Users, exact: false },
+  { to: "/adminpanel/certifications", label: "الشهادات الاحترافية", icon: BadgeCheck, exact: false },
   { to: "/adminpanel/news", label: "الأخبار (مدونة)", icon: Newspaper, exact: false },
   { to: "/adminpanel/social", label: "وسائل التواصل", icon: Share2, exact: false },
   { to: "/adminpanel/branding", label: "الهوية البصرية", icon: Palette, exact: false },

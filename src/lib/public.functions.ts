@@ -85,6 +85,22 @@ export interface PublicSectionText {
 }
 export type SectionTextsMap = Record<string, PublicSectionText>;
 
+export interface PublicCertification {
+  id: string;
+  name: string;
+  logo_url: string | null;
+  website_url: string | null;
+}
+
+async function fetchCertifications(): Promise<PublicCertification[]> {
+  const { data } = await supabase
+    .from("certifications")
+    .select("id,name,logo_url,website_url")
+    .eq("is_active", true)
+    .order("sort_order", { ascending: true });
+  return (data ?? []) as PublicCertification[];
+}
+
 async function fetchSlides(): Promise<PublicSlide[]> {
   const { data } = await supabase
     .from("slides")
@@ -167,7 +183,7 @@ async function fetchSectionTexts(): Promise<SectionTextsMap> {
 }
 
 export async function getPublicHome() {
-  const [slides, services, offers, systems, clients, news, socialLinks, circles, sections] = await Promise.all([
+  const [slides, services, offers, systems, clients, news, socialLinks, circles, sections, certifications] = await Promise.all([
     fetchSlides(),
     fetchServices(),
     fetchOffers(),
@@ -177,8 +193,9 @@ export async function getPublicHome() {
     fetchSocialLinks(),
     fetchCircles(),
     fetchSectionTexts(),
+    fetchCertifications(),
   ]);
-  return { slides, services, offers, systems, clients, news, socialLinks, circles, sections };
+  return { slides, services, offers, systems, clients, news, socialLinks, circles, sections, certifications };
 }
 
 export async function getPublicSystems() {

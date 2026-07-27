@@ -144,10 +144,19 @@
   to { opacity: 1; }
 }
 
+/*
+ * Seamless RTL marquee: track uses no gap; every child carries its own
+ * margin-inline-end, including the last one, so total width is exactly
+ * 2× one loop and translateX(-50%) is pixel-perfect.
+ */
 .marquee-track {
   display: flex;
   width: max-content;
   animation: marquee-rtl 40s linear infinite;
+}
+
+.marquee-track > * {
+  margin-inline-end: 1rem;
 }
 
 .marquee-track-slow {

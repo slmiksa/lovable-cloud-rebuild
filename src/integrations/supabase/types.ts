@@ -65,6 +65,39 @@ export type Database = {
         }
         Relationships: []
       }
+      certifications: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          logo_url: string | null
+          name: string
+          sort_order: number
+          updated_at: string
+          website_url: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          logo_url?: string | null
+          name: string
+          sort_order?: number
+          updated_at?: string
+          website_url?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          logo_url?: string | null
+          name?: string
+          sort_order?: number
+          updated_at?: string
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       clients: {
         Row: {
           created_at: string

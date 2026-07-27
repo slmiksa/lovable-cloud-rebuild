@@ -1,6 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Outlet, Link, createRootRouteWithContext, useRouter } from "@tanstack/react-router";
-import { useEffect, type ErrorInfo } from "react";
+import { Outlet, Link, createRootRouteWithContext, useRouter, useRouterState } from "@tanstack/react-router";
+import { lazy, Suspense, useEffect, type ErrorInfo } from "react";
+
+const WhatsAppWidgetImpl = lazy(() => import("@/components/WhatsAppWidget"));
 
 function NotFoundComponent() {
   return (
@@ -67,12 +69,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isAdmin = pathname.startsWith("/adminpanel");
   useEffect(() => {
     void import("@/hooks/useSiteSettings").then((m) => m.refreshSiteSettings());
   }, []);
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      {!isAdmin && <WhatsAppWidgetLazy />}
     </QueryClientProvider>
+  );
+}
+
+function WhatsAppWidgetLazy() {
+  return (
+    <Suspense fallback={null}>
+      <WhatsAppWidgetImpl />
+    </Suspense>
   );
 }
