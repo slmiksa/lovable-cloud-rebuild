@@ -94,8 +94,8 @@ export default function WhatsAppWidget() {
               <span className="absolute -top-0.5 -left-0.5 h-2.5 w-2.5 rounded-full bg-[var(--brand-light)] ring-2 ring-[var(--brand)]" />
             </div>
             <div className="flex-1 leading-tight">
-              <div className="text-sm font-bold">Lamha Secure — الدعم الفوري</div>
-              <div className="text-[11px] text-white/80">عادةً نرد خلال دقائق</div>
+              <div className="text-sm font-bold">{text.headerTitle}</div>
+              <div className="text-[11px] text-white/80">{text.headerSubtitle}</div>
             </div>
             <button
               onClick={() => { setOpen(false); setSelected(null); }}
@@ -108,9 +108,8 @@ export default function WhatsAppWidget() {
 
           {/* Body */}
           <div className="max-h-[60vh] space-y-2.5 overflow-y-auto bg-[#0b1220] p-4 text-white">
-            <div className="rounded-2xl rounded-tr-sm bg-white/5 p-3 text-sm leading-relaxed text-white/90 ring-1 ring-white/10">
-              مرحباً بك في <span className="font-bold text-[var(--brand)]">Lamha Secure</span> 👋
-              <br />اختر سؤالاً للإجابة السريعة، أو تواصل معنا مباشرة عبر واتساب.
+            <div className="whitespace-pre-line rounded-2xl rounded-tr-sm bg-white/5 p-3 text-sm leading-relaxed text-white/90 ring-1 ring-white/10">
+              {text.greeting}
             </div>
 
             {selected === null ? (
@@ -157,7 +156,7 @@ export default function WhatsAppWidget() {
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[var(--brand)] to-[var(--brand-dark)] px-4 py-3 text-sm font-bold text-white shadow-lg shadow-[var(--brand)]/20 transition hover:brightness-110"
             >
               <WhatsAppIcon className="h-5 w-5" />
-              تواصل معنا عبر واتساب
+              {text.ctaLabel}
             </button>
             
           </div>
@@ -181,7 +180,7 @@ export default function WhatsAppWidget() {
           ) : (
             <>
               <LogoMark className="h-12 w-12 object-contain md:h-14 md:w-14" />
-              <MessageCircle className="absolute -bottom-1.5 -left-1.5 h-4 w-4 rounded-full bg-[var(--brand)] text-white p-0.5" />
+              <IconEl className="absolute -bottom-1.5 -left-1.5 h-4 w-4 rounded-full bg-[var(--brand)] text-white p-0.5" />
             </>
           )}
         </span>
