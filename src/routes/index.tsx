@@ -239,7 +239,7 @@ function Index() {
 
       {/* News-style cards */}
       {news.length > 0 && (
-        <section className="mx-auto max-w-[1400px] px-5 pb-20 md:px-10" dir="rtl">
+        <section id="news" className="mx-auto max-w-[1400px] px-5 pb-20 md:px-10" dir="rtl">
           <SectionHeader
             data={sec("news")}
             fallback={{ eyebrow: "الأخبار", title: "أهم أخبار Lamha Secure" }}
@@ -481,17 +481,15 @@ function ClientLogo({ name, logoUrl }: { name: string; logoUrl: string | null })
 }
 
 function ClientsCarousel({ clients }: { clients: PublicClient[] }) {
-  // Duplicate the list so the marquee can loop seamlessly. Each item carries
-  // its own trailing margin (see .marquee-track > * in styles.css), so the
-  // total track width is exactly 2× one loop → translateX(-50%) is pixel-perfect.
-  const loop = [...clients, ...clients];
-  const duration = Math.max(20, clients.length * 4);
-
+  // Static strip — logos don't auto-scroll; users swipe/drag horizontally.
   return (
-    <div className="marquee-wrap marquee-mask group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-white p-4">
-      <div className="marquee-track" style={{ animationDuration: `${duration}s` }}>
-        {loop.map((c, i) => (
-          <ClientLogo key={`${c.id}-${i}`} name={c.name} logoUrl={c.logo_url} />
+    <div className="relative mt-8 overflow-hidden rounded-2xl border border-[var(--line)] bg-white">
+      <div
+        className="flex gap-4 overflow-x-auto scroll-smooth px-4 py-4 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        style={{ overscrollBehaviorX: "contain" }}
+      >
+        {clients.map((c) => (
+          <ClientLogo key={c.id} name={c.name} logoUrl={c.logo_url} />
         ))}
       </div>
     </div>
@@ -565,7 +563,7 @@ function CertificationsStrip({
 }
 
 
-function ContactSection({ sectionData: _sectionData }: { sectionData?: import("@/lib/public.functions").PublicSectionText | null } = {}) {
+function ContactSection({ sectionData }: { sectionData?: import("@/lib/public.functions").PublicSectionText | null } = {}) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -575,6 +573,12 @@ function ContactSection({ sectionData: _sectionData }: { sectionData?: import("@
   const [success, setSuccess] = useState<{ requestNo: number } | null>(null);
 
   const maxMsg = 700;
+
+  const eyebrow = sectionData?.eyebrow ?? "تواصل معنا";
+  const title = sectionData?.title ?? "تواصل معنا الآن";
+  const description =
+    sectionData?.description ??
+    "اترك بياناتك وسيقوم فريق Lamha Secure بالتواصل معك في أقرب وقت لمناقشة احتياجاتك الأمنية والتقنية.";
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -625,10 +629,11 @@ function ContactSection({ sectionData: _sectionData }: { sectionData?: import("@
         <div className="grid gap-10 md:grid-cols-2 md:items-center">
           <div>
             <span className="inline-block rounded-full bg-white/10 px-4 py-1.5 text-xs font-bold text-white/90 backdrop-blur">
+              {eyebrow}
             </span>
-            <h3 className="mt-4 text-3xl font-black leading-tight md:text-5xl">تواصل معنا الآن</h3>
-            <p className="mt-4 text-white/85 md:text-lg">
-              اترك بياناتك وسيقوم فريق Lamha Secure بالتواصل معك في أقرب وقت لمناقشة احتياجاتك الأمنية والتقنية.
+            <h3 className="mt-4 text-3xl font-black leading-tight md:text-5xl">{title}</h3>
+            <p className="mt-4 whitespace-pre-line text-white/85 md:text-lg">
+              {description}
             </p>
           </div>
 

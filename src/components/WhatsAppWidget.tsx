@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { X, MessageCircle, ChevronLeft } from "lucide-react";
 import { LogoMark } from "./LogoMark";
 import { supabase } from "@/integrations/supabase/client";
+import { getIcon } from "@/lib/icons";
 
 const PHONE = "966552553315";
 
@@ -26,6 +27,14 @@ const FALLBACK_FAQS: Faq[] = [
   },
 ];
 
+const DEFAULTS = {
+  headerTitle: "Lamha Secure — الدعم الفوري",
+  headerSubtitle: "عادةً نرد خلال دقائق",
+  greeting: "مرحباً بك في Lamha Secure 👋\nاختر سؤالاً للإجابة السريعة، أو تواصل معنا مباشرة عبر واتساب.",
+  ctaLabel: "تواصل معنا عبر واتساب",
+  iconName: "MessageCircle",
+};
+
 function openWhatsApp(text?: string) {
   const msg = text ? `?text=${encodeURIComponent(text)}` : "";
   window.open(`https://wa.me/${PHONE}${msg}`, "_blank", "noopener");
@@ -35,22 +44,43 @@ export default function WhatsAppWidget() {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
   const [faqs, setFaqs] = useState<Faq[]>(FALLBACK_FAQS);
+  const [text, setText] = useState(DEFAULTS);
 
   useEffect(() => {
     let alive = true;
     (async () => {
-      const { data, error } = await supabase
-        .from("whatsapp_faqs")
-        .select("question,answer,sort_order,is_active")
-        .eq("is_active", true)
-        .order("sort_order", { ascending: true });
-      if (!alive || error || !data || data.length === 0) return;
-      setFaqs(data.map((r) => ({ q: r.question, a: r.answer })));
+      const [{ data: faqRows }, { data: sec }] = await Promise.all([
+        supabase
+          .from("whatsapp_faqs")
+          .select("question,answer,sort_order,is_active")
+          .eq("is_active", true)
+          .order("sort_order", { ascending: true }),
+        supabase
+          .from("section_texts")
+          .select("eyebrow,title,description,icon")
+          .eq("key", "whatsapp")
+          .maybeSingle(),
+      ]);
+      if (!alive) return;
+      if (faqRows && faqRows.length > 0) {
+        setFaqs(faqRows.map((r) => ({ q: r.question, a: r.answer })));
+      }
+      if (sec) {
+        setText({
+          headerTitle: sec.title || DEFAULTS.headerTitle,
+          headerSubtitle: sec.description ? sec.description.split("\n")[0] : DEFAULTS.headerSubtitle,
+          greeting: sec.description || DEFAULTS.greeting,
+          ctaLabel: sec.eyebrow || DEFAULTS.ctaLabel,
+          iconName: sec.icon || DEFAULTS.iconName,
+        });
+      }
     })();
     return () => {
       alive = false;
     };
   }, []);
+
+  const IconEl = getIcon(text.iconName);
 
   return (
     <div className="fixed bottom-8 right-5 z-[60] md:bottom-12 md:right-8" dir="rtl">
@@ -64,8 +94,8 @@ export default function WhatsAppWidget() {
               <span className="absolute -top-0.5 -left-0.5 h-2.5 w-2.5 rounded-full bg-[var(--brand-light)] ring-2 ring-[var(--brand)]" />
             </div>
             <div className="flex-1 leading-tight">
-              <div className="text-sm font-bold">Lamha Secure — الدعم الفوري</div>
-              <div className="text-[11px] text-white/80">عادةً نرد خلال دقائق</div>
+              <div className="text-sm font-bold">{text.headerTitle}</div>
+              <div className="text-[11px] text-white/80">{text.headerSubtitle}</div>
             </div>
             <button
               onClick={() => { setOpen(false); setSelected(null); }}
@@ -78,9 +108,8 @@ export default function WhatsAppWidget() {
 
           {/* Body */}
           <div className="max-h-[60vh] space-y-2.5 overflow-y-auto bg-[#0b1220] p-4 text-white">
-            <div className="rounded-2xl rounded-tr-sm bg-white/5 p-3 text-sm leading-relaxed text-white/90 ring-1 ring-white/10">
-              مرحباً بك في <span className="font-bold text-[var(--brand)]">Lamha Secure</span> 👋
-              <br />اختر سؤالاً للإجابة السريعة، أو تواصل معنا مباشرة عبر واتساب.
+            <div className="whitespace-pre-line rounded-2xl rounded-tr-sm bg-white/5 p-3 text-sm leading-relaxed text-white/90 ring-1 ring-white/10">
+              {text.greeting}
             </div>
 
             {selected === null ? (
@@ -127,7 +156,7 @@ export default function WhatsAppWidget() {
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[var(--brand)] to-[var(--brand-dark)] px-4 py-3 text-sm font-bold text-white shadow-lg shadow-[var(--brand)]/20 transition hover:brightness-110"
             >
               <WhatsAppIcon className="h-5 w-5" />
-              تواصل معنا عبر واتساب
+              {text.ctaLabel}
             </button>
             
           </div>
@@ -151,7 +180,7 @@ export default function WhatsAppWidget() {
           ) : (
             <>
               <LogoMark className="h-12 w-12 object-contain md:h-14 md:w-14" />
-              <MessageCircle className="absolute -bottom-1.5 -left-1.5 h-4 w-4 rounded-full bg-[var(--brand)] text-white p-0.5" />
+              <IconEl className="absolute -bottom-1.5 -left-1.5 h-4 w-4 rounded-full bg-[var(--brand)] text-white p-0.5" />
             </>
           )}
         </span>

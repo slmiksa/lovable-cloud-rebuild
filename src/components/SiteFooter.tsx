@@ -39,8 +39,8 @@ export function SiteFooter() {
               <LogoMark className="h-24 w-24 md:h-28 md:w-28" />
             </div>
             <div className="leading-tight">
-              <div className="text-base font-extrabold tracking-wider">Lamha Secure</div>
-              <div className="text-[10px] tracking-[0.12em] text-white/70">لمحة الآمنة للحلول التقنية</div>
+              <div className="text-base font-extrabold">لمحة الآمنة</div>
+              <div className="mt-1 text-[11px] tracking-[0.14em] text-white/70">Lamha Secure</div>
             </div>
           </div>
           <p className="mt-4 text-sm leading-loose text-white/70">
@@ -93,8 +93,8 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-[1400px] items-center justify-center px-5 py-5 text-center text-xs text-white/70 md:px-10">
-          © {new Date().getFullYear()} جميع الحقوق محفوظة للمحة الآمنة للحلول التقنية
+        <div className="mx-auto flex max-w-[1400px] items-center justify-center px-5 py-5 text-center text-xs text-white/70 md:px-10" dir="ltr">
+          All Rights Reserved for Lamha Secure for Technical Solutions ©️ 2026
         </div>
       </div>
     </footer>
