@@ -25,13 +25,15 @@ interface SectionText {
 const LABELS: Record<string, string> = {
   services: "خدماتنا",
   offers: "أحدث العروض",
-  systems: "التطبيقات والأنظمة",
+  systems: "التطبيقات والأنظمة (الرئيسية)",
+  systems_page: "صفحة أنظمتنا",
   clients: "العملاء (الرئيسية)",
   clients_page: "صفحة عملاؤنا",
   news: "الأخبار",
   circles: "الدوائر الرئيسية",
   contact: "تواصل معنا",
   certifications: "الشهادات الاحترافية",
+  whatsapp: "زر الدعم الفوري (واتساب)",
 };
 
 function SectionsAdmin() {

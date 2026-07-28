@@ -199,7 +199,8 @@ export async function getPublicHome() {
 }
 
 export async function getPublicSystems() {
-  return fetchSystems();
+  const [systems, sections] = await Promise.all([fetchSystems(), fetchSectionTexts()]);
+  return { systems, sections };
 }
 
 export async function getPublicClients() {
