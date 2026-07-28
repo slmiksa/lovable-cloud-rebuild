@@ -506,8 +506,6 @@ function CertificationsStrip({
   sectionData: import("@/lib/public.functions").PublicSectionText | null;
 }) {
   if (!items || items.length === 0) return null;
-  const loop = [...items, ...items];
-  const duration = Math.max(24, items.length * 5);
   return (
     <section className="bg-white py-14 md:py-16" dir="rtl">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10">
@@ -521,9 +519,9 @@ function CertificationsStrip({
             icon: "BadgeCheck",
           }}
         />
-        <div className="marquee-wrap marquee-mask group relative mt-8 overflow-hidden rounded-2xl border border-[var(--line)] bg-white p-4">
-          <div className="marquee-track" style={{ animationDuration: `${duration}s` }}>
-            {loop.map((c, i) => {
+        <div className="mt-8 rounded-2xl border border-[var(--line)] bg-white p-4 md:p-6">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-4 lg:grid-cols-6">
+            {items.map((c) => {
               const inner = c.logo_url ? (
                 <img
                   src={c.logo_url}
@@ -538,8 +536,8 @@ function CertificationsStrip({
               );
               return (
                 <div
-                  key={`${c.id}-${i}`}
-                  className="flex h-28 w-32 shrink-0 flex-col items-center justify-center gap-2 rounded-xl border border-[var(--line)] bg-white px-3 py-2 grayscale transition hover:grayscale-0 hover:border-[var(--brand)]/40 sm:w-36 md:h-32 md:w-40"
+                  key={c.id}
+                  className="flex h-28 flex-col items-center justify-center gap-2 rounded-xl border border-[var(--line)] bg-white px-3 py-2 transition hover:border-[var(--brand)]/40 md:h-32"
                 >
                   {c.website_url ? (
                     <a href={c.website_url} target="_blank" rel="noreferrer" aria-label={c.name} className="flex flex-col items-center gap-2">
@@ -565,6 +563,7 @@ function CertificationsStrip({
     </section>
   );
 }
+
 
 function ContactSection({ sectionData: _sectionData }: { sectionData?: import("@/lib/public.functions").PublicSectionText | null } = {}) {
   const [name, setName] = useState("");
