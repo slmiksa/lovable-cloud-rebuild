@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { X, MessageCircle, ChevronLeft } from "lucide-react";
 import { LogoMark } from "./LogoMark";
 import { supabase } from "@/integrations/supabase/client";
+import { getIcon } from "@/lib/icons";
 
 const PHONE = "966552553315";
 
@@ -26,6 +27,14 @@ const FALLBACK_FAQS: Faq[] = [
   },
 ];
 
+const DEFAULTS = {
+  headerTitle: "Lamha Secure — الدعم الفوري",
+  headerSubtitle: "عادةً نرد خلال دقائق",
+  greeting: "مرحباً بك في Lamha Secure 👋\nاختر سؤالاً للإجابة السريعة، أو تواصل معنا مباشرة عبر واتساب.",
+  ctaLabel: "تواصل معنا عبر واتساب",
+  iconName: "MessageCircle",
+};
+
 function openWhatsApp(text?: string) {
   const msg = text ? `?text=${encodeURIComponent(text)}` : "";
   window.open(`https://wa.me/${PHONE}${msg}`, "_blank", "noopener");
@@ -35,22 +44,43 @@ export default function WhatsAppWidget() {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
   const [faqs, setFaqs] = useState<Faq[]>(FALLBACK_FAQS);
+  const [text, setText] = useState(DEFAULTS);
 
   useEffect(() => {
     let alive = true;
     (async () => {
-      const { data, error } = await supabase
-        .from("whatsapp_faqs")
-        .select("question,answer,sort_order,is_active")
-        .eq("is_active", true)
-        .order("sort_order", { ascending: true });
-      if (!alive || error || !data || data.length === 0) return;
-      setFaqs(data.map((r) => ({ q: r.question, a: r.answer })));
+      const [{ data: faqRows }, { data: sec }] = await Promise.all([
+        supabase
+          .from("whatsapp_faqs")
+          .select("question,answer,sort_order,is_active")
+          .eq("is_active", true)
+          .order("sort_order", { ascending: true }),
+        supabase
+          .from("section_texts")
+          .select("eyebrow,title,description,icon")
+          .eq("key", "whatsapp")
+          .maybeSingle(),
+      ]);
+      if (!alive) return;
+      if (faqRows && faqRows.length > 0) {
+        setFaqs(faqRows.map((r) => ({ q: r.question, a: r.answer })));
+      }
+      if (sec) {
+        setText({
+          headerTitle: sec.title || DEFAULTS.headerTitle,
+          headerSubtitle: sec.description ? sec.description.split("\n")[0] : DEFAULTS.headerSubtitle,
+          greeting: sec.description || DEFAULTS.greeting,
+          ctaLabel: sec.eyebrow || DEFAULTS.ctaLabel,
+          iconName: sec.icon || DEFAULTS.iconName,
+        });
+      }
     })();
     return () => {
       alive = false;
     };
   }, []);
+
+  const IconEl = getIcon(text.iconName);
 
   return (
     <div className="fixed bottom-8 right-5 z-[60] md:bottom-12 md:right-8" dir="rtl">
