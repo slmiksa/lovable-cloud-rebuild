@@ -363,6 +363,8 @@ export type Database = {
           favicon_url: string | null
           id: boolean
           logo_url: string | null
+          support_type: string
+          support_value: string | null
           updated_at: string
         }
         Insert: {
@@ -374,6 +376,8 @@ export type Database = {
           favicon_url?: string | null
           id?: boolean
           logo_url?: string | null
+          support_type?: string
+          support_value?: string | null
           updated_at?: string
         }
         Update: {
@@ -385,6 +389,8 @@ export type Database = {
           favicon_url?: string | null
           id?: boolean
           logo_url?: string | null
+          support_type?: string
+          support_value?: string | null
           updated_at?: string
         }
         Relationships: []
