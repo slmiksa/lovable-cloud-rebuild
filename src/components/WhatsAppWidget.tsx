@@ -42,10 +42,22 @@ function openWhatsApp(text?: string) {
 }
 
 export default function WhatsAppWidget() {
+  const settings = useSiteSettings();
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
   const [faqs, setFaqs] = useState<Faq[]>(FALLBACK_FAQS);
   const [text, setText] = useState(DEFAULTS);
+
+  const supportType = settings.support_type;
+  const supportValue = (settings.support_value ?? "").trim();
+  const isEmail = supportType === "email";
+  const target = supportValue || (isEmail ? "" : FALLBACK_PHONE);
+
+  const triggerContact = (msg: string) => {
+    if (!target) return;
+    if (isEmail) openEmail(target, msg);
+    else openWhatsApp(target, msg);
+  };
 
   useEffect(() => {
     let alive = true;
@@ -148,7 +160,7 @@ export default function WhatsAppWidget() {
           <div className="border-t border-white/10 bg-[#0b1220] p-3">
             <button
               onClick={() =>
-                openWhatsApp(
+                triggerContact(
                   selected !== null
                     ? `مرحباً، لدي استفسار بخصوص: ${faqs[selected].q}`
                     : "مرحباً، أود التواصل مع فريق Lamha Secure."
@@ -156,10 +168,9 @@ export default function WhatsAppWidget() {
               }
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[var(--brand)] to-[var(--brand-dark)] px-4 py-3 text-sm font-bold text-white shadow-lg shadow-[var(--brand)]/20 transition hover:brightness-110"
             >
-              <WhatsAppIcon className="h-5 w-5" />
+              {isEmail ? <EmailIcon className="h-5 w-5" /> : <WhatsAppIcon className="h-5 w-5" />}
               {text.ctaLabel}
             </button>
-            
           </div>
         </div>
       )}
