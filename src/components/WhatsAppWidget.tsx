@@ -36,9 +36,15 @@ const DEFAULTS = {
   iconName: "MessageCircle",
 };
 
-function openWhatsApp(text?: string) {
+function openWhatsApp(phone: string, text?: string) {
   const msg = text ? `?text=${encodeURIComponent(text)}` : "";
-  window.open(`https://wa.me/${PHONE}${msg}`, "_blank", "noopener");
+  window.open(`https://wa.me/${phone}${msg}`, "_blank", "noopener");
+}
+
+function openEmail(email: string, text?: string) {
+  const subject = encodeURIComponent("استفسار عبر موقع لمحة الآمنة");
+  const body = text ? `&body=${encodeURIComponent(text)}` : "";
+  window.location.href = `mailto:${email}?subject=${subject}${body}`;
 }
 
 export default function WhatsAppWidget() {
