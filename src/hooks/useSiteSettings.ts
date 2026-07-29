@@ -7,6 +7,8 @@ export type SiteSettings = {
   contact_phone: string | null;
   contact_email: string | null;
   contact_address: string | null;
+  support_type: "whatsapp" | "email";
+  support_value: string | null;
 };
 
 let cache: SiteSettings | null = null;
@@ -55,20 +57,25 @@ const EMPTY: SiteSettings = {
   contact_phone: null,
   contact_email: null,
   contact_address: null,
+  support_type: "whatsapp",
+  support_value: null,
 };
 
 export async function refreshSiteSettings() {
   const { data } = await supabase
     .from("site_settings")
-    .select("logo_url,favicon_url,contact_phone,contact_email,contact_address")
+    .select("logo_url,favicon_url,contact_phone,contact_email,contact_address,support_type,support_value")
     .eq("id", true)
     .maybeSingle();
+  const st = (data as { support_type?: string } | null)?.support_type;
   const next: SiteSettings = {
     logo_url: data?.logo_url ?? null,
     favicon_url: data?.favicon_url ?? null,
     contact_phone: data?.contact_phone ?? null,
     contact_email: data?.contact_email ?? null,
     contact_address: data?.contact_address ?? null,
+    support_type: st === "email" ? "email" : "whatsapp",
+    support_value: (data as { support_value?: string | null } | null)?.support_value ?? null,
   };
   cache = next;
   applyFavicon(next.favicon_url || next.logo_url);

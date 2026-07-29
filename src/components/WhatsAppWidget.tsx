@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { X, MessageCircle, ChevronLeft } from "lucide-react";
+import { X, ChevronLeft } from "lucide-react";
 import { LogoMark } from "./LogoMark";
 import { supabase } from "@/integrations/supabase/client";
 import { getIcon } from "@/lib/icons";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 
-const PHONE = "966552553315";
+const FALLBACK_PHONE = "966552553315";
 
 type Faq = { q: string; a: string };
 
