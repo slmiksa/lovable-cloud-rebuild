@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { X, MessageCircle, ChevronLeft } from "lucide-react";
+import { X, ChevronLeft } from "lucide-react";
 import { LogoMark } from "./LogoMark";
 import { supabase } from "@/integrations/supabase/client";
 import { getIcon } from "@/lib/icons";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
 
-const PHONE = "966552553315";
+const FALLBACK_PHONE = "966552553315";
 
 type Faq = { q: string; a: string };
 
@@ -35,16 +36,34 @@ const DEFAULTS = {
   iconName: "MessageCircle",
 };
 
-function openWhatsApp(text?: string) {
+function openWhatsApp(phone: string, text?: string) {
   const msg = text ? `?text=${encodeURIComponent(text)}` : "";
-  window.open(`https://wa.me/${PHONE}${msg}`, "_blank", "noopener");
+  window.open(`https://wa.me/${phone}${msg}`, "_blank", "noopener");
+}
+
+function openEmail(email: string, text?: string) {
+  const subject = encodeURIComponent("استفسار عبر موقع لمحة الآمنة");
+  const body = text ? `&body=${encodeURIComponent(text)}` : "";
+  window.location.href = `mailto:${email}?subject=${subject}${body}`;
 }
 
 export default function WhatsAppWidget() {
+  const settings = useSiteSettings();
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
   const [faqs, setFaqs] = useState<Faq[]>(FALLBACK_FAQS);
   const [text, setText] = useState(DEFAULTS);
+
+  const supportType = settings.support_type;
+  const supportValue = (settings.support_value ?? "").trim();
+  const isEmail = supportType === "email";
+  const target = supportValue || (isEmail ? "" : FALLBACK_PHONE);
+
+  const triggerContact = (msg: string) => {
+    if (!target) return;
+    if (isEmail) openEmail(target, msg);
+    else openWhatsApp(target, msg);
+  };
 
   useEffect(() => {
     let alive = true;
@@ -147,7 +166,7 @@ export default function WhatsAppWidget() {
           <div className="border-t border-white/10 bg-[#0b1220] p-3">
             <button
               onClick={() =>
-                openWhatsApp(
+                triggerContact(
                   selected !== null
                     ? `مرحباً، لدي استفسار بخصوص: ${faqs[selected].q}`
                     : "مرحباً، أود التواصل مع فريق Lamha Secure."
@@ -155,10 +174,9 @@ export default function WhatsAppWidget() {
               }
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[var(--brand)] to-[var(--brand-dark)] px-4 py-3 text-sm font-bold text-white shadow-lg shadow-[var(--brand)]/20 transition hover:brightness-110"
             >
-              <WhatsAppIcon className="h-5 w-5" />
+              {isEmail ? <EmailIcon className="h-5 w-5" /> : <WhatsAppIcon className="h-5 w-5" />}
               {text.ctaLabel}
             </button>
-            
           </div>
         </div>
       )}
@@ -191,6 +209,15 @@ export default function WhatsAppWidget() {
         </span>
       </button>
     </div>
+  );
+}
+
+function EmailIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="m3 7 9 6 9-6" />
+    </svg>
   );
 }
 
