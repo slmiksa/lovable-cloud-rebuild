@@ -136,7 +136,7 @@ export function SystemCard({ system, onOpen }: { system: SystemItem; onOpen: () 
             <img
               src={system.imageUrl}
               alt={system.name}
-              className="h-full w-full object-contain"
+              className="h-full w-full object-cover object-center"
               loading="lazy"
             />
           </div>
@@ -172,7 +172,7 @@ export function SystemDialogContent({ system }: { system: SystemItem }) {
             <img
               src={system.imageUrl}
               alt={system.name}
-              className="h-full w-full object-contain"
+              className="h-full w-full object-cover object-center"
             />
           </div>
         ) : (

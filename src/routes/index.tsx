@@ -344,7 +344,7 @@ function HeroSlider({ slides }: { slides: PublicSlide[] }) {
               <img
                 src={s.image_url!}
                 alt={s.title || "Slide"}
-                className="h-full w-full object-contain"
+                className="h-full w-full object-cover object-center"
                 loading={i === 0 ? "eager" : "lazy"}
               />
             </div>
