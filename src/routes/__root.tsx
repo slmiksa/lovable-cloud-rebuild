@@ -2,6 +2,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Outlet, Link, createRootRouteWithContext, useRouter, useRouterState } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect, type ErrorInfo } from "react";
 
+import { CyberBackground } from "@/components/CyberBackground";
+
 const WhatsAppWidgetImpl = lazy(() => import("@/components/WhatsAppWidget"));
 
 function NotFoundComponent() {
@@ -76,6 +78,7 @@ function RootComponent() {
   }, []);
   return (
     <QueryClientProvider client={queryClient}>
+      {!isAdmin && <CyberBackground />}
       <Outlet />
       {!isAdmin && <WhatsAppWidgetLazy />}
     </QueryClientProvider>
