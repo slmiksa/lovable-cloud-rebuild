@@ -38,7 +38,7 @@ function SystemsPage() {
   const title = s?.title ?? "تطبيقاتنا وأنظمتنا";
   const description = s?.description ?? "مجموعة متكاملة من المنصات السيبرانية والتقنية تعمل بتناغم لحماية مؤسستك وتطوير بيئتها الرقمية.";
   return (
-    <div className="min-h-screen bg-white font-arabic text-[var(--ink)]">
+    <div className="min-h-screen bg-transparent font-arabic text-[var(--ink)]">
       <SiteHeader active="systems" />
 
       {/* Page hero */}

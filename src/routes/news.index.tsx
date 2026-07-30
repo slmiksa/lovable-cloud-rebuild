@@ -33,7 +33,7 @@ function NewsIndex() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--bg)]" dir="rtl">
+    <div className="min-h-screen bg-transparent" dir="rtl">
       <SiteHeader active="news" />
 
       <section className="bg-gradient-to-l from-[var(--brand-dark)] to-[var(--brand)] py-14 text-white">
