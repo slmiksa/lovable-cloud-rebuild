@@ -120,7 +120,6 @@ export function CyberBackground() {
     const onPointerMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
       pointer.x = e.clientX - rect.left;
-      pointer.y = e.clientY - rect.top + window.scrollY - (window.scrollY + rect.top - rect.top);
       pointer.y = e.clientY - rect.top;
       pointer.active = true;
     };
