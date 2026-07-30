@@ -11,6 +11,11 @@ export const Route = createFileRoute("/news/")({
 
 function NewsIndex() {
   const [news, setNews] = useState<PublicNews[]>([]);
+  const [sec, setSec] = useState<{
+    eyebrow: string | null;
+    title: string | null;
+    description: string | null;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,6 +24,7 @@ function NewsIndex() {
       const d = await getPublicHome();
       if (!alive) return;
       setNews(d.news);
+      setSec(d.sections?.news_page ?? d.sections?.news ?? null);
       setLoading(false);
     })();
     return () => {
@@ -32,13 +38,19 @@ function NewsIndex() {
 
       <section className="bg-gradient-to-l from-[var(--brand-dark)] to-[var(--brand)] py-14 text-white">
         <div className="mx-auto max-w-[1400px] px-5 text-center md:px-10">
-          <div className="text-sm font-bold tracking-widest text-white/80">الأخبار</div>
-          <h1 className="mt-3 text-3xl font-black md:text-5xl">أهم أخبار Lamha Secure</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-base text-white/85 md:text-lg">
-            تابع جديد المقالات والإعلانات في مجال الأمن السيبراني والحلول التقنية.
+          <div className="text-sm font-bold tracking-widest text-white/80">
+            {sec?.eyebrow || "الأخبار"}
+          </div>
+          <h1 className="mt-3 text-3xl font-black md:text-5xl">
+            {sec?.title || "أهم أخبار Lamha Secure"}
+          </h1>
+          <p className="mx-auto mt-4 max-w-2xl whitespace-pre-line text-base text-white/85 md:text-lg">
+            {sec?.description ||
+              "تابع جديد المقالات والإعلانات في مجال الأمن السيبراني والحلول التقنية."}
           </p>
         </div>
       </section>
+
 
       <section className="mx-auto max-w-[1400px] px-5 py-16 md:px-10">
         {loading ? (
