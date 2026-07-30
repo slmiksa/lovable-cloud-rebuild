@@ -76,6 +76,7 @@ function RootComponent() {
   }, []);
   return (
     <QueryClientProvider client={queryClient}>
+      {!isAdmin && <CyberBackground />}
       <Outlet />
       {!isAdmin && <WhatsAppWidgetLazy />}
     </QueryClientProvider>
