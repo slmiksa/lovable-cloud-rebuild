@@ -35,7 +35,7 @@ function AboutPage() {
   }, []);
 
   return (
-    <div dir="rtl" className="min-h-screen bg-white font-arabic">
+    <div dir="rtl" className="min-h-screen bg-transparent font-arabic">
       <SiteHeader />
       <main className="mx-auto max-w-4xl px-5 py-14 md:px-10 md:py-20">
         <div className="mb-10 text-center">

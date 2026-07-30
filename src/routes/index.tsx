@@ -121,7 +121,7 @@ function Index() {
   const systemItems = systems.map((s, i) => toSystemItem(s, i));
 
   return (
-    <div className="min-h-screen font-arabic bg-white text-[var(--ink)]">
+    <div className="min-h-screen font-arabic bg-transparent text-[var(--ink)]">
       <SiteHeader active="home" />
 
       {/* Hero slider */}

@@ -34,7 +34,7 @@ function ClientsPage() {
  const description =
   "نفخر بثقة عملائنا من مختلف القطاعات، ونقدم حلولاً متكاملة في الأمن السيبراني وتقنية المعلومات، تشمل حماية الأصول الرقمية، وتعزيز البنية الأمنية، وتطوير حلول تقنية مبتكرة تدعم استمرارية الأعمال والتحول الرقمي.";
   return (
-    <div className="min-h-screen bg-white font-arabic text-[var(--ink)]" dir="rtl">
+    <div className="min-h-screen bg-transparent font-arabic text-[var(--ink)]" dir="rtl">
       <SiteHeader active="clients" />
 
       <section className="bg-gradient-to-l from-[var(--purple)] to-[var(--purple-dark)] py-16 text-white">

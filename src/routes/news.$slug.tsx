@@ -26,7 +26,7 @@ export const Route = createFileRoute("/news/$slug")({
       : [],
   }),
   notFoundComponent: () => (
-    <div className="min-h-screen font-arabic bg-white text-[var(--ink)]" dir="rtl">
+    <div className="min-h-screen font-arabic bg-transparent text-[var(--ink)]" dir="rtl">
       <SiteHeader active="home" />
       <div className="mx-auto max-w-2xl px-5 py-32 text-center">
         <h1 className="text-3xl font-black text-[var(--purple)]">الخبر غير موجود</h1>
@@ -75,7 +75,7 @@ function NewsDetail() {
   const { item, others } = Route.useLoaderData() as { item: PublicNewsFull; others: PublicNews[] };
 
   return (
-    <div className="min-h-screen font-arabic bg-white text-[var(--ink)]" dir="rtl">
+    <div className="min-h-screen font-arabic bg-transparent text-[var(--ink)]" dir="rtl">
       <SiteHeader active="home" />
 
       <article className="mx-auto max-w-[1000px] px-5 py-12 md:px-10 md:py-16">
