@@ -32,24 +32,30 @@ function NewsIndex() {
     };
   }, []);
 
+  const eyebrow = sec?.eyebrow?.trim() || null;
+  const title = sec?.title?.trim() || null;
+  const description = sec?.description?.trim() || null;
+  const hasHero = !loading && Boolean(eyebrow || title || description);
+
   return (
     <div className="min-h-screen bg-transparent" dir="rtl">
       <SiteHeader active="news" />
 
-      <section className="bg-gradient-to-l from-[var(--brand-dark)] to-[var(--brand)] py-14 text-white">
-        <div className="mx-auto max-w-[1400px] px-5 text-center md:px-10">
-          <div className="text-sm font-bold tracking-widest text-white/80">
-            {sec?.eyebrow || "الأخبار"}
+      {hasHero && (
+        <section className="bg-gradient-to-l from-[var(--brand-dark)] to-[var(--brand)] py-14 text-white">
+          <div className="mx-auto max-w-[1400px] px-5 text-center md:px-10">
+            {eyebrow && (
+              <div className="text-sm font-bold tracking-widest text-white/80">{eyebrow}</div>
+            )}
+            {title && <h1 className="mt-3 text-3xl font-black md:text-5xl">{title}</h1>}
+            {description && (
+              <p className="mx-auto mt-4 max-w-2xl whitespace-pre-line text-base text-white/85 md:text-lg">
+                {description}
+              </p>
+            )}
           </div>
-          <h1 className="mt-3 text-3xl font-black md:text-5xl">
-            {sec?.title || "أهم أخبار Lamha Secure"}
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl whitespace-pre-line text-base text-white/85 md:text-lg">
-            {sec?.description ||
-              "تابع جديد المقالات والإعلانات في مجال الأمن السيبراني والحلول التقنية."}
-          </p>
-        </div>
-      </section>
+        </section>
+      )}
 
 
       <section className="mx-auto max-w-[1400px] px-5 py-16 md:px-10">
@@ -77,9 +83,11 @@ function NewsIndex() {
                       className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                     />
                   )}
-                  <span className="absolute right-4 top-4 rounded bg-[var(--brand)] px-3 py-1 text-xs font-bold text-white shadow">
-                    {n.date || "أخبار"}
-                  </span>
+                  {n.date && (
+                    <span className="absolute right-4 top-4 rounded bg-[var(--brand)] px-3 py-1 text-xs font-bold text-white shadow">
+                      {n.date}
+                    </span>
+                  )}
                 </div>
                 <div className="p-5">
                   <h4 className="text-lg font-bold text-[var(--purple)] group-hover:text-[var(--brand)]">
