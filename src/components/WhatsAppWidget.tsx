@@ -5,36 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { getIcon } from "@/lib/icons";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 
-const FALLBACK_PHONE = "966552553315";
-
 type Faq = { q: string; a: string };
-
-const FALLBACK_FAQS: Faq[] = [
-  {
-    q: "ما هي الخدمات التي تقدمونها؟",
-    a: "نقدّم حلولاً متكاملة في الأمن السيبراني والحلول التقنية والبرمجية والاستشارات: اختبار الاختراق، أمن الشبكات، أمن السحابة، الاستجابة للحوادث، والحوكمة والامتثال.",
-  },
-  {
-    q: "هل تقدمون دعماً على مدار الساعة؟",
-    a: "نعم، فريق مركز العمليات الأمنية (SOC) لدينا يعمل 24/7 لرصد التهديدات والاستجابة الفورية لأي حادث سيبراني.",
-  },
-  {
-    q: "كيف أحصل على عرض سعر؟",
-    a: "تواصل معنا عبر واتساب أو راسلنا على sales@lamhasec.com وسيقوم فريقنا بدراسة احتياجك وإرسال عرض مخصص خلال 24 ساعة.",
-  },
-  {
-    q: "هل تخدمون الشركات الصغيرة؟",
-    a: "بالتأكيد. لدينا باقات مرنة تناسب الشركات الناشئة والصغيرة والمتوسطة، إضافة إلى حلول مؤسسية للجهات الكبرى.",
-  },
-];
-
-const DEFAULTS = {
-  headerTitle: "Lamha Secure — الدعم الفوري",
-  headerSubtitle: "عادةً نرد خلال دقائق",
-  greeting: "مرحباً بك في Lamha Secure 👋\nاختر سؤالاً للإجابة السريعة، أو تواصل معنا مباشرة عبر واتساب.",
-  ctaLabel: "تواصل معنا عبر واتساب",
-  iconName: "MessageCircle",
-};
 
 function openWhatsApp(phone: string, text?: string) {
   const msg = text ? `?text=${encodeURIComponent(text)}` : "";
@@ -51,13 +22,19 @@ export default function WhatsAppWidget() {
   const settings = useSiteSettings();
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
-  const [faqs, setFaqs] = useState<Faq[]>(FALLBACK_FAQS);
-  const [text, setText] = useState(DEFAULTS);
+  const [faqs, setFaqs] = useState<Faq[]>([]);
+  const [text, setText] = useState({
+    headerTitle: "",
+    headerSubtitle: "",
+    greeting: "",
+    ctaLabel: "",
+    iconName: "",
+  });
 
   const supportType = settings.support_type;
   const supportValue = (settings.support_value ?? "").trim();
   const isEmail = supportType === "email";
-  const target = supportValue || (isEmail ? "" : FALLBACK_PHONE);
+  const target = supportValue;
 
   const triggerContact = (msg: string) => {
     if (!target) return;
@@ -81,16 +58,14 @@ export default function WhatsAppWidget() {
           .maybeSingle(),
       ]);
       if (!alive) return;
-      if (faqRows && faqRows.length > 0) {
-        setFaqs(faqRows.map((r) => ({ q: r.question, a: r.answer })));
-      }
+      setFaqs((faqRows ?? []).map((r) => ({ q: r.question, a: r.answer })));
       if (sec) {
         setText({
-          headerTitle: sec.title || DEFAULTS.headerTitle,
-          headerSubtitle: sec.description ? sec.description.split("\n")[0] : DEFAULTS.headerSubtitle,
-          greeting: sec.description || DEFAULTS.greeting,
-          ctaLabel: sec.eyebrow || DEFAULTS.ctaLabel,
-          iconName: sec.icon || DEFAULTS.iconName,
+          headerTitle: sec.title ?? "",
+          headerSubtitle: sec.description ? sec.description.split("\n")[0] : "",
+          greeting: sec.description ?? "",
+          ctaLabel: sec.eyebrow ?? "",
+          iconName: sec.icon ?? "",
         });
       }
     })();
@@ -113,8 +88,10 @@ export default function WhatsAppWidget() {
               <span className="absolute -top-0.5 -left-0.5 h-2.5 w-2.5 rounded-full bg-[var(--brand-light)] ring-2 ring-[var(--brand)]" />
             </div>
             <div className="flex-1 leading-tight">
-              <div className="text-sm font-bold">{text.headerTitle}</div>
-              <div className="text-[11px] text-white/80">{text.headerSubtitle}</div>
+              {text.headerTitle && <div className="text-sm font-bold">{text.headerTitle}</div>}
+              {text.headerSubtitle && (
+                <div className="text-[11px] text-white/80">{text.headerSubtitle}</div>
+              )}
             </div>
             <button
               onClick={() => { setOpen(false); setSelected(null); }}
@@ -127,9 +104,11 @@ export default function WhatsAppWidget() {
 
           {/* Body */}
           <div className="max-h-[60vh] space-y-2.5 overflow-y-auto bg-[#0b1220] p-4 text-white">
-            <div className="whitespace-pre-line rounded-2xl rounded-tr-sm bg-white/5 p-3 text-sm leading-relaxed text-white/90 ring-1 ring-white/10">
-              {text.greeting}
-            </div>
+            {text.greeting && (
+              <div className="whitespace-pre-line rounded-2xl rounded-tr-sm bg-white/5 p-3 text-sm leading-relaxed text-white/90 ring-1 ring-white/10">
+                {text.greeting}
+              </div>
+            )}
 
             {selected === null ? (
               <div className="space-y-2 pt-1">
@@ -169,7 +148,7 @@ export default function WhatsAppWidget() {
                 triggerContact(
                   selected !== null
                     ? `مرحباً، لدي استفسار بخصوص: ${faqs[selected].q}`
-                    : "مرحباً، أود التواصل مع فريق Lamha Secure."
+                    : "مرحباً، أود التواصل معكم."
                 )
               }
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[var(--brand)] to-[var(--brand-dark)] px-4 py-3 text-sm font-bold text-white shadow-lg shadow-[var(--brand)]/20 transition hover:brightness-110"

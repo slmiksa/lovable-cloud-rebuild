@@ -51,18 +51,17 @@ function clientShort(name: string): string {
 
 function SectionHeader({
   data,
-  fallback,
   size = "md",
 }: {
   data: import("@/lib/public.functions").PublicSectionText | null;
-  fallback: { eyebrow?: string; title: string; description?: string; icon?: string };
   size?: "sm" | "md" | "lg";
 }) {
-  const eyebrow = data?.eyebrow ?? fallback.eyebrow;
-  const title = data?.title ?? fallback.title;
-  const description = data?.description ?? fallback.description;
-  const iconName = data?.icon ?? fallback.icon;
+  const eyebrow = data?.eyebrow?.trim() || null;
+  const title = data?.title?.trim() || null;
+  const description = data?.description?.trim() || null;
+  const iconName = data?.icon?.trim() || null;
   const Icon = iconName ? getIcon(iconName) : null;
+  if (!eyebrow && !title && !description) return null;
   const titleCls =
     size === "lg"
       ? "mt-3 text-3xl font-black text-[var(--purple)] md:text-5xl"
@@ -81,7 +80,7 @@ function SectionHeader({
           {eyebrow}
         </div>
       )}
-      <h2 className={titleCls}>{title}</h2>
+      {title && <h2 className={titleCls}>{title}</h2>}
       {description && (
         <p className="mt-3 text-sm text-[var(--ink-soft)] md:text-base whitespace-pre-line">{description}</p>
       )}
@@ -143,12 +142,6 @@ function Index() {
         <SectionHeader
           data={sec("services")}
           size="lg"
-          fallback={{
-            eyebrow: "خدماتنا",
-            title: "حلول متكاملة لأمنك الرقمي",
-            description:
-              "نقدم باقة شاملة من خدمات الأمن السيبراني والحلول التقنية والبرمجية والاستشارات لحماية أعمالك ودعم نموها بثقة.",
-          }}
         />
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s) => {
@@ -178,7 +171,6 @@ function Index() {
         <section className="mx-auto max-w-[1400px] px-5 pb-6 md:px-10" dir="rtl">
           <SectionHeader
             data={sec("offers")}
-            fallback={{ eyebrow: "أحدث عروضنا", title: "باقات مصمّمة لحماية مؤسستك" }}
           />
           <div className="grid gap-6 md:grid-cols-2">
             {offers.map((o) => (
@@ -193,12 +185,6 @@ function Index() {
         <section id="systems" className="mx-auto max-w-[1400px] px-5 pb-6 pt-20 md:px-10" dir="rtl">
           <SectionHeader
             data={sec("systems")}
-            fallback={{
-              eyebrow: "منصاتنا",
-              title: "تطبيقاتنا وأنظمتنا",
-              description:
-                "اضغط على أي نظام لعرض تفاصيله. تعمل جميع منصاتنا بشكل متكامل لحماية مؤسستك من جميع الزوايا.",
-            }}
           />
           <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {systemItems.slice(0, 4).map((sys) => (
@@ -222,7 +208,6 @@ function Index() {
           <div className="mx-auto max-w-[1400px] px-5 md:px-10">
             <SectionHeader
               data={sec("clients")}
-              fallback={{ eyebrow: "عملاء Lamha Secure", title: "يثقون بنا" }}
             />
             <ClientsCarousel clients={clients} />
             <div className="mt-6 flex justify-center">
@@ -242,7 +227,6 @@ function Index() {
         <section id="news" className="mx-auto max-w-[1400px] px-5 pb-20 md:px-10" dir="rtl">
           <SectionHeader
             data={sec("news")}
-            fallback={{ eyebrow: "الأخبار", title: "أهم أخبار Lamha Secure" }}
           />
           <div className="mt-8 grid gap-6 md:grid-cols-3">
             {news.slice(0, 3).map((n: PublicNews) => (
@@ -262,7 +246,7 @@ function Index() {
                     />
                   )}
                   <span className="absolute right-4 top-4 rounded bg-[var(--brand)] px-3 py-1 text-xs font-bold text-white shadow">
-                    {n.date || "أخبار"}
+                    {n.date}
                   </span>
                 </div>
                 <div className="p-5">
@@ -509,13 +493,6 @@ function CertificationsStrip({
       <div className="mx-auto max-w-[1400px] px-5 md:px-10">
         <SectionHeader
           data={sectionData}
-          fallback={{
-            eyebrow: "اعتماداتنا",
-            title: "الشهادات الاحترافية",
-            description:
-              "نفتخر باعتماداتنا وشهاداتنا من كبرى الجهات المتخصصة في الأمن السيبراني.",
-            icon: "BadgeCheck",
-          }}
         />
         <div className="mt-8 rounded-2xl border border-[var(--line)] bg-white p-4 md:p-6">
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-4 lg:grid-cols-6">
@@ -574,11 +551,9 @@ function ContactSection({ sectionData }: { sectionData?: import("@/lib/public.fu
 
   const maxMsg = 700;
 
-  const eyebrow = sectionData?.eyebrow ?? "تواصل معنا";
-  const title = sectionData?.title ?? "تواصل معنا الآن";
-  const description =
-    sectionData?.description ??
-    "اترك بياناتك وسيقوم فريق Lamha Secure بالتواصل معك في أقرب وقت لمناقشة احتياجاتك الأمنية والتقنية.";
+  const eyebrow = sectionData?.eyebrow?.trim() || null;
+  const title = sectionData?.title?.trim() || null;
+  const description = sectionData?.description?.trim() || null;
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -741,7 +716,7 @@ function ContactSection({ sectionData }: { sectionData?: import("@/lib/public.fu
             </div>
             <h4 className="text-2xl font-black text-[var(--purple)]">تم استلام طلبك بنجاح</h4>
             <p className="mt-3 text-[var(--ink-soft)]">
-              سوف يتم التواصل معكم قريباً من قِبَل فريق Lamha Secure.
+              سوف يتم التواصل معكم قريباً.
             </p>
             <button
               onClick={() => setSuccess(null)}
