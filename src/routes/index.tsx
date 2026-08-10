@@ -51,18 +51,17 @@ function clientShort(name: string): string {
 
 function SectionHeader({
   data,
-  fallback,
   size = "md",
 }: {
   data: import("@/lib/public.functions").PublicSectionText | null;
-  fallback: { eyebrow?: string; title: string; description?: string; icon?: string };
   size?: "sm" | "md" | "lg";
 }) {
-  const eyebrow = data?.eyebrow ?? fallback.eyebrow;
-  const title = data?.title ?? fallback.title;
-  const description = data?.description ?? fallback.description;
-  const iconName = data?.icon ?? fallback.icon;
+  const eyebrow = data?.eyebrow?.trim() || null;
+  const title = data?.title?.trim() || null;
+  const description = data?.description?.trim() || null;
+  const iconName = data?.icon?.trim() || null;
   const Icon = iconName ? getIcon(iconName) : null;
+  if (!eyebrow && !title && !description) return null;
   const titleCls =
     size === "lg"
       ? "mt-3 text-3xl font-black text-[var(--purple)] md:text-5xl"
