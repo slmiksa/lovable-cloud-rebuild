@@ -80,7 +80,7 @@ function SectionHeader({
           {eyebrow}
         </div>
       )}
-      {title && <h2 className={titleCls}>{title}</h2>}
+      <h2 className={titleCls}>{title}</h2>
       {description && (
         <p className="mt-3 text-sm text-[var(--ink-soft)] md:text-base whitespace-pre-line">{description}</p>
       )}
@@ -142,6 +142,12 @@ function Index() {
         <SectionHeader
           data={sec("services")}
           size="lg"
+          fallback={{
+            eyebrow: "خدماتنا",
+            title: "حلول متكاملة لأمنك الرقمي",
+            description:
+              "نقدم باقة شاملة من خدمات الأمن السيبراني والحلول التقنية والبرمجية والاستشارات لحماية أعمالك ودعم نموها بثقة.",
+          }}
         />
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s) => {
@@ -171,6 +177,27 @@ function Index() {
         <section className="mx-auto max-w-[1400px] px-5 pb-6 md:px-10" dir="rtl">
           <SectionHeader
             data={sec("offers")}
+            fallback={{ eyebrow: "أحدث عروضنا", title: "باقات مصمّمة لحماية مؤسستك" }}
+          />
+          <div className="grid gap-6 md:grid-cols-2">
+            {offers.map((o) => (
+              <PromoCard key={o.id} offer={o} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Systems */}
+      {systemItems.length > 0 && (
+        <section id="systems" className="mx-auto max-w-[1400px] px-5 pb-6 pt-20 md:px-10" dir="rtl">
+          <SectionHeader
+            data={sec("systems")}
+            fallback={{
+              eyebrow: "منصاتنا",
+              title: "تطبيقاتنا وأنظمتنا",
+              description:
+                "اضغط على أي نظام لعرض تفاصيله. تعمل جميع منصاتنا بشكل متكامل لحماية مؤسستك من جميع الزوايا.",
+            }}
           />
           <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {systemItems.slice(0, 4).map((sys) => (
@@ -194,6 +221,300 @@ function Index() {
           <div className="mx-auto max-w-[1400px] px-5 md:px-10">
             <SectionHeader
               data={sec("clients")}
+              fallback={{ eyebrow: "عملاء Lamha Secure", title: "يثقون بنا" }}
+            />
+            <ClientsCarousel clients={clients} />
+            <div className="mt-6 flex justify-center">
+              <Link
+                to="/clients"
+                className="rounded-md border border-[var(--brand)] bg-white px-6 py-2.5 text-sm font-bold text-[var(--brand)] transition hover:bg-[var(--brand)] hover:text-white"
+              >
+                عرض الكل
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* News-style cards */}
+      {news.length > 0 && (
+        <section id="news" className="mx-auto max-w-[1400px] px-5 pb-20 md:px-10" dir="rtl">
+          <SectionHeader
+            data={sec("news")}
+            fallback={{ eyebrow: "الأخبار", title: "أهم أخبار Lamha Secure" }}
+          />
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            {news.slice(0, 3).map((n: PublicNews) => (
+              <Link
+                key={n.slug}
+                to="/news/$slug"
+                params={{ slug: n.slug }}
+                className="group block overflow-hidden rounded-2xl border border-[var(--line)] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  {n.image_url && (
+                    <img
+                      src={n.image_url}
+                      alt={n.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  )}
+                  <span className="absolute right-4 top-4 rounded bg-[var(--brand)] px-3 py-1 text-xs font-bold text-white shadow">
+                    {n.date || "أخبار"}
+                  </span>
+                </div>
+                <div className="p-5">
+                  <h4 className="text-lg font-bold text-[var(--purple)] group-hover:text-[var(--brand)]">
+                    {n.title}
+                  </h4>
+                  <p className="mt-2 text-sm leading-loose text-[var(--ink-soft)]">{n.excerpt}</p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[var(--brand)]">
+                    اقرأ المزيد
+                    <ArrowLeft className="h-4 w-4" />
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-6 flex justify-center">
+            <Link
+              to="/news"
+              className="inline-flex items-center gap-2 rounded-md border border-[var(--brand)] bg-white px-5 py-2 text-sm font-bold text-[var(--brand)] transition hover:bg-[var(--brand)] hover:text-white"
+            >
+              <span>مشاهدة الكل</span>
+              <ArrowLeft className="h-4 w-4" />
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {/* Contact Form */}
+      <ContactSection sectionData={sec("contact")} />
+
+      {/* Professional certifications strip */}
+      <CertificationsStrip items={certifications} sectionData={sec("certifications")} />
+
+      <SiteFooter />
+
+      {/* WhatsApp widget mounted globally in root layout */}
+
+      <Dialog open={!!openSystem} onOpenChange={(o) => !o && setOpenSystem(null)}>
+        <DialogContent
+          className="max-w-2xl border border-[var(--line)] bg-white p-0 text-[var(--ink)] sm:rounded-3xl"
+          dir="rtl"
+        >
+          {openSystem && <SystemDialogContent system={openSystem} />}
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
+function HeroSlider({ slides }: { slides: PublicSlide[] }) {
+  const [active, setActive] = useState(0);
+  const activeSlides = slides.filter((s) => s.image_url);
+
+  useEffect(() => {
+    if (activeSlides.length <= 1) return;
+    const timer = setInterval(() => {
+      setActive((i) => (i + 1) % activeSlides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [activeSlides.length]);
+
+  if (activeSlides.length === 0) {
+    return <div className="h-6" />;
+  }
+
+  const slide = activeSlides[active];
+  const hasContent = Boolean(slide.title || slide.subtitle || slide.cta_label);
+
+  return (
+    <div className="mx-auto max-w-[1400px] px-4 md:px-8">
+      <div className="relative overflow-hidden rounded-2xl md:rounded-3xl border-[3px] border-[var(--brand)] shadow-[0_20px_60px_-20px_color-mix(in_oklab,var(--brand)_35%,transparent)] bg-gradient-to-br from-[var(--purple-dark)] to-[var(--purple)]">
+        {/* Slide image container — full image without cropping */}
+        <div className="relative aspect-[16/10] sm:aspect-[16/8] md:aspect-[16/7] lg:aspect-[16/6] w-full overflow-hidden">
+          {activeSlides.map((s, i) => (
+            <div
+              key={s.id}
+              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${i === active ? "opacity-100" : "opacity-0"}`}
+            >
+              <img
+                src={s.image_url!}
+                alt={s.title || "Slide"}
+                className="h-full w-full object-cover object-center"
+                loading={i === 0 ? "eager" : "lazy"}
+              />
+            </div>
+          ))}
+
+          {/* Bottom content bar — only when data exists */}
+          {hasContent && (
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[var(--purple-dark)]/95 via-[var(--purple-dark)]/70 to-transparent px-4 py-4 sm:px-6 sm:py-5 md:px-10 md:py-6">
+              <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div className="max-w-2xl">
+                  {slide.title && (
+                    <h2 className="text-base font-black text-white drop-shadow sm:text-xl md:text-2xl lg:text-3xl">
+                      {slide.title}
+                    </h2>
+                  )}
+                  {slide.subtitle && (
+                    <p className="mt-1 text-xs font-medium text-white/90 drop-shadow sm:text-sm md:text-base">
+                      {slide.subtitle}
+                    </p>
+                  )}
+                </div>
+                {slide.cta_label && slide.cta_url && (
+                  <Link
+                    to={slide.cta_url}
+                    className="mt-2 inline-flex items-center gap-1.5 rounded-md bg-[var(--brand)] px-3 py-1.5 text-xs font-bold text-white shadow transition hover:bg-[var(--brand-light)] hover:text-[var(--brand-foreground)] sm:mt-0 sm:px-4 sm:py-2 sm:text-sm"
+                  >
+                    {slide.cta_label}
+                    <ArrowLeft className="h-3 w-3 sm:h-4 sm:w-4" />
+                  </Link>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Dots */}
+        {activeSlides.length > 1 && (
+          <div className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 gap-1.5 sm:bottom-3">
+            {activeSlides.map((s, i) => (
+              <button
+                key={s.id}
+                onClick={() => setActive(i)}
+                aria-label={`انتقل للشريحة ${i + 1}`}
+                className={`h-2 w-2 rounded-full transition sm:h-2.5 sm:w-2.5 ${i === active ? "bg-white" : "bg-white/40 hover:bg-white/70"}`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function HomeCircles({ items }: { items: PublicCircle[] }) {
+  const list = items.slice(0, 4);
+  if (list.length === 0) return null;
+  return (
+    <div className="mx-auto max-w-[1100px] px-4 md:px-10">
+      <div className="relative">
+        <div className="absolute left-[10%] right-[10%] top-[38px] hidden h-[3px] bg-[var(--brand)] md:top-[46px] md:block" />
+        <div className="relative grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+          {list.map((it) => {
+            const Icon = getIcon(it.icon);
+            return (
+              <div key={it.id} className="flex flex-col items-center text-center">
+                <div className="flex h-[76px] w-[76px] items-center justify-center overflow-hidden rounded-full border-[4px] border-[var(--brand)] bg-white shadow-[0_8px_20px_-8px_color-mix(in_oklab,var(--brand)_40%,transparent)] md:h-[96px] md:w-[96px] md:border-[5px]">
+                  {it.image_url ? (
+                    <img
+                      src={it.image_url}
+                      alt={it.title}
+                      loading="lazy"
+                      className="h-full w-full object-contain p-2"
+                    />
+                  ) : (
+                    <Icon className="h-7 w-7 text-[var(--brand)] md:h-9 md:w-9" strokeWidth={1.8} />
+                  )}
+                </div>
+                <div className="mt-3 text-xs font-extrabold text-[var(--purple)] md:mt-4 md:text-sm">
+                  {it.title}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PromoCard({ offer }: { offer: PublicOffer }) {
+  const { note, features } = parseOffer(offer.description);
+  return (
+    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-bl from-[var(--purple-light)] via-[var(--purple)] to-[var(--purple-dark)] p-8 text-white shadow-[0_20px_50px_-20px_rgba(60,20,90,0.6)]">
+      <div className="absolute -right-10 -top-10 h-44 w-44 rounded-full bg-white/5" />
+      <div className="absolute -bottom-16 -left-10 h-56 w-56 rounded-full bg-white/[0.04]" />
+      <div className="relative grid items-center gap-6 md:grid-cols-2">
+        <ul className="space-y-2.5 text-sm">
+          {features.map((f) => (
+            <li key={f} className="flex items-center gap-2">
+              <Check className="h-4 w-4 shrink-0 text-emerald-300" />
+              <span>{f}</span>
+            </li>
+          ))}
+        </ul>
+        <div className="text-right">
+          {offer.badge && (
+            <span className="inline-block rounded-md border border-white/30 px-3 py-1 text-xs font-bold">{offer.badge}</span>
+          )}
+          <h4 className="mt-3 text-2xl font-black leading-tight">{offer.title}</h4>
+          {note && <p className="mt-4 text-sm leading-relaxed text-white/80">{note}</p>}
+          {offer.price && <p className="mt-2 text-lg font-black text-emerald-300">{offer.price}</p>}
+          <button className="mt-5 rounded-md border border-white px-6 py-2 text-sm font-bold transition hover:bg-white hover:text-[var(--purple)]">
+            اشترك الآن
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ClientLogo({ name, logoUrl }: { name: string; logoUrl: string | null }) {
+  return (
+    <div className="flex h-32 w-36 shrink-0 flex-col items-center justify-center gap-2 rounded-xl border border-[var(--line)] bg-white px-3 py-2 grayscale transition hover:grayscale-0 hover:border-[var(--brand)]/40 sm:w-40 md:h-36 md:w-44">
+      {logoUrl ? (
+        <img src={logoUrl} alt={name} className="h-14 w-14 rounded-xl object-contain md:h-16 md:w-16" />
+      ) : (
+        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[var(--purple)]/10 text-base font-black text-[var(--purple)] md:h-16 md:w-16">
+          {clientShort(name)}
+        </div>
+      )}
+      <div className="line-clamp-2 text-center text-[11px] font-bold leading-tight tracking-wide text-[var(--ink)] sm:text-xs md:text-sm">{name}</div>
+    </div>
+  );
+}
+
+function ClientsCarousel({ clients }: { clients: PublicClient[] }) {
+  // Static strip — logos don't auto-scroll; users swipe/drag horizontally.
+  return (
+    <div className="relative mt-8 overflow-hidden rounded-2xl border border-[var(--line)] bg-white">
+      <div
+        className="flex gap-4 overflow-x-auto scroll-smooth px-4 py-4 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        style={{ overscrollBehaviorX: "contain" }}
+      >
+        {clients.map((c) => (
+          <ClientLogo key={c.id} name={c.name} logoUrl={c.logo_url} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CertificationsStrip({
+  items,
+  sectionData,
+}: {
+  items: PublicCertification[];
+  sectionData: import("@/lib/public.functions").PublicSectionText | null;
+}) {
+  if (!items || items.length === 0) return null;
+  return (
+    <section className="bg-white py-14 md:py-16" dir="rtl">
+      <div className="mx-auto max-w-[1400px] px-5 md:px-10">
+        <SectionHeader
+          data={sectionData}
+          fallback={{
+            eyebrow: "اعتماداتنا",
+            title: "الشهادات الاحترافية",
+            description:
+              "نفتخر باعتماداتنا وشهاداتنا من كبرى الجهات المتخصصة في الأمن السيبراني.",
+            icon: "BadgeCheck",
+          }}
         />
         <div className="mt-8 rounded-2xl border border-[var(--line)] bg-white p-4 md:p-6">
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-4 lg:grid-cols-6">
@@ -252,9 +573,11 @@ function ContactSection({ sectionData }: { sectionData?: import("@/lib/public.fu
 
   const maxMsg = 700;
 
-  const eyebrow = sectionData?.eyebrow?.trim() || null;
-  const title = sectionData?.title?.trim() || null;
-  const description = sectionData?.description?.trim() || null;
+  const eyebrow = sectionData?.eyebrow ?? "تواصل معنا";
+  const title = sectionData?.title ?? "تواصل معنا الآن";
+  const description =
+    sectionData?.description ??
+    "اترك بياناتك وسيقوم فريق Lamha Secure بالتواصل معك في أقرب وقت لمناقشة احتياجاتك الأمنية والتقنية.";
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -417,7 +740,7 @@ function ContactSection({ sectionData }: { sectionData?: import("@/lib/public.fu
             </div>
             <h4 className="text-2xl font-black text-[var(--purple)]">تم استلام طلبك بنجاح</h4>
             <p className="mt-3 text-[var(--ink-soft)]">
-              سوف يتم التواصل معكم قريباً.
+              سوف يتم التواصل معكم قريباً من قِبَل فريق Lamha Secure.
             </p>
             <button
               onClick={() => setSuccess(null)}
