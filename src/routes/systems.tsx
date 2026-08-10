@@ -34,23 +34,30 @@ function SystemsPage() {
   const systemItems = systems.map((r, i) => toSystemItem(r, i));
   const [openSystem, setOpenSystem] = useState<SystemItem | null>(null);
   const s = sections?.["systems_page"] ?? null;
-  const eyebrow = s?.eyebrow ?? "منصاتنا";
-  const title = s?.title ?? "تطبيقاتنا وأنظمتنا";
-  const description = s?.description ?? "مجموعة متكاملة من المنصات السيبرانية والتقنية تعمل بتناغم لحماية مؤسستك وتطوير بيئتها الرقمية.";
+  const eyebrow = s?.eyebrow?.trim() || null;
+  const title = s?.title?.trim() || null;
+  const description = s?.description?.trim() || null;
+  const hasHero = Boolean(eyebrow || title || description);
   return (
     <div className="min-h-screen bg-transparent font-arabic text-[var(--ink)]">
       <SiteHeader active="systems" />
 
       {/* Page hero */}
-      <section className="bg-gradient-to-l from-[var(--purple)] to-[var(--purple-dark)] py-16 text-white" dir="rtl">
-        <div className="mx-auto max-w-[1400px] px-5 text-center md:px-10">
-          <div className="text-sm font-bold tracking-widest text-[var(--brand)]">{eyebrow}</div>
-          <h1 className="mt-3 text-3xl font-black md:text-5xl">{title}</h1>
-          <p className="mx-auto mt-4 max-w-2xl whitespace-pre-line text-base text-white/85 md:text-lg">
-            {description}
-          </p>
-        </div>
-      </section>
+      {hasHero && (
+        <section className="bg-gradient-to-l from-[var(--purple)] to-[var(--purple-dark)] py-16 text-white" dir="rtl">
+          <div className="mx-auto max-w-[1400px] px-5 text-center md:px-10">
+            {eyebrow && (
+              <div className="text-sm font-bold tracking-widest text-[var(--brand)]">{eyebrow}</div>
+            )}
+            {title && <h1 className="mt-3 text-3xl font-black md:text-5xl">{title}</h1>}
+            {description && (
+              <p className="mx-auto mt-4 max-w-2xl whitespace-pre-line text-base text-white/85 md:text-lg">
+                {description}
+              </p>
+            )}
+          </div>
+        </section>
+      )}
 
       <section className="mx-auto max-w-[1400px] px-5 py-16 md:px-10" dir="rtl">
         {systemItems.length === 0 ? (

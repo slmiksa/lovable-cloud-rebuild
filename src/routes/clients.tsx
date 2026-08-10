@@ -29,21 +29,29 @@ function ClientsPage() {
     sections: SectionTextsMap;
   };
   const s = sections?.["clients_page"];
-  const eyebrow = s?.eyebrow ?? "شركاؤنا";
-  const title = s?.title ?? "عملاؤنا";
- const description =
-  "نفخر بثقة عملائنا من مختلف القطاعات، ونقدم حلولاً متكاملة في الأمن السيبراني وتقنية المعلومات، تشمل حماية الأصول الرقمية، وتعزيز البنية الأمنية، وتطوير حلول تقنية مبتكرة تدعم استمرارية الأعمال والتحول الرقمي.";
+  const eyebrow = s?.eyebrow?.trim() || null;
+  const title = s?.title?.trim() || null;
+  const description = s?.description?.trim() || null;
+  const hasHero = Boolean(eyebrow || title || description);
   return (
     <div className="min-h-screen bg-transparent font-arabic text-[var(--ink)]" dir="rtl">
       <SiteHeader active="clients" />
 
-      <section className="bg-gradient-to-l from-[var(--purple)] to-[var(--purple-dark)] py-16 text-white">
-        <div className="mx-auto max-w-[1400px] px-5 text-center md:px-10">
-          <p className="mx-auto mt-3 max-w-xl whitespace-pre-line text-base text-white/85">
-            {description}
-          </p>
-        </div>
-      </section>
+      {hasHero && (
+        <section className="bg-gradient-to-l from-[var(--purple)] to-[var(--purple-dark)] py-16 text-white">
+          <div className="mx-auto max-w-[1400px] px-5 text-center md:px-10">
+            {eyebrow && (
+              <div className="text-sm font-bold tracking-widest text-[var(--brand)]">{eyebrow}</div>
+            )}
+            {title && <h1 className="mt-3 text-3xl font-black md:text-5xl">{title}</h1>}
+            {description && (
+              <p className="mx-auto mt-3 max-w-xl whitespace-pre-line text-base text-white/85">
+                {description}
+              </p>
+            )}
+          </div>
+        </section>
+      )}
 
       <main className="mx-auto max-w-[1400px] px-5 py-16 md:px-10">
         {clients.length === 0 ? (
