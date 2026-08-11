@@ -18,7 +18,7 @@ export const Route = createFileRoute("/about")({
 
 function AboutPage() {
   const [loading, setLoading] = useState(true);
-  const [title, setTitle] = useState("من نحن");
+  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   useEffect(() => {
@@ -38,21 +38,24 @@ function AboutPage() {
     <div dir="rtl" className="min-h-screen bg-transparent font-arabic">
       <SiteHeader />
       <main className="mx-auto max-w-4xl px-5 py-14 md:px-10 md:py-20">
-        <div className="mb-10 text-center">
-          <div className="mx-auto mb-4 h-1.5 w-16 rounded-full bg-gradient-to-l from-[var(--brand)] to-[var(--brand-dark)]" />
-          <h1 className="text-3xl font-extrabold text-[var(--ink)] md:text-4xl">{title}</h1>
-        </div>
-
         {loading ? (
           <div className="flex justify-center py-16">
             <Loader2 className="h-8 w-8 animate-spin text-[var(--brand)]" />
           </div>
-        ) : content.trim() ? (
-          <article className="whitespace-pre-line rounded-2xl border border-[var(--line)] bg-white p-6 text-[17px] leading-[2.1] text-[var(--ink)] shadow-sm md:p-10">
-            {content}
-          </article>
         ) : (
-          <p className="text-center text-[var(--ink-soft)]">لم يُضف محتوى بعد.</p>
+          <>
+            {title.trim() && (
+              <div className="mb-10 text-center">
+                <div className="mx-auto mb-4 h-1.5 w-16 rounded-full bg-gradient-to-l from-[var(--brand)] to-[var(--brand-dark)]" />
+                <h1 className="text-3xl font-extrabold text-[var(--ink)] md:text-4xl">{title}</h1>
+              </div>
+            )}
+            {content.trim() && (
+              <article className="whitespace-pre-line rounded-2xl border border-[var(--line)] bg-white p-6 text-[17px] leading-[2.1] text-[var(--ink)] shadow-sm md:p-10">
+                {content}
+              </article>
+            )}
+          </>
         )}
       </main>
       <SiteFooter />
