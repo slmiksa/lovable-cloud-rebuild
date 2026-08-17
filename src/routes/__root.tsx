@@ -82,6 +82,7 @@ function RootComponent() {
       {!isAdmin && <CyberBackground />}
       <Outlet />
       {!isAdmin && <WhatsAppWidgetLazy />}
+      {!isAdmin && <ScrollToTop />}
     </QueryClientProvider>
   );
 }
