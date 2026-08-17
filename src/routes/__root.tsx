@@ -3,6 +3,7 @@ import { Outlet, Link, createRootRouteWithContext, useRouter, useRouterState } f
 import { lazy, Suspense, useEffect, type ErrorInfo } from "react";
 
 import { CyberBackground } from "@/components/CyberBackground";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 const WhatsAppWidgetImpl = lazy(() => import("@/components/WhatsAppWidget"));
 
@@ -81,6 +82,7 @@ function RootComponent() {
       {!isAdmin && <CyberBackground />}
       <Outlet />
       {!isAdmin && <WhatsAppWidgetLazy />}
+      {!isAdmin && <ScrollToTop />}
     </QueryClientProvider>
   );
 }
